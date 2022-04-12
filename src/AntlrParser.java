@@ -17,7 +17,10 @@ public class AntlrParser
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         HelloParser parser = new HelloParser(commonTokenStream);
         ParseTree parseTree = parser.trafficProg();
-        System.out.println("Done");
-        Trees.inspect(parseTree, parser);
+        ParseTreeVisitor visitor = new ConcreteTreeVisitor();
+        visitor.visit(parseTree);
+
+        //System.out.println("Done");
+        //Trees.inspect(parseTree, parser);
     }
 }
