@@ -122,14 +122,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_trafficProg; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterTrafficProg(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitTrafficProg(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitTrafficProg(this);
 			else return visitor.visitChildren(this);
@@ -195,14 +187,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitStatement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitStatement(this);
@@ -287,14 +271,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_method; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterMethod(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitMethod(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitMethod(this);
 			else return visitor.visitChildren(this);
@@ -366,14 +342,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_if_statement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterIf_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitIf_statement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitIf_statement(this);
 			else return visitor.visitChildren(this);
@@ -444,14 +412,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_while_loop; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterWhile_loop(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitWhile_loop(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitWhile_loop(this);
 			else return visitor.visitChildren(this);
@@ -514,14 +474,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_create_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterCreate_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCreate_statement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCreate_statement(this);
@@ -594,14 +546,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_assignment; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterAssignment(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitAssignment(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitAssignment(this);
 			else return visitor.visitChildren(this);
@@ -642,14 +586,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitDeclaration(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitDeclaration(this);
@@ -699,14 +635,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_method_parameter; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterMethod_parameter(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitMethod_parameter(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitMethod_parameter(this);
@@ -761,14 +689,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_curl_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterCurl_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCurl_statement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCurl_statement(this);
@@ -825,14 +745,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_logic_expression; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterLogic_expression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitLogic_expression(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitLogic_expression(this);
 			else return visitor.visitChildren(this);
@@ -876,14 +788,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_else_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterElse_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitElse_statement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitElse_statement(this);
@@ -938,14 +842,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_car_statement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterCar_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCar_statement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCar_statement(this);
 			else return visitor.visitChildren(this);
@@ -987,14 +883,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_carSpawner_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterCarSpawner_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCarSpawner_statement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCarSpawner_statement(this);
@@ -1038,14 +926,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_trafficLight_statement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterTrafficLight_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitTrafficLight_statement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitTrafficLight_statement(this);
 			else return visitor.visitChildren(this);
@@ -1087,14 +967,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_grid_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterGrid_statement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitGrid_statement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitGrid_statement(this);
@@ -1141,14 +1013,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitExpression(this);
@@ -1234,14 +1098,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_condition; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterCondition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitCondition(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitCondition(this);
 			else return visitor.visitChildren(this);
@@ -1317,14 +1173,6 @@ public class HelloParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_term; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterTerm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitTerm(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitTerm(this);
 			else return visitor.visitChildren(this);
@@ -1388,14 +1236,6 @@ public class HelloParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_factor; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterFactor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitFactor(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitFactor(this);
