@@ -1,0 +1,25 @@
+
+create Car carEast 
+{
+ void Behavior() 
+ {
+  if (passedCars > 2) 
+  {
+    TurnRight();
+  }
+ }
+}
+
+create TrafficLight trafficLight1 
+{
+   void Behavior()
+   {
+	int timing = 30;
+   }
+}
+
+create Grid grid
+{
+ int me = 2;
+ void Behavior(){}
+}
