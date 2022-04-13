@@ -7,6 +7,10 @@ create Car carEast
   {
     TurnRight();
   }
+  else
+  {
+    int j = 2;
+  }
  }
 }
 
@@ -23,3 +27,5 @@ create Grid grid
  int me = 2;
  void Behavior(){}
 }
+
+int a = 2 + 5 * 2;

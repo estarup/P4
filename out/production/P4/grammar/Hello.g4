@@ -17,7 +17,7 @@ method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement  // declare 
 if_statement : IF  logic_expression curl_statement+ else_statement?; 
 while_loop : WHILE logic_expression curl_statement+ ;
 create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement); // CREATE CAR ; CAR : name, car_curl_sttm?
-assignment : declaration ASSIGN expression SEMICOLON;
+assignment : declaration OP_ASSIGN expression SEMICOLON;
 declaration : NUM_TYPE? ID ;
 method_parameter : LPAREN declaration? RPAREN ;
 curl_statement : LCURL statement* RCURL ;
@@ -27,11 +27,11 @@ car_statement: CAR CAR_NAME curl_statement;
 carSpawner_statement : CARSPAWNER CARSPAWNER_NAME curl_statement; 
 trafficLight_statement : TRAFFICLIGHT TRAFFICLIGHT_NAME curl_statement;
 grid_statement : GRID GRID_NAME curl_statement; 
-expression :  term ((ADD | SUBTRACT ) term)?
+expression :  term ((OP_ADD | OP_SUBTRACT ) term)?
 			| BOOL ;
 condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?
 			| BOOL ;
-term : factor (( MULTIPLY | DIVIDE ) factor)? ;
+term : factor (( OP_MULTIPLY | OP_DIVIDE ) factor)? ;
 factor : LPAREN expression* RPAREN 
 		| INTEGER
 	    | ID;
@@ -47,11 +47,11 @@ FLOAT : INTEGER '.'[0-9]* ;
 
 // Operators 0
 //MATH_OPERATOR : '+' | '-' | '*' | '/' | '=' | '(' | ')' ;
-ADD : '+' ;
-SUBTRACT : '-' ;
-MULTIPLY : '*' ;
-DIVIDE : '/' ;
-ASSIGN : '=' ;
+OP_ADD : '+' ;
+OP_SUBTRACT : '-' ;
+OP_MULTIPLY : '*' ;
+OP_DIVIDE : '/' ;
+OP_ASSIGN : '=' ;
 LPAREN : '(' ;
 RPAREN : ')' ;
 // Logic operators

@@ -20,7 +20,6 @@ public class AntlrParser
         ParseTree parseTree = parser.trafficProg();
         ParseTreeVisitor visitor = new BuildASTVisitor();
         visitor.visit(parseTree);
-
         Trees.inspect(parseTree, parser);
     }
 }
