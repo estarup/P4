@@ -75,7 +75,7 @@ WHILE : 'while' ;
 VOID : 'void' ;
 CREATE : 'create' ;
 START : 'Start()' ;
-CAR :  'Car'; //{System.out.println("matched rule car");} ;
+CAR :  'Car';
 CARSPAWNER: 'CarSpawner' ;
 TRAFFICLIGHT : 'TrafficLight'; 
 GRID : 'Grid' ;

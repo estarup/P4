@@ -7,26 +7,15 @@ public class PrettyPrintVisitor<T> extends HelloBaseVisitor<T>
     }
 
     @Override public T visitStatement(HelloParser.StatementContext ctx) { return visitChildren(ctx); }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation returns the result of calling
-     * {@link #visitChildren} on {@code ctx}.</p>
-     */
+
     @Override public T visitMethod(HelloParser.MethodContext ctx) { return visitChildren(ctx); }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation returns the result of calling
-     * {@link #visitChildren} on {@code ctx}.</p>
-     */
-    @Override public T visitIf_statement(HelloParser.If_statementContext ctx) { return visitChildren(ctx); }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation returns the result of calling
-     * {@link #visitChildren} on {@code ctx}.</p>
-     */
+
+    @Override public T visitIf_statement(HelloParser.If_statementContext ctx)
+    {
+        System.out.println("If statement");
+        return visitChildren(ctx);
+    }
+
     @Override public T visitWhile_loop(HelloParser.While_loopContext ctx) { return visitChildren(ctx); }
     /**
      * {@inheritDoc}
@@ -76,7 +65,11 @@ public class PrettyPrintVisitor<T> extends HelloBaseVisitor<T>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public T visitElse_statement(HelloParser.Else_statementContext ctx) { return visitChildren(ctx); }
+    @Override public T visitElse_statement(HelloParser.Else_statementContext ctx)
+    {
+        System.out.println("Else");
+        return visitChildren(ctx);
+    }
     /**
      * {@inheritDoc}
      *

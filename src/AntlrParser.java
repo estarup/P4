@@ -2,6 +2,7 @@ import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -17,10 +18,9 @@ public class AntlrParser
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         HelloParser parser = new HelloParser(commonTokenStream);
         ParseTree parseTree = parser.trafficProg();
-        ParseTreeVisitor visitor = new ConcreteTreeVisitor();
+        ParseTreeVisitor visitor = new BuildASTVisitor();
         visitor.visit(parseTree);
 
-        //System.out.println("Done");
-        //Trees.inspect(parseTree, parser);
+        Trees.inspect(parseTree, parser);
     }
 }

@@ -7,10 +7,6 @@ create Car carEast
   {
     TurnRight();
   }
-  else
-  {
-    int j = 2;
-  }
  }
 }
 

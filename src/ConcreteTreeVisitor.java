@@ -1,6 +1,6 @@
-import org.antlr.v4.runtime.tree.*;
+/*import org.antlr.v4.runtime.tree.*;
 
-public class ConcreteTreeVisitor implements ParseTreeVisitor {
+public class ConcreteTreeVisitor implements ParseTreeVisitor<Object> {
     @Override
     public Object visit(ParseTree parseTree) {
         System.out.print("print this");
@@ -22,3 +22,4 @@ public class ConcreteTreeVisitor implements ParseTreeVisitor {
         return null;
     }
 }
+*/
