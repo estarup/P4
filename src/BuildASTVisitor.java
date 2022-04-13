@@ -1,14 +1,9 @@
-import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
-import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.util.Stack;
 
 public class BuildASTVisitor extends HelloBaseVisitor<StatementNode>
 {
+
     @Override
     public StatementNode visitStatement(HelloParser.StatementContext ctx) {
-
-        System.out.println("Statement: " + ctx.getText());
         return super.visitStatement(ctx);
     }
 
@@ -22,11 +17,30 @@ public class BuildASTVisitor extends HelloBaseVisitor<StatementNode>
         return super.visitIf_statement(ctx);
     }
 
+
     @Override
-    public StatementNode visitExpression(HelloParser.ExpressionContext ctx) {
-        System.out.println("string: " + ctx.parent.getText());
-        return super.visitExpression(ctx);
+    public StatementNode visitWhile_loop(HelloParser.While_loopContext ctx) {
+        return super.visitWhile_loop(ctx);
     }
 
+    @Override
+    public StatementNode visitCreate_statement(HelloParser.Create_statementContext ctx) {
+        return super.visitCreate_statement(ctx);
+    }
 
+    @Override
+    public StatementNode visitAssignment(HelloParser.AssignmentContext ctx) {
+        return super.visitAssignment(ctx);
+    }
+
+    @Override
+    public StatementNode visitDeclaration(HelloParser.DeclarationContext ctx) {
+
+        return super.visitDeclaration(ctx);
+    }
+
+    @Override
+    public StatementNode visitExpression(HelloParser.ExpressionContext ctx) {
+        return super.visitExpression(ctx);
+    }
 }
