@@ -1,15 +1,15 @@
 import javax.swing.plaf.nimbus.State;
 
 abstract class StatementNode {}
-abstract class Method extends StatementNode
+abstract class MethodNode extends StatementNode
 {
 }
-abstract class If_statement extends StatementNode {}
-abstract class Else_statement extends StatementNode {}
-abstract class While_statement extends StatementNode {}
-abstract class Create_statement extends StatementNode{}
-abstract class Declaration extends StatementNode {}
-abstract class Assignment extends StatementNode {}
+abstract class If_statementNode extends StatementNode {}
+abstract class Else_statementNode extends StatementNode {}
+abstract class While_statementNode extends StatementNode {}
+abstract class Create_statementNode extends StatementNode{}
+abstract class DeclarationNode extends StatementNode {}
+abstract class AssignmentNode extends StatementNode {}
 
 abstract class ExpressionNode extends StatementNode
 {
