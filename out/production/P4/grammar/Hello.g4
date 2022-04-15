@@ -8,16 +8,16 @@ options {
 trafficProg : statement* EOF ;
 statement :   method
 			| if_statement
-	        | while_loop 
+	        | while_loop
 	        | create_statement
-  			| assignment 
-			| declaration ; 
+  			| assignment
+			| declaration ;
 method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement  // declare method
 			| METH_NAME method_parameter SEMICOLON; // Call method
-if_statement : IF  logic_expression curl_statement+ else_statement?; 
+if_statement : IF  logic_expression curl_statement+ else_statement? ;
 while_loop : WHILE logic_expression curl_statement+ ;
-create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement); // CREATE CAR ; CAR : name, car_curl_sttm?
-assignment : declaration OP_ASSIGN expression SEMICOLON;
+create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement) ; // CREATE CAR ; CAR : name, car_curl_sttm?
+assignment : declaration ASSIGN expression SEMICOLON;
 declaration : NUM_TYPE? ID ;
 method_parameter : LPAREN declaration? RPAREN ;
 curl_statement : LCURL statement* RCURL ;
@@ -27,14 +27,14 @@ car_statement: CAR CAR_NAME curl_statement;
 carSpawner_statement : CARSPAWNER CARSPAWNER_NAME curl_statement; 
 trafficLight_statement : TRAFFICLIGHT TRAFFICLIGHT_NAME curl_statement;
 grid_statement : GRID GRID_NAME curl_statement; 
-expression :  term ((OP_ADD | OP_SUBTRACT ) term)?
+expression :  term ((ADD | SUBTRACT ) term)?
 			| BOOL ;
 condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?
 			| BOOL ;
-term : factor (( OP_MULTIPLY | OP_DIVIDE ) factor)? ;
-factor : LPAREN expression* RPAREN 
-		| INTEGER
-	    | ID;
+term : factor (( MULTIPLY | DIVIDE ) factor)? ;
+factor : LPAREN expression* RPAREN #ParenExpression
+		| INTEGER #Int
+	    | ID #Id;
 
 
 // Lexer rules // 
@@ -47,11 +47,11 @@ FLOAT : INTEGER '.'[0-9]* ;
 
 // Operators 0
 //MATH_OPERATOR : '+' | '-' | '*' | '/' | '=' | '(' | ')' ;
-OP_ADD : '+' ;
-OP_SUBTRACT : '-' ;
-OP_MULTIPLY : '*' ;
-OP_DIVIDE : '/' ;
-OP_ASSIGN : '=' ;
+ADD : '+' ;
+SUBTRACT : '-' ;
+MULTIPLY : '*' ;
+DIVIDE : '/' ;
+ASSIGN : '=' ;
 LPAREN : '(' ;
 RPAREN : ')' ;
 // Logic operators

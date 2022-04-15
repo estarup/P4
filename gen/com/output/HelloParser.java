@@ -17,13 +17,12 @@ public class HelloParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		METH_RETURN_TYPE=1, NUM_TYPE=2, INTEGER=3, FLOAT=4, OP_ADD=5, OP_SUBTRACT=6, 
-		OP_MULTIPLY=7, OP_DIVIDE=8, OP_ASSIGN=9, LPAREN=10, RPAREN=11, EQUAL=12, 
-		NOTEQUAL=13, LESSTHAN=14, MORETHAN=15, LESSOREQUAL=16, MOREOREQUAL=17, 
-		LCURL=18, RCURL=19, IF=20, ELSE=21, WHILE=22, VOID=23, CREATE=24, START=25, 
-		CAR=26, CARSPAWNER=27, TRAFFICLIGHT=28, GRID=29, CAR_NAME=30, CARSPAWNER_NAME=31, 
-		TRAFFICLIGHT_NAME=32, GRID_NAME=33, BOOL=34, SEMICOLON=35, METH_NAME=36, 
-		ID=37, STRING=38, WS=39;
+		METH_RETURN_TYPE=1, NUM_TYPE=2, INTEGER=3, FLOAT=4, ADD=5, SUBTRACT=6, 
+		MULTIPLY=7, DIVIDE=8, ASSIGN=9, LPAREN=10, RPAREN=11, EQUAL=12, NOTEQUAL=13, 
+		LESSTHAN=14, MORETHAN=15, LESSOREQUAL=16, MOREOREQUAL=17, LCURL=18, RCURL=19, 
+		IF=20, ELSE=21, WHILE=22, VOID=23, CREATE=24, START=25, CAR=26, CARSPAWNER=27, 
+		TRAFFICLIGHT=28, GRID=29, CAR_NAME=30, CARSPAWNER_NAME=31, TRAFFICLIGHT_NAME=32, 
+		GRID_NAME=33, BOOL=34, SEMICOLON=35, METH_NAME=36, ID=37, STRING=38, WS=39;
 	public static final int
 		RULE_trafficProg = 0, RULE_statement = 1, RULE_method = 2, RULE_if_statement = 3, 
 		RULE_while_loop = 4, RULE_create_statement = 5, RULE_assignment = 6, RULE_declaration = 7, 
@@ -52,10 +51,10 @@ public class HelloParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "METH_RETURN_TYPE", "NUM_TYPE", "INTEGER", "FLOAT", "OP_ADD", "OP_SUBTRACT", 
-			"OP_MULTIPLY", "OP_DIVIDE", "OP_ASSIGN", "LPAREN", "RPAREN", "EQUAL", 
-			"NOTEQUAL", "LESSTHAN", "MORETHAN", "LESSOREQUAL", "MOREOREQUAL", "LCURL", 
-			"RCURL", "IF", "ELSE", "WHILE", "VOID", "CREATE", "START", "CAR", "CARSPAWNER", 
+			null, "METH_RETURN_TYPE", "NUM_TYPE", "INTEGER", "FLOAT", "ADD", "SUBTRACT", 
+			"MULTIPLY", "DIVIDE", "ASSIGN", "LPAREN", "RPAREN", "EQUAL", "NOTEQUAL", 
+			"LESSTHAN", "MORETHAN", "LESSOREQUAL", "MOREOREQUAL", "LCURL", "RCURL", 
+			"IF", "ELSE", "WHILE", "VOID", "CREATE", "START", "CAR", "CARSPAWNER", 
 			"TRAFFICLIGHT", "GRID", "CAR_NAME", "CARSPAWNER_NAME", "TRAFFICLIGHT_NAME", 
 			"GRID_NAME", "BOOL", "SEMICOLON", "METH_NAME", "ID", "STRING", "WS"
 		};
@@ -538,7 +537,7 @@ public class HelloParser extends Parser {
 		public DeclarationContext declaration() {
 			return getRuleContext(DeclarationContext.class,0);
 		}
-		public TerminalNode OP_ASSIGN() { return getToken(HelloParser.OP_ASSIGN, 0); }
+		public TerminalNode ASSIGN() { return getToken(HelloParser.ASSIGN, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -563,7 +562,7 @@ public class HelloParser extends Parser {
 			setState(91);
 			declaration();
 			setState(92);
-			match(OP_ASSIGN);
+			match(ASSIGN);
 			setState(93);
 			expression();
 			setState(94);
@@ -1008,8 +1007,8 @@ public class HelloParser extends Parser {
 		public TermContext term(int i) {
 			return getRuleContext(TermContext.class,i);
 		}
-		public TerminalNode OP_ADD() { return getToken(HelloParser.OP_ADD, 0); }
-		public TerminalNode OP_SUBTRACT() { return getToken(HelloParser.OP_SUBTRACT, 0); }
+		public TerminalNode ADD() { return getToken(HelloParser.ADD, 0); }
+		public TerminalNode SUBTRACT() { return getToken(HelloParser.SUBTRACT, 0); }
 		public TerminalNode BOOL() { return getToken(HelloParser.BOOL, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1040,11 +1039,11 @@ public class HelloParser extends Parser {
 				setState(145);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==OP_ADD || _la==OP_SUBTRACT) {
+				if (_la==ADD || _la==SUBTRACT) {
 					{
 					setState(143);
 					_la = _input.LA(1);
-					if ( !(_la==OP_ADD || _la==OP_SUBTRACT) ) {
+					if ( !(_la==ADD || _la==SUBTRACT) ) {
 					_errHandler.recoverInline(this);
 					}
 					else {
@@ -1168,8 +1167,8 @@ public class HelloParser extends Parser {
 		public FactorContext factor(int i) {
 			return getRuleContext(FactorContext.class,i);
 		}
-		public TerminalNode OP_MULTIPLY() { return getToken(HelloParser.OP_MULTIPLY, 0); }
-		public TerminalNode OP_DIVIDE() { return getToken(HelloParser.OP_DIVIDE, 0); }
+		public TerminalNode MULTIPLY() { return getToken(HelloParser.MULTIPLY, 0); }
+		public TerminalNode DIVIDE() { return getToken(HelloParser.DIVIDE, 0); }
 		public TermContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1193,11 +1192,11 @@ public class HelloParser extends Parser {
 			setState(161);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==OP_MULTIPLY || _la==OP_DIVIDE) {
+			if (_la==MULTIPLY || _la==DIVIDE) {
 				{
 				setState(159);
 				_la = _input.LA(1);
-				if ( !(_la==OP_MULTIPLY || _la==OP_DIVIDE) ) {
+				if ( !(_la==MULTIPLY || _la==DIVIDE) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -1224,6 +1223,17 @@ public class HelloParser extends Parser {
 	}
 
 	public static class FactorContext extends ParserRuleContext {
+		public FactorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_factor; }
+	 
+		public FactorContext() { }
+		public void copyFrom(FactorContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ParenExpressionContext extends FactorContext {
 		public TerminalNode LPAREN() { return getToken(HelloParser.LPAREN, 0); }
 		public TerminalNode RPAREN() { return getToken(HelloParser.RPAREN, 0); }
 		public List<ExpressionContext> expression() {
@@ -1232,15 +1242,28 @@ public class HelloParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode INTEGER() { return getToken(HelloParser.INTEGER, 0); }
-		public TerminalNode ID() { return getToken(HelloParser.ID, 0); }
-		public FactorContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_factor; }
+		public ParenExpressionContext(FactorContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitFactor(this);
+			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitParenExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IdContext extends FactorContext {
+		public TerminalNode ID() { return getToken(HelloParser.ID, 0); }
+		public IdContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntContext extends FactorContext {
+		public TerminalNode INTEGER() { return getToken(HelloParser.INTEGER, 0); }
+		public IntContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitInt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1254,6 +1277,7 @@ public class HelloParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LPAREN:
+				_localctx = new ParenExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(163);
@@ -1277,6 +1301,7 @@ public class HelloParser extends Parser {
 				}
 				break;
 			case INTEGER:
+				_localctx = new IntContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(171);
@@ -1284,6 +1309,7 @@ public class HelloParser extends Parser {
 				}
 				break;
 			case ID:
+				_localctx = new IdContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(172);

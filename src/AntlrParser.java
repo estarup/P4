@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class AntlrParser
 {
@@ -18,7 +19,6 @@ public class AntlrParser
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         HelloParser parser = new HelloParser(commonTokenStream);
         ParseTree parseTree = parser.trafficProg();
-
         ParseTreeVisitor visitor = new BuildASTVisitor();
         Trees.inspect(parseTree,parser);
         visitor.visit(parseTree);
