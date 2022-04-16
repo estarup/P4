@@ -14,27 +14,27 @@ statement :   method
 			| declaration ;
 method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement  // declare method
 			| METH_NAME method_parameter SEMICOLON; // Call method
-if_statement : IF  logic_expression curl_statement+ else_statement? ;
-while_loop : WHILE logic_expression curl_statement+ ;
+if_statement : IF  logic_expression curl_statement else_statement? ;
+while_loop : WHILE logic_expression curl_statement ;
 create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement) ; // CREATE CAR ; CAR : name, car_curl_sttm?
-assignment : declaration ASSIGN expression SEMICOLON;
-declaration : NUM_TYPE? ID ;
+assignment : ID ASSIGN expression SEMICOLON;
+declaration : NUM_TYPE ID SEMICOLON;
 method_parameter : LPAREN declaration? RPAREN ;
 curl_statement : LCURL statement* RCURL ;
 logic_expression : LPAREN condition RPAREN; 
-else_statement : ELSE curl_statement+;
+else_statement : ELSE curl_statement;
 car_statement: CAR CAR_NAME curl_statement;
 carSpawner_statement : CARSPAWNER CARSPAWNER_NAME curl_statement; 
 trafficLight_statement : TRAFFICLIGHT TRAFFICLIGHT_NAME curl_statement;
 grid_statement : GRID GRID_NAME curl_statement; 
-expression :  term ((ADD | SUBTRACT ) term)?
-			| BOOL ;
+expression :  term ((ADD | SUBTRACT ) term)? ;
 condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?
 			| BOOL ;
 term : factor (( MULTIPLY | DIVIDE ) factor)? ;
-factor : LPAREN expression* RPAREN #ParenExpression
-		| INTEGER #Int
-	    | ID #Id;
+factor : LPAREN expression* RPAREN
+		| INTEGER
+		| FLOAT
+	    | ID ;
 
 
 // Lexer rules // 

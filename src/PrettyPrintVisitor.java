@@ -125,5 +125,4 @@ public class PrettyPrintVisitor<T> extends HelloBaseVisitor<T>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public T visitFactor(HelloParser.FactorContext ctx) { return visitChildren(ctx); }
 }

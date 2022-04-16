@@ -125,24 +125,9 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTerm(HelloParser.TermContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ParenExpression}
-	 * labeled alternative in {@link HelloParser#factor}.
+	 * Visit a parse tree produced by {@link HelloParser#factor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParenExpression(HelloParser.ParenExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Int}
-	 * labeled alternative in {@link HelloParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInt(HelloParser.IntContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Id}
-	 * labeled alternative in {@link HelloParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitId(HelloParser.IdContext ctx);
+	T visitFactor(HelloParser.FactorContext ctx);
 }
