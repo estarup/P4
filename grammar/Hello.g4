@@ -26,12 +26,16 @@ else_statement : ELSE curl_statement;
 car_statement: CAR CAR_NAME curl_statement;
 carSpawner_statement : CARSPAWNER CARSPAWNER_NAME curl_statement; 
 trafficLight_statement : TRAFFICLIGHT TRAFFICLIGHT_NAME curl_statement;
-grid_statement : GRID GRID_NAME curl_statement; 
-expression :  term ((ADD | SUBTRACT ) term)? ;
+grid_statement : GRID GRID_NAME curl_statement;
+expression : term
+            | add_expression
+            | subtract_expression;
+add_expression :  term ADD term;
+subtract_expression : term SUBTRACT term;
 condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?
 			| BOOL ;
 term : factor (( MULTIPLY | DIVIDE ) factor)? ;
-factor : LPAREN expression* RPAREN
+factor : LPAREN expression RPAREN
 		| INTEGER
 		| FLOAT
 	    | ID ;

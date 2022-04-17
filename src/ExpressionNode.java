@@ -1,3 +1,3 @@
-public class ExpressionNode {
+public class ExpressionNode extends GraphNode {
 
 }

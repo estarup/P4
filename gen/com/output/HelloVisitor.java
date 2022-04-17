@@ -113,6 +113,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(HelloParser.ExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#add_expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdd_expression(HelloParser.Add_expressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#subtract_expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubtract_expression(HelloParser.Subtract_expressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#condition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

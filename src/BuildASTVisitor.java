@@ -1,16 +1,21 @@
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
+import sun.java2d.pipe.SpanShapeRenderer;
 
-public class BuildASTVisitor extends HelloBaseVisitor<StatementNode>
+public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
     private BlockNode theTopNode = new BlockNode();
-    @Override public StatementNode visitTrafficProg(HelloParser.TrafficProgContext ctx) {
-        return visitChildren(ctx); }
-    @Override public StatementNode visitStatement(HelloParser.StatementContext ctx) {
-        return visitChildren(ctx); }
+    @Override public GraphNode visitTrafficProg(HelloParser.TrafficProgContext ctx) {
+        GraphNode result =  visitChildren(ctx);
+        if (result instanceof BlockNode) {
+            theTopNode = (BlockNode) result;
+        }
+        return result;
+    }
+
 
     @Override
-    public StatementNode visitDeclaration(HelloParser.DeclarationContext ctx) {
+    public GraphNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
         node.type = ctx.children.get(0).getText();
         node.ID = ctx.children.get(1).getText();
@@ -18,24 +23,45 @@ public class BuildASTVisitor extends HelloBaseVisitor<StatementNode>
     }
 
     @Override
-    public StatementNode visitAssignment(HelloParser.AssignmentContext ctx) {
+    public GraphNode visitAssignment(HelloParser.AssignmentContext ctx) {
         AssignmentNode node = new AssignmentNode();
         node.ID = ctx.children.get(0).getText();
-        node.value =  null;
+        node.value =  visitExpression(ctx.expression());
+        return node;
+    }
+
+
+    @Override
+    public GraphNode visitFactor(HelloParser.FactorContext ctx) {
+        if (ctx.getChildCount() > 1) {
+            return visitExpression(ctx.expression(0));
+        }
+        SimpleExpressionNode factor = new SimpleExpressionNode();
+        factor.value = ctx.getText();
+        return factor;
+    }
+
+
+    @Override
+    public GraphNode visitAdd_expression(HelloParser.Add_expressionContext ctx) {
+        AddNode node = new AddNode();
+        node.left = visitTerm(ctx.term(0));
+        node.right = visitTerm(ctx.term(1));
         return node;
     }
 
     @Override
-    public StatementNode visitExpression(HelloParser.ExpressionContext ctx) {
-        return super.visitExpression(ctx);
-    }
+    protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
+        if (aggregate != null && ! (aggregate instanceof BlockNode)) {
+            BlockNode block = new BlockNode();
+            block.children.add(aggregate);
+            aggregate = block;
+        }
 
-    @Override
-    protected StatementNode aggregateResult(StatementNode aggregate, StatementNode nextResult) {
         if (aggregate instanceof BlockNode) {
             BlockNode block = (BlockNode) aggregate;
             block.children.add(nextResult);
-            return aggregate;
+            return block;
         }
         return nextResult;
     }
