@@ -34,7 +34,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitFactor(HelloParser.FactorContext ctx) {
         if (ctx.getChildCount() > 1) {
-            return visitExpression(ctx.expression(0));
+            return visitExpression(ctx.expression());
         }
         SimpleExpressionNode factor = new SimpleExpressionNode();
         factor.value = ctx.getText();
@@ -47,6 +47,29 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         AddNode node = new AddNode();
         node.left = visitTerm(ctx.term(0));
         node.right = visitTerm(ctx.term(1));
+        return node;
+    }
+
+    @Override
+    public GraphNode visitSubtract_expression(HelloParser.Subtract_expressionContext ctx) {
+        SubtractNode node = new SubtractNode();
+        node.left = visitTerm(ctx.term(0));
+        node.right = visitTerm(ctx.term(1));
+        return node;
+    }
+    @Override
+    public GraphNode visitMultiply_term(HelloParser.Multiply_termContext ctx) {
+        MultiplyNode node = new MultiplyNode();
+        node.left = visitFactor(ctx.factor(0));
+        node.right = visitFactor(ctx.factor(1));
+        return node;
+    }
+
+    @Override
+    public GraphNode visitDivide_term(HelloParser.Divide_termContext ctx) {
+        DivideNode node = new DivideNode();
+        node.left = visitFactor(ctx.factor(0));
+        node.right = visitFactor(ctx.factor(1));
         return node;
     }
 

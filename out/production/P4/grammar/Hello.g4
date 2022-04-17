@@ -34,7 +34,11 @@ add_expression :  term ADD term;
 subtract_expression : term SUBTRACT term;
 condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?
 			| BOOL ;
-term : factor (( MULTIPLY | DIVIDE ) factor)? ;
+term : factor
+       | multiply_term
+       | divide_term;
+multiply_term : factor MULTIPLY factor;
+divide_term : factor DIVIDE factor;
 factor : LPAREN expression RPAREN
 		| INTEGER
 		| FLOAT

@@ -136,6 +136,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTerm(HelloParser.TermContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#multiply_term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiply_term(HelloParser.Multiply_termContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#divide_term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivide_term(HelloParser.Divide_termContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#factor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
