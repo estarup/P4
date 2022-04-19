@@ -1,4 +1,4 @@
-public class ParameterNode {
+public class ParameterNode extends StatementNode {
     String type;
-    String name;
+    String ID;
 }

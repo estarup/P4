@@ -1,3 +1,6 @@
+import com.sun.org.apache.bcel.internal.classfile.MethodParameter;
+import org.antlr.runtime.debug.DebugEventListener;
+import org.antlr.v4.codegen.model.decl.Decl;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import sun.java2d.pipe.SpanShapeRenderer;
@@ -12,7 +15,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         }
         return result;
     }
-
 
     @Override
     public GraphNode visitDeclaration(HelloParser.DeclarationContext ctx) {
@@ -30,6 +32,28 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return node;
     }
 
+    @Override
+    public GraphNode visitMethod(HelloParser.MethodContext ctx) {
+        MethodNode node = new MethodNode();
+        node.returnType = ctx.children.get(0).getText();
+        node.name = ctx.children.get(1).getText();
+        System.out.println("Count: " + ctx.getChildCount());
+        System.out.println("2: " + ctx.children.get(2).getText());
+        node.parameter = visitMethod_parameter(ctx.method_parameter());
+        //node.parameter.ID = ctx.children.get(3).getText();
+        //node.parameter.type = ctx.children.get(4).getText();
+        node.body = null;
+        return node;
+    }
+
+    @Override
+    public ParameterNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
+        ParameterNode node = new ParameterNode();
+        node.ID = ctx.children.get(0).getText();
+        node.type = ctx.children.get(1).getText();
+        System.out.println("Parameter count: " + ctx.getChildCount());
+        return node;
+    }
 
     @Override
     public GraphNode visitFactor(HelloParser.FactorContext ctx) {
@@ -80,7 +104,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             block.children.add(aggregate);
             aggregate = block;
         }
-
         if (aggregate instanceof BlockNode) {
             BlockNode block = (BlockNode) aggregate;
             block.children.add(nextResult);

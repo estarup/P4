@@ -2,3 +2,5 @@ int x;
 x = 2;
 x = 2 + (3 + 4);
 y = 2 * 7 + 3 / 4;
+
+void Behavior(int i;) {}

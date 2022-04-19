@@ -19,7 +19,8 @@ while_loop : WHILE logic_expression curl_statement ;
 create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement) ; // CREATE CAR ; CAR : name, car_curl_sttm?
 assignment : ID ASSIGN expression SEMICOLON;
 declaration : NUM_TYPE ID SEMICOLON;
-method_parameter : LPAREN declaration? RPAREN ;
+method_parameter : LPAREN declaration RPAREN ;
+method_no_parameter : LPAREN RPAREN;
 curl_statement : LCURL statement* RCURL ;
 logic_expression : LPAREN condition RPAREN; 
 else_statement : ELSE curl_statement;
@@ -54,16 +55,13 @@ INTEGER : [0]| ('-')? [1-9][0-9]* ;
 FLOAT : INTEGER '.'[0-9]* ;
 
 // Operators 0
-//MATH_OPERATOR : '+' | '-' | '*' | '/' | '=' | '(' | ')' ;
 ADD : '+' ;
 SUBTRACT : '-' ;
 MULTIPLY : '*' ;
 DIVIDE : '/' ;
 ASSIGN : '=' ;
-LPAREN : '(' ;
-RPAREN : ')' ;
+
 // Logic operators
-//LOGIC_OP : EQUAL | NOTEQUAL | LESSTHAN | MORETHAN ;
 EQUAL : '==' ;
 NOTEQUAL : '!=' ;
 LESSTHAN : '<' ; 
@@ -74,7 +72,8 @@ MOREOREQUAL : '>=' ;
 // Brackets
 LCURL : '{'  ;
 RCURL : '}'  ;
-
+LPAREN : '(' ;
+RPAREN : ')' ;
 
 // TEST 
 IF : 'if' ;
@@ -82,7 +81,8 @@ ELSE : 'else' ;
 WHILE : 'while' ;
 VOID : 'void' ;
 CREATE : 'create' ;
-START : 'Start()' ;
+START : 'Start' ;
+RETURN : 'return';
 CAR :  'Car';
 CARSPAWNER: 'CarSpawner' ;
 TRAFFICLIGHT : 'TrafficLight'; 

@@ -65,6 +65,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod_parameter(HelloParser.Method_parameterContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#method_no_parameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_no_parameter(HelloParser.Method_no_parameterContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#curl_statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
