@@ -40,6 +40,16 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
+    public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
+        If_Then_ElseNode node = new If_Then_ElseNode();
+        node.condition = (ExpressionNode) visitLogic_expression(ctx.logic_expression());
+        if (ctx.children.get(2).getChildCount() > 2) {
+            node.if_part = (BlockNode) visitChildren(ctx.curl_statement());
+        }
+        return super.visitIf_statement(ctx);
+    }
+
+    @Override
     public GraphNode visitMethod(HelloParser.MethodContext ctx) {
         MethodNode node = new MethodNode();
         node.returnType = ctx.children.get(0).getText();
@@ -48,13 +58,10 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         BlockNode block = new BlockNode();
         node.body = block;
         if (ctx.children.get(3).getChildCount() > 2) {
-            BlockNode stmNode = (BlockNode) visitChildren(ctx.curl_statement());
-            node.body = stmNode;
+            node.body = (BlockNode) visitChildren(ctx.curl_statement());
         }
         return node;
     }
-
-
 
     @Override
     public GraphNode visitReturn_statement(HelloParser.Return_statementContext ctx) {
