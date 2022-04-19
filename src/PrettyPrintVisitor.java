@@ -8,7 +8,6 @@ public class PrettyPrintVisitor<T> extends HelloBaseVisitor<T>
 
     @Override public T visitStatement(HelloParser.StatementContext ctx) { return visitChildren(ctx); }
 
-    @Override public T visitMethod(HelloParser.MethodContext ctx) { return visitChildren(ctx); }
 
     @Override public T visitIf_statement(HelloParser.If_statementContext ctx)
     {

@@ -11,17 +11,22 @@ statement :   method
 	        | while_loop
 	        | create_statement
   			| assignment
-			| declaration ;
-method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement  // declare method
-			| METH_NAME method_parameter SEMICOLON; // Call method
+			| declaration SEMICOLON
+			;
+method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement #methodParamReturn  // declare method
+			| METH_NAME method_parameter SEMICOLON # methodCallParam
+			| METH_NAME method_no_parameter SEMICOLON # methodCallNoParam
+			| METH_RETURN_TYPE METH_NAME method_no_parameter curl_statement #methodNoParamReturn
+			| METH_RETURN_TYPE METH_NAME method_no_parameter curl_statement #mehodVoidNoParam ; // Call method
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
 create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement) ; // CREATE CAR ; CAR : name, car_curl_sttm?
 assignment : ID ASSIGN expression SEMICOLON;
-declaration : NUM_TYPE ID SEMICOLON;
+declaration : NUM_TYPE ID ;
 method_parameter : LPAREN declaration RPAREN ;
-method_no_parameter : LPAREN RPAREN;
-curl_statement : LCURL statement* RCURL ;
+method_no_parameter : LPAREN RPAREN ;
+curl_statement : LCURL statement* return_statement? RCURL ;
+return_statement : RETURN ID SEMICOLON;
 logic_expression : LPAREN condition RPAREN; 
 else_statement : ELSE curl_statement;
 car_statement: CAR CAR_NAME curl_statement;
@@ -44,7 +49,6 @@ factor : LPAREN expression RPAREN
 		| INTEGER
 		| FLOAT
 	    | ID ;
-
 
 // Lexer rules // 
 

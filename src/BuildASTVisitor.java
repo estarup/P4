@@ -17,7 +17,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
-    public GraphNode visitDeclaration(HelloParser.DeclarationContext ctx) {
+    public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
         node.type = ctx.children.get(0).getText();
         node.ID = ctx.children.get(1).getText();
@@ -33,27 +33,13 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
-    public GraphNode visitMethod(HelloParser.MethodContext ctx) {
-        MethodNode node = new MethodNode();
-        node.returnType = ctx.children.get(0).getText();
-        node.name = ctx.children.get(1).getText();
-        System.out.println("Count: " + ctx.getChildCount());
-        System.out.println("2: " + ctx.children.get(2).getText());
-        node.parameter = visitMethod_parameter(ctx.method_parameter());
-        //node.parameter.ID = ctx.children.get(3).getText();
-        //node.parameter.type = ctx.children.get(4).getText();
-        node.body = null;
+    public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
+        ParameterNode node = new ParameterNode();
+        node.declaration = visitDeclaration(ctx.declaration());
         return node;
     }
 
-    @Override
-    public ParameterNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
-        ParameterNode node = new ParameterNode();
-        node.ID = ctx.children.get(0).getText();
-        node.type = ctx.children.get(1).getText();
-        System.out.println("Parameter count: " + ctx.getChildCount());
-        return node;
-    }
+
 
     @Override
     public GraphNode visitFactor(HelloParser.FactorContext ctx) {
@@ -96,6 +82,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.right = visitFactor(ctx.factor(1));
         return node;
     }
+
 
     @Override
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {

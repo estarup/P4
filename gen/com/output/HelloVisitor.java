@@ -23,11 +23,33 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#method}.
+	 * Visit a parse tree produced by the {@code methodParamReturn}
+	 * labeled alternative in {@link HelloParser#method}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMethod(HelloParser.MethodContext ctx);
+	T visitMethodParamReturn(HelloParser.MethodParamReturnContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code methodCall}
+	 * labeled alternative in {@link HelloParser#method}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodCall(HelloParser.MethodCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code methodNoParamReturn}
+	 * labeled alternative in {@link HelloParser#method}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodNoParamReturn(HelloParser.MethodNoParamReturnContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code mehodVoidNoParam}
+	 * labeled alternative in {@link HelloParser#method}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMehodVoidNoParam(HelloParser.MehodVoidNoParamContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#if_statement}.
 	 * @param ctx the parse tree
