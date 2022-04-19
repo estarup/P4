@@ -13,11 +13,11 @@ statement :   method
   			| assignment
 			| declaration SEMICOLON
 			;
-method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement #methodParamReturn  // declare method
-			| METH_NAME method_parameter SEMICOLON # methodCallParam
-			| METH_NAME method_no_parameter SEMICOLON # methodCallNoParam
-			| METH_RETURN_TYPE METH_NAME method_no_parameter curl_statement #methodNoParamReturn
-			| METH_RETURN_TYPE METH_NAME method_no_parameter curl_statement #mehodVoidNoParam ; // Call method
+method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement   // declare method
+            | METH_RETURN_TYPE METH_NAME method_no_parameter curl_statement
+			| METH_NAME method_parameter SEMICOLON
+			| METH_NAME method_no_parameter SEMICOLON
+			;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
 create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement) ; // CREATE CAR ; CAR : name, car_curl_sttm?
@@ -35,7 +35,8 @@ trafficLight_statement : TRAFFICLIGHT TRAFFICLIGHT_NAME curl_statement;
 grid_statement : GRID GRID_NAME curl_statement;
 expression : term
             | add_expression
-            | subtract_expression;
+            | subtract_expression
+            ;
 add_expression :  term ADD term;
 subtract_expression : term SUBTRACT term;
 condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?

@@ -5,6 +5,11 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import sun.java2d.pipe.SpanShapeRenderer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.Integer.parseInt;
+
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
     private BlockNode theTopNode = new BlockNode();
@@ -15,6 +20,8 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         }
         return result;
     }
+
+
 
     @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
@@ -33,13 +40,37 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
-    public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
-        ParameterNode node = new ParameterNode();
-        node.declaration = visitDeclaration(ctx.declaration());
+    public GraphNode visitMethod(HelloParser.MethodContext ctx) {
+        MethodNode node = new MethodNode();
+        node.returnType = ctx.children.get(0).getText();
+        node.name = ctx.children.get(1).getText();
+        node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
+        BlockNode block = new BlockNode();
+        node.body = block;
+        if (ctx.children.get(3).getChildCount() > 2) {
+            BlockNode stmNode = (BlockNode) visitChildren(ctx.curl_statement());
+            node.body = stmNode;
+        }
         return node;
     }
 
 
+
+    @Override
+    public GraphNode visitReturn_statement(HelloParser.Return_statementContext ctx) {
+        ReturnNode node = new ReturnNode();
+        node.ID = ctx.children.get(0).getText();
+        return node;
+    }
+
+    @Override
+    public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
+        DeclarationNode node = new DeclarationNode();
+        if (ctx.getChildCount() > 0) {
+            node = visitDeclaration(ctx.declaration());
+        }
+        return node;
+    }
 
     @Override
     public GraphNode visitFactor(HelloParser.FactorContext ctx) {
@@ -88,12 +119,12 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
         if (aggregate != null && ! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();
-            block.children.add(aggregate);
+            block.childrenList.add(aggregate);
             aggregate = block;
         }
         if (aggregate instanceof BlockNode) {
             BlockNode block = (BlockNode) aggregate;
-            block.children.add(nextResult);
+            block.childrenList.add(nextResult);
             return block;
         }
         return nextResult;

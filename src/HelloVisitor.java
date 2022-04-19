@@ -22,40 +22,11 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code methodParamReturn}
-	 * labeled alternative in {@link HelloParser#method}.
+	 * Visit a parse tree produced by {@link HelloParser#method}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMethodParamReturn(HelloParser.MethodParamReturnContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code methodCallParam}
-	 * labeled alternative in {@link HelloParser#method}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMethodCallParam(HelloParser.MethodCallParamContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code methodCallNoParam}
-	 * labeled alternative in {@link HelloParser#method}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMethodCallNoParam(HelloParser.MethodCallNoParamContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code methodNoParamReturn}
-	 * labeled alternative in {@link HelloParser#method}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMethodNoParamReturn(HelloParser.MethodNoParamReturnContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code mehodVoidNoParam}
-	 * labeled alternative in {@link HelloParser#method}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMehodVoidNoParam(HelloParser.MehodVoidNoParamContext ctx);
+	T visitMethod(HelloParser.MethodContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#if_statement}.
 	 * @param ctx the parse tree
