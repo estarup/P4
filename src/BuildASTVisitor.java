@@ -79,9 +79,9 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitCreate_statement(HelloParser.Create_statementContext ctx) {
         CreateNode node = new CreateNode();
-        node.type = ctx.children.get(0).getText();
-        node.ID = ctx.children.get(1).getText();
-        node.body = (BlockNode) visitCreate_type(ctx.create_type());
+        node.type = ctx.children.get(1).getText();
+        node.ID = ctx.children.get(2).getText();
+        node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
         return  node;
     }
 
