@@ -38,8 +38,8 @@ expression : term
             | add_expression
             | subtract_expression
             ;
-add_expression :  term ADD term;
-subtract_expression : term SUBTRACT term;
+add_expression :  term (ADD term)*;
+subtract_expression : term (SUBTRACT term)*;
 condition :   expression
             | equal_condition
             | not_equal_condition
