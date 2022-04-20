@@ -8,13 +8,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
-    private BlockNode theTopNode = new BlockNode();
+    private GraphNode theTopNode = new BlockNode();
     @Override public GraphNode visitTrafficProg(HelloParser.TrafficProgContext ctx) {
         GraphNode result =  visitChildren(ctx);
         if (result instanceof BlockNode) {
@@ -84,7 +83,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
         return  node;
     }
-
 
     @Override
     public GraphNode visitReturn_statement(HelloParser.Return_statementContext ctx) {
