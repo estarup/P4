@@ -1,1 +1,1 @@
-create Car myCar {int j; }
+create CarSpawner spawner {return hey;}

@@ -87,7 +87,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitReturn_statement(HelloParser.Return_statementContext ctx) {
         ReturnNode node = new ReturnNode();
-        node.ID = ctx.children.get(0).getText();
+        node.ID = ctx.children.get(1).getText();
         return node;
     }
 
