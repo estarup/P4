@@ -1,6 +1,7 @@
 import com.sun.org.apache.bcel.internal.classfile.MethodParameter;
 import org.antlr.runtime.debug.DebugEventListener;
 import org.antlr.v4.codegen.model.decl.Decl;
+import org.antlr.v4.misc.Graph;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import sun.java2d.pipe.SpanShapeRenderer;
@@ -23,6 +24,8 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 
 
 
+
+
     @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
@@ -38,7 +41,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.value =  visitExpression(ctx.expression());
         return node;
     }
-
+/*
     @Override
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
@@ -49,7 +52,9 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return super.visitIf_statement(ctx);
     }
 
-    @Override
+*/
+
+  /*  @Override
     public GraphNode visitMethod(HelloParser.MethodContext ctx) {
         MethodNode node = new MethodNode();
         node.returnType = ctx.children.get(0).getText();
@@ -58,10 +63,15 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         BlockNode block = new BlockNode();
         node.body = block;
         if (ctx.children.get(3).getChildCount() > 2) {
-            node.body = (BlockNode) visitChildren(ctx.curl_statement());
+            node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
+            System.out.println(visitCurl_statement(ctx.curl_statement()));
         }
         return node;
-    }
+    }*/
+
+
+
+
 
     @Override
     public GraphNode visitReturn_statement(HelloParser.Return_statementContext ctx) {
