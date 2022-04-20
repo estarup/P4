@@ -1,3 +1,2 @@
-if (i == 1)  { int j; } 
-
-
+if (i <= 1)  { int j; }
+while (i != 2) {int k; return yes; }

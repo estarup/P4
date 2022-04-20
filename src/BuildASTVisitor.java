@@ -1,4 +1,5 @@
 import com.sun.org.apache.bcel.internal.classfile.MethodParameter;
+import jdk.nashorn.internal.ir.WhileNode;
 import org.antlr.runtime.debug.DebugEventListener;
 import org.antlr.v4.codegen.model.decl.Decl;
 import org.antlr.v4.misc.Graph;
@@ -23,6 +24,18 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
+    public GraphNode visitMethod(HelloParser.MethodContext ctx) {
+        MethodNode node = new MethodNode();
+        node.returnType = ctx.children.get(0).getText();
+        node.name = ctx.children.get(1).getText();
+        node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
+        if (ctx.children.get(3).getChildCount() > 2) {
+            node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
+        }
+        return node;
+    }
+
+    @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
         node.type = ctx.children.get(0).getText();
@@ -43,9 +56,9 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         If_Then_ElseNode node = new If_Then_ElseNode();
         if (ctx.children.get(2).getChildCount() > 2) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-            node.if_part = (BlockNode) visitChildren(ctx.curl_statement());
+            node.if_body = (BlockNode) visitChildren(ctx.curl_statement());
             try {
-                node.else_part = (BlockNode) visitChildren(ctx.else_statement());
+                node.else_body = (BlockNode) visitChildren(ctx.else_statement());
             } catch (NullPointerException n) {
                 System.out.println("No else statement");
             }
@@ -53,17 +66,23 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return node;
     }
 
-
     @Override
-    public GraphNode visitMethod(HelloParser.MethodContext ctx) {
-        MethodNode node = new MethodNode();
-        node.returnType = ctx.children.get(0).getText();
-        node.name = ctx.children.get(1).getText();
-        node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
-        if (ctx.children.get(3).getChildCount() > 2) {
-            node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
+    public GraphNode visitWhile_loop(HelloParser.While_loopContext ctx) {
+        WhileStmNode node = new WhileStmNode();
+        if (ctx.children.get(2).getChildCount() > 2) {
+            node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
+            node.body = (BlockNode) visitChildren(ctx.curl_statement());
         }
         return node;
+    }
+
+    @Override
+    public GraphNode visitCreate_statement(HelloParser.Create_statementContext ctx) {
+        CreateNode node = new CreateNode();
+        node.type = ctx.children.get(0).getText();
+        node.ID = ctx.children.get(1).getText();
+        node.body = (BlockNode) visitCreate_type(ctx.create_type());
+        return  node;
     }
 
 

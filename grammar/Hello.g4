@@ -20,7 +20,12 @@ method : METH_RETURN_TYPE METH_NAME method_parameter curl_statement   // declare
 			;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
-create_statement : CREATE (car_statement | carSpawner_statement | trafficLight_statement | grid_statement) ; // CREATE CAR ; CAR : name, car_curl_sttm?
+create_statement : CREATE create_type create_name curl_statement;
+create_type : CAR
+            | CARSPAWNER
+            | TRAFFICLIGHT
+            | GRID ;
+create_name : ID;
 assignment : ID ASSIGN expression SEMICOLON;
 declaration : NUM_TYPE ID ;
 method_parameter : LPAREN declaration RPAREN ;
@@ -29,10 +34,6 @@ curl_statement : LCURL statement* return_statement? RCURL ;
 return_statement : RETURN ID SEMICOLON;
 logic_expression : LPAREN condition RPAREN; 
 else_statement : ELSE curl_statement;
-car_statement: CAR CAR_NAME curl_statement;
-carSpawner_statement : CARSPAWNER CARSPAWNER_NAME curl_statement; 
-trafficLight_statement : TRAFFICLIGHT TRAFFICLIGHT_NAME curl_statement;
-grid_statement : GRID GRID_NAME curl_statement;
 expression : term
             | add_expression
             | subtract_expression

@@ -47,6 +47,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCreate_statement(HelloParser.Create_statementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#create_type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_type(HelloParser.Create_typeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#create_name}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_name(HelloParser.Create_nameContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -94,30 +106,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitElse_statement(HelloParser.Else_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#car_statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCar_statement(HelloParser.Car_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#carSpawner_statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCarSpawner_statement(HelloParser.CarSpawner_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#trafficLight_statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTrafficLight_statement(HelloParser.TrafficLight_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#grid_statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGrid_statement(HelloParser.Grid_statementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#expression}.
 	 * @param ctx the parse tree
