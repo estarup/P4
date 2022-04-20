@@ -39,8 +39,21 @@ expression : term
             ;
 add_expression :  term ADD term;
 subtract_expression : term SUBTRACT term;
-condition :   expression ((EQUAL | NOTEQUAL | LESSTHAN | MORETHAN | MOREOREQUAL | LESSOREQUAL) term)?
+condition :   expression
+            | equal_condition
+            | not_equal_condition
+            | less_than_condition
+            | more_than_condition
+            | more_or_equal_condition
+            | less_or_equal_condition
 			| BOOL ;
+equal_condition : expression EQUAL term;
+not_equal_condition: expression NOTEQUAL term;
+less_than_condition : expression LESSTHAN term;
+more_than_condition : expression MORETHAN term;
+more_or_equal_condition : expression MOREOREQUAL term;
+less_or_equal_condition : expression LESSOREQUAL term;
+
 term : factor
        | multiply_term
        | divide_term;

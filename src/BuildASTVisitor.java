@@ -22,10 +22,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return result;
     }
 
-
-
-
-
     @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
@@ -41,36 +37,34 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.value =  visitExpression(ctx.expression());
         return node;
     }
-/*
+
     @Override
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
-        node.condition = (ExpressionNode) visitLogic_expression(ctx.logic_expression());
         if (ctx.children.get(2).getChildCount() > 2) {
+            node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
             node.if_part = (BlockNode) visitChildren(ctx.curl_statement());
-        }
-        return super.visitIf_statement(ctx);
+            try {
+                node.else_part = (BlockNode) visitChildren(ctx.else_statement());
+            } catch (NullPointerException n) {
+                System.out.println("No else statement");
+            }
+         }
+        return node;
     }
 
-*/
 
-  /*  @Override
+    @Override
     public GraphNode visitMethod(HelloParser.MethodContext ctx) {
         MethodNode node = new MethodNode();
         node.returnType = ctx.children.get(0).getText();
         node.name = ctx.children.get(1).getText();
         node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
-        BlockNode block = new BlockNode();
-        node.body = block;
         if (ctx.children.get(3).getChildCount() > 2) {
             node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
-            System.out.println(visitCurl_statement(ctx.curl_statement()));
         }
         return node;
-    }*/
-
-
-
+    }
 
 
     @Override
@@ -99,6 +93,53 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return factor;
     }
 
+    @Override
+    public GraphNode visitEqual_condition(HelloParser.Equal_conditionContext ctx) {
+        EqualNode node = new EqualNode();
+        node.left = visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
+        return node;
+    }
+
+    @Override
+    public GraphNode visitNot_equal_condition(HelloParser.Not_equal_conditionContext ctx) {
+        NotEqualNode node = new NotEqualNode();
+        node.left = visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
+        return node;
+    }
+
+    @Override
+    public GraphNode visitLess_or_equal_condition(HelloParser.Less_or_equal_conditionContext ctx) {
+        LessOrEqualNode node = new LessOrEqualNode();
+        node.left = visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
+        return node;
+    }
+
+    @Override
+    public GraphNode visitMore_or_equal_condition(HelloParser.More_or_equal_conditionContext ctx) {
+        MoreOrEqualNode node = new MoreOrEqualNode();
+        node.left = visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
+        return node;
+    }
+
+    @Override
+    public GraphNode visitMore_than_condition(HelloParser.More_than_conditionContext ctx) {
+        MoreThanNode node = new MoreThanNode();
+        node.left = visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
+        return node;
+    }
+
+    @Override
+    public GraphNode visitLess_than_condition(HelloParser.Less_than_conditionContext ctx) {
+        LessThanNode node = new LessThanNode();
+        node.left = visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
+        return node;
+    }
 
     @Override
     public GraphNode visitAdd_expression(HelloParser.Add_expressionContext ctx) {

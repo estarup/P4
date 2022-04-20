@@ -1,3 +1,3 @@
+if (i == 1)  { int j; } 
 
-void Behavior(int i) { j = 0; return yes; }
 

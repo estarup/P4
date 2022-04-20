@@ -143,6 +143,42 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCondition(HelloParser.ConditionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#equal_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqual_condition(HelloParser.Equal_conditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#not_equal_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNot_equal_condition(HelloParser.Not_equal_conditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#less_than_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLess_than_condition(HelloParser.Less_than_conditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#more_than_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMore_than_condition(HelloParser.More_than_conditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#more_or_equal_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMore_or_equal_condition(HelloParser.More_or_equal_conditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#less_or_equal_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLess_or_equal_condition(HelloParser.Less_or_equal_conditionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
