@@ -1,12 +1,10 @@
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     @Override
     public GraphNode visit(AddNode node) {
-        node.left = new AddNode();
         return node;
     }
     @Override
-    public GraphNode visit(AssignmentNode node) { return node;
-    }
+    public GraphNode visit(AssignmentNode node) { return node;}
 
     @Override
     public GraphNode visit(BinaryOperatorNode node) {
@@ -94,7 +92,8 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(SimpleExpressionNode node) { return node;
+    public GraphNode visit(SimpleExpressionNode node) {
+        return node;
     }
 
     @Override
