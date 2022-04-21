@@ -1,2 +1,8 @@
 id =  -2 * 3* (-2+1);
 
+create Car carYes {
+
+}
+    void Behavior(int i) {
+        create CarSpawner spawner {return i;}
+    }

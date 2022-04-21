@@ -91,10 +91,14 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return node;
     }
 
+
+
+
     @Override
     public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
         DeclarationNode node = new DeclarationNode();
-        if (ctx.getChildCount() > 0) {
+        if (ctx.getChildCount() > 2) {
+            System.out.println(ctx.children.get(1).getText());
             node = visitDeclaration(ctx.declaration());
         }
         return node;
@@ -188,14 +192,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.right = visitTerm(ctx.term());
         return node;
     }
-/*
-    @Override
-    public GraphNode visitNegate_expression(HelloParser.Negate_expressionContext ctx) {
-        NegateNode node = new NegateNode();
-        node.value = (ExpressionNode) visitTerm(ctx.term());
-        return node;
-    }
-*/
 
     @Override
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
