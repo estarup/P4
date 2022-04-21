@@ -106,7 +106,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             return visitExpression(ctx.expression());
         }
         SimpleExpressionNode factor = new SimpleExpressionNode();
-        factor.value = ctx.getText();
+        factor.value =  ctx.getText();
         return factor;
     }
 
@@ -188,14 +188,14 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.right = visitTerm(ctx.term());
         return node;
     }
-
+/*
     @Override
     public GraphNode visitNegate_expression(HelloParser.Negate_expressionContext ctx) {
         NegateNode node = new NegateNode();
         node.value = (ExpressionNode) visitTerm(ctx.term());
         return node;
     }
-
+*/
 
     @Override
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {

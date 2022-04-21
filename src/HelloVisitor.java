@@ -124,12 +124,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSubtract_expression(HelloParser.Subtract_expressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#negate_expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNegate_expression(HelloParser.Negate_expressionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HelloParser#condition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -190,15 +184,15 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDivide_term(HelloParser.Divide_termContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#negate_term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNegate_term(HelloParser.Negate_termContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HelloParser#factor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFactor(HelloParser.FactorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#negative_factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegative_factor(HelloParser.Negative_factorContext ctx);
 }

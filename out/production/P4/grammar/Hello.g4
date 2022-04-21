@@ -36,12 +36,11 @@ logic_expression : LPAREN condition RPAREN;
 else_statement : ELSE curl_statement;
 expression :  add_expression
             | subtract_expression
-            | negate_expression
             | term
             ;
 add_expression :  term ADD expression;
 subtract_expression : term SUBTRACT expression;
-negate_expression : SUBTRACT term;
+//negate_expression : SUBTRACT term;
 condition :   expression
             | equal_condition
             | not_equal_condition
@@ -59,16 +58,17 @@ less_or_equal_condition : expression LESSOREQUAL term;
 
 term :   multiply_term
        | divide_term
-       | negate_expression
+//       | negate_expression
        | factor;
 multiply_term : factor MULTIPLY term;
 divide_term : factor DIVIDE term;
 factor : LPAREN expression RPAREN
-		| INTEGER
-		| FLOAT
-	    | ID
+		|  INTEGER
+		|  FLOAT
+	    |  ID
+	    | negative_factor
 	    ;
-
+negative_factor : SUBTRACT factor;
 // Lexer rules // 
 
 
