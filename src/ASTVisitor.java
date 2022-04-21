@@ -16,7 +16,7 @@ public abstract class ASTVisitor<T>
     public abstract T Visit(MoreOrEqualNode node);
     public abstract T Visit(MoreThanNode node);
     public abstract T Visit(MultiplyNode node);
-    public abstract T Visit(NegativeNode node);
+    public abstract T Visit(NegateNode node);
     public abstract T Visit(NotEqualNode node);
     public abstract T Visit(ReturnNode node);
     public abstract T Visit(SimpleExpressionNode node);

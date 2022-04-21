@@ -81,7 +81,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode Visit(NegativeNode node) {
+    public GraphNode Visit(NegateNode node) {
         return null;
     }
 

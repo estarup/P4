@@ -34,12 +34,14 @@ curl_statement : LCURL statement* return_statement? RCURL ;
 return_statement : RETURN ID SEMICOLON;
 logic_expression : LPAREN condition RPAREN; 
 else_statement : ELSE curl_statement;
-expression : term
-            | add_expression
+expression :  add_expression
             | subtract_expression
+            | negate_expression
+            | term
             ;
-add_expression :  term (ADD term)*;
-subtract_expression : term (SUBTRACT term)*;
+add_expression :  term ADD expression;
+subtract_expression : term SUBTRACT expression;
+negate_expression : SUBTRACT term;
 condition :   expression
             | equal_condition
             | not_equal_condition
@@ -55,30 +57,29 @@ more_than_condition : expression MORETHAN term;
 more_or_equal_condition : expression MOREOREQUAL term;
 less_or_equal_condition : expression LESSOREQUAL term;
 
-term : factor
-       | multiply_term
-       | divide_term;
-multiply_term : factor MULTIPLY factor;
-divide_term : factor DIVIDE factor;
+term :   multiply_term
+       | divide_term
+       | negate_expression
+       | factor;
+multiply_term : factor MULTIPLY term;
+divide_term : factor DIVIDE term;
 factor : LPAREN expression RPAREN
 		| INTEGER
 		| FLOAT
-	    | ID ;
+	    | ID
+	    ;
 
 // Lexer rules // 
 
-// Literals
-METH_RETURN_TYPE : VOID | 'Int' | 'Float' ;
-NUM_TYPE : 'int' | 'float' ;
-INTEGER : [0]| ('-')? [1-9][0-9]* ;
-FLOAT : INTEGER '.'[0-9]* ;
 
-// Operators 0
+
+// Operators
 ADD : '+' ;
 SUBTRACT : '-' ;
 MULTIPLY : '*' ;
 DIVIDE : '/' ;
 ASSIGN : '=' ;
+SEMICOLON : ';' ;
 
 // Logic operators
 EQUAL : '==' ;
@@ -94,7 +95,7 @@ RCURL : '}'  ;
 LPAREN : '(' ;
 RPAREN : ')' ;
 
-// TEST 
+// Keywords
 IF : 'if' ;
 ELSE : 'else' ;
 WHILE : 'while' ;
@@ -110,9 +111,13 @@ CAR_NAME : 'car' [a-zA-Z0-9]*;
 CARSPAWNER_NAME : 'carSpawner' [a-zA-Z0-9]*;
 TRAFFICLIGHT_NAME : 'trafficLight' [a-zA-Z0-9]*; 
 GRID_NAME : 'grid' [a-zA-Z0-9]* ;
-// Keywords
 BOOL : 'true' | 'false' ;
-SEMICOLON : ';' ;
+
+// Literals
+METH_RETURN_TYPE : VOID | 'Int' | 'Float' ;
+NUM_TYPE : 'int' | 'float' ;
+INTEGER : [0]| [1-9][0-9]* ; // missing negative numbers
+FLOAT : INTEGER '.'[0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT : [0-9];

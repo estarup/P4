@@ -22,6 +22,6 @@ public class AntlrParser
         ParseTreeVisitor visitor = new BuildASTVisitor();
         Trees.inspect(parseTree,parser);
         visitor.visit(parseTree);
-        int x = 7;
+        int x = -7;
     }
 }
