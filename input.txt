@@ -1,1 +1,7 @@
 Int GetInt(int i) {return i;}
+
+
+Float GetFloat(float i) {return i;}
+
+int i;
+i = 1 +1 ;

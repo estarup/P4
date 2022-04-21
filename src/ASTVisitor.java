@@ -1,26 +1,27 @@
-public abstract class ASTVisitor<T>
+
+public abstract class ASTVisitor<T> extends BuildASTVisitor
 {
-    public abstract T Visit(AddNode node);
-    public abstract T Visit(AssignmentNode node);
-    public abstract T Visit(BinaryOperatorNode node);
-    public abstract T Visit(BlockNode node);
-    public abstract T Visit(CreateNode node);
-    public abstract T Visit(DeclarationNode node);
-    public abstract T Visit(DivideNode node);
-    public abstract T Visit(EqualNode node);
-    public abstract T Visit(ExpressionNode node);
-    public abstract T Visit(If_Then_ElseNode node);
-    public abstract T Visit(LessOrEqualNode node);
-    public abstract T Visit(LessThanNode node);
-    public abstract T Visit(MethodNode node);
-    public abstract T Visit(MoreOrEqualNode node);
-    public abstract T Visit(MoreThanNode node);
-    public abstract T Visit(MultiplyNode node);
-    public abstract T Visit(NegateNode node);
-    public abstract T Visit(NotEqualNode node);
-    public abstract T Visit(ReturnNode node);
-    public abstract T Visit(SimpleExpressionNode node);
-    public abstract T Visit(StatementNode node);
-    public abstract T Visit(SubtractNode node);
-    public abstract T Visit(WhileStmNode node);
+    public abstract T visit(AddNode node);
+    public abstract T visit(AssignmentNode node);
+    public abstract T visit(BinaryOperatorNode node);
+    public abstract T visit(BlockNode node);
+    public abstract T visit(CreateNode node);
+    public abstract T visit(DeclarationNode node);
+    public abstract T visit(DivideNode node);
+    public abstract T visit(EqualNode node);
+    public abstract T visit(ExpressionNode node);
+    public abstract T visit(If_Then_ElseNode node);
+    public abstract T visit(LessOrEqualNode node);
+    public abstract T visit(LessThanNode node);
+    public abstract T visit(MethodNode node);
+    public abstract T visit(MoreOrEqualNode node);
+    public abstract T visit(MoreThanNode node);
+    public abstract T visit(MultiplyNode node);
+    public abstract T visit(NegateNode node);
+    public abstract T visit(NotEqualNode node);
+    public abstract T visit(ReturnNode node);
+    public abstract T visit(SimpleExpressionNode node);
+    public abstract T visit(StatementNode node);
+    public abstract T visit(SubtractNode node);
+    public abstract T visit(WhileStmNode node);
 }

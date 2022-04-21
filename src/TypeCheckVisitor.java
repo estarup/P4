@@ -1,117 +1,114 @@
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
-
     @Override
-    public GraphNode Visit(AddNode node) {
-        return null;
+    public GraphNode visit(AddNode node) {
+        node.left = new AddNode();
+        return node;
+    }
+    @Override
+    public GraphNode visit(AssignmentNode node) { return node;
     }
 
     @Override
-    public GraphNode Visit(AssignmentNode node) {
-        return null;
+    public GraphNode visit(BinaryOperatorNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(BinaryOperatorNode node) {
-        return null;
+    public GraphNode visit(BlockNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(BlockNode node) {
-        return null;
+    public GraphNode visit(CreateNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(CreateNode node) {
-        return null;
+    public GraphNode visit(DeclarationNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(DeclarationNode node) {
-        return null;
+    public GraphNode visit(DivideNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(DivideNode node) {
-        return null;
+    public GraphNode visit(EqualNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(EqualNode node) {
-        return null;
+    public GraphNode visit(ExpressionNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(ExpressionNode node) {
-        return null;
+    public GraphNode visit(If_Then_ElseNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(If_Then_ElseNode node) {
-        return null;
+    public GraphNode visit(LessOrEqualNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(LessOrEqualNode node) {
-        return null;
+    public GraphNode visit(LessThanNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(LessThanNode node) {
-        return null;
+    public GraphNode visit(MethodNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(MethodNode node) {
-        return null;
+    public GraphNode visit(MoreOrEqualNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(MoreOrEqualNode node) {
-        return null;
+    public GraphNode visit(MoreThanNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(MoreThanNode node) {
-        return null;
+    public GraphNode visit(MultiplyNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(MultiplyNode node) {
-        return null;
+    public GraphNode visit(NegateNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(NegateNode node) {
-        return null;
+    public GraphNode visit(NotEqualNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(NotEqualNode node) {
-        return null;
+    public GraphNode visit(ReturnNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(ReturnNode node) {
-        return null;
+    public GraphNode visit(SimpleExpressionNode node) { return node;
     }
 
     @Override
-    public GraphNode Visit(SimpleExpressionNode node) {
-        return null;
+    public GraphNode visit(StatementNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(StatementNode node) {
-        return null;
+    public GraphNode visit(SubtractNode node) {
+        return node;
     }
 
     @Override
-    public GraphNode Visit(SubtractNode node) {
-        return null;
-    }
-
-    @Override
-    public GraphNode Visit(WhileStmNode node) {
-        return null;
+    public GraphNode visit(WhileStmNode node) {
+        return node;
     }
 }
