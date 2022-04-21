@@ -6,3 +6,5 @@ create Car carYes {
     void Behavior(int i) {
         create CarSpawner spawner {return i;}
     }
+
+create Grid grid { return newGrid;}

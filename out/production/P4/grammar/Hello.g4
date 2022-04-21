@@ -100,9 +100,6 @@ CAR :  'Car';
 CARSPAWNER: 'CarSpawner' ;
 TRAFFICLIGHT : 'TrafficLight'; 
 GRID : 'Grid' ;
-CARSPAWNER_NAME : 'carSpawner' [a-zA-Z0-9]*;
-TRAFFICLIGHT_NAME : 'trafficLight' [a-zA-Z0-9]*; 
-GRID_NAME : 'grid' [a-zA-Z0-9]* ;
 BOOL : 'true' | 'false' ;
 
 // Literals
