@@ -104,12 +104,13 @@ GRID : 'Grid' ;
 BOOL : 'true' | 'false' ;
 
 // Literals
-METH_RETURN_TYPE : 'void' | 'Int' | 'Float' ;
+METH_RETURN_TYPE : 'void' | NUM_TYPE ;
 NUM_TYPE : 'int' | 'float' ;
-
 INTEGER : [0]| [1-9][0-9]* ;
 FLOAT : INTEGER '.'[0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
+
+
 ID : [a-z]+ LETTER* DIGIT* ;
 STRING : '"' [a-zA-Z0-9]+  '"';
 fragment LETTER : [a-zA-Z] ;

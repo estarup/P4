@@ -13,9 +13,10 @@ statement :   method
   			| assignment
 			| declaration SEMICOLON
 			;
-method :      METH_RETURN_TYPE METH_NAME method_parameter curl_statement
+method :      method_declaration method_parameter curl_statement
 			| METH_NAME method_parameter SEMICOLON
 			;
+method_declaration: METH_RETURN_TYPE METH_NAME;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
 create_statement : CREATE create_type ID curl_statement;
@@ -105,11 +106,10 @@ BOOL : 'true' | 'false' ;
 // Literals
 METH_RETURN_TYPE : 'void' | 'Int' | 'Float' ;
 NUM_TYPE : 'int' | 'float' ;
+
 INTEGER : [0]| [1-9][0-9]* ;
 FLOAT : INTEGER '.'[0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
-
-
 ID : [a-z]+ LETTER* DIGIT* ;
 STRING : '"' [a-zA-Z0-9]+  '"';
 fragment LETTER : [a-zA-Z] ;

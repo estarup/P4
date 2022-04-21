@@ -1,10 +1,1 @@
-id =  -2 * 3* (-2+1);
-
-create Car carYes {
-
-}
-    void Behavior(int i) {
-        create CarSpawner spawner {return i;}
-    }
-
-create Grid grid { return newGrid;}
+Int GetInt(int i) {return i;}

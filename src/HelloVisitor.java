@@ -28,6 +28,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod(HelloParser.MethodContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#method_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_declaration(HelloParser.Method_declarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#if_statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

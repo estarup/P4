@@ -25,12 +25,23 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitMethod(HelloParser.MethodContext ctx) {
         MethodNode node = new MethodNode();
-        node.returnType = ctx.children.get(0).getText();
-        node.name = ctx.children.get(1).getText();
-        node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
-        if (ctx.children.get(3).getChildCount() > 2) {
+        if (ctx.children.get(0).getChildCount() > 0) {
+            node.declaration = (MethodDeclaration) visitMethod_declaration(ctx.method_declaration());
+        }
+        if (ctx.children.get(1).getChildCount() > 0) {
+            node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
+        }
+        if (ctx.children.get(2).getChildCount() > 2) {
             node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
         }
+        return node;
+    }
+
+    @Override
+    public GraphNode visitMethod_declaration(HelloParser.Method_declarationContext ctx) {
+        MethodDeclaration node = new MethodDeclaration();
+        node.returnType = ctx.children.get(0).getText();
+        node.name = ctx.children.get(1).getText();
         return node;
     }
 
@@ -98,7 +109,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
         DeclarationNode node = new DeclarationNode();
         if (ctx.getChildCount() > 2) {
-            System.out.println(ctx.children.get(1).getText());
             node = visitDeclaration(ctx.declaration());
         }
         return node;

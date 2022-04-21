@@ -1,6 +1,5 @@
 public class MethodNode extends StatementNode {
-    String returnType;
-    String name;
+    MethodDeclaration declaration;
     DeclarationNode parameter;
     BlockNode body;
 }
