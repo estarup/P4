@@ -10,6 +10,7 @@ import static java.lang.Integer.parseInt;
 
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
+
     private GraphNode theTopNode = new BlockNode();
     @Override public GraphNode visitTrafficProg(HelloParser.TrafficProgContext ctx) {
         GraphNode result =  visitChildren(ctx);

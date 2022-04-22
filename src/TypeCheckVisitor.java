@@ -1,10 +1,17 @@
+import java.util.Hashtable;
+
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
+
+
+
     @Override
     public GraphNode visit(AddNode node) {
+
         return node;
     }
+
     @Override
-    public GraphNode visit(AssignmentNode node) { return node;}
+    public GraphNode visit(AssignmentNode node) { return null;}
 
     @Override
     public GraphNode visit(BinaryOperatorNode node) {
@@ -23,6 +30,8 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(DeclarationNode node) {
+        System.out.println("Sometying declared");
+        node.ID = "not this";
         return node;
     }
 
@@ -38,6 +47,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(ExpressionNode node) {
+        System.out.println("Exp");
         return node;
     }
 
@@ -58,6 +68,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(MethodNode node) {
+        System.out.println("Yeah");
         return node;
     }
 
@@ -93,6 +104,12 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(SimpleExpressionNode node) {
+        System.out.println(node.getClass().getSimpleName());
+        try {
+            int test = Integer.parseInt(node.value);
+        } catch (Exception e) {
+            System.out.println("Not an integer");
+        }
         return node;
     }
 

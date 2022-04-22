@@ -1,4 +1,5 @@
 import org.antlr.v4.gui.Trees;
+import org.antlr.v4.misc.Graph;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -20,10 +21,11 @@ public class AntlrParser
         HelloParser parser = new HelloParser(commonTokenStream);
         ParseTree parseTree = parser.trafficProg();
         Trees.inspect(parseTree,parser);
-       // ParseTreeVisitor visitor = new BuildASTVisitor();
-       // BlockNode ast = (BlockNode) visitor.visit(parseTree);
-        ParseTreeVisitor type = new TypeCheckVisitor();
-        BlockNode ast = (BlockNode) type.visit(parseTree);
+        ParseTreeVisitor visitor = new BuildASTVisitor();
+        GraphNode astNode = new BuildASTVisitor().visit(parseTree);
+
+        //ParseTreeVisitor visitor2 = new TypeCheckVisitor(ast);
+        //BlockNode ast2 = (BlockNode) visitor2.visit(parseTree);
         int x = -7;
     }
 }
