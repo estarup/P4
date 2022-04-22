@@ -2,8 +2,6 @@ import java.util.Hashtable;
 
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
-
-
     @Override
     public GraphNode visit(AddNode node) {
 
@@ -20,6 +18,11 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(BlockNode node) {
+        System.out.println("hello");
+        for (GraphNode n: node.childrenList
+             ) {
+
+        }
         return node;
     }
 

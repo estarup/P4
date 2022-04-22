@@ -22,10 +22,10 @@ public class AntlrParser
         ParseTree parseTree = parser.trafficProg();
         Trees.inspect(parseTree,parser);
         ParseTreeVisitor visitor = new BuildASTVisitor();
-        GraphNode astNode = new BuildASTVisitor().visit(parseTree);
+        BlockNode astNode = (BlockNode) new BuildASTVisitor().visit(parseTree);
+        ASTVisitor astVisitor = new TypeCheckVisitor();
+        astVisitor.visit(astNode);
 
-        //ParseTreeVisitor visitor2 = new TypeCheckVisitor(ast);
-        //BlockNode ast2 = (BlockNode) visitor2.visit(parseTree);
         int x = -7;
     }
 }
