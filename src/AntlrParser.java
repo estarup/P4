@@ -15,17 +15,25 @@ public class AntlrParser
 {
     public static void main(String args[]) throws IOException
     {
-        CharStream charStream = CharStreams.fromFileName("./input.txt");
-        HelloLexer lexer = new HelloLexer(charStream);
-        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-        HelloParser parser = new HelloParser(commonTokenStream);
-        ParseTree parseTree = parser.trafficProg();
-        Trees.inspect(parseTree,parser);
-        ParseTreeVisitor visitor = new BuildASTVisitor();
-        BlockNode astNode = (BlockNode) new BuildASTVisitor().visit(parseTree);
-        ASTVisitor astVisitor = new TypeCheckVisitor();
-        astVisitor.visit(astNode);
+        try {
+            CharStream charStream = CharStreams.fromFileName("./input.txt");
+            HelloLexer lexer = new HelloLexer(charStream);
+            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+            HelloParser parser = new HelloParser(commonTokenStream);
+            ParseTree parseTree = parser.trafficProg();
+            Trees.inspect(parseTree,parser);
+            //var test = parseTree.accept(new BuildASTVisitor());
+           // var test = parseTree.accept(new TypeCheckVisitor());
+            ParseTreeVisitor visitor = new BuildASTVisitor();
+            BlockNode astNode = (BlockNode) new BuildASTVisitor().visit(parseTree);
 
-        int x = -7;
+            ASTVisitor astVisitor = new TypeCheckVisitor();
+            var result = astVisitor.visit(astNode);
+            int x = -7;
+        }
+        catch (IOException e) {
+            System.out.println("IOException: " + e.getLocalizedMessage());
+        }
+
     }
 }

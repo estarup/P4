@@ -4,7 +4,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(AddNode node) {
-
+        System.out.println("Hello");
         return node;
     }
 
@@ -18,10 +18,20 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(BlockNode node) {
-        System.out.println("hello");
+        System.out.println("Block");
         for (GraphNode n: node.childrenList
              ) {
-
+            if (n != null) {
+                System.out.println("Child in block");
+                if (n instanceof  AssignmentNode) {
+                    System.out.println("assignment");
+                    return n;
+                } else if (n instanceof DeclarationNode) {
+                    System.out.println("Declaration node returning");
+                    ((DeclarationNode) n).ID = "22";
+                    return n;
+                }
+            }
         }
         return node;
     }
@@ -33,8 +43,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(DeclarationNode node) {
-        System.out.println("Sometying declared");
-        node.ID = "not this";
+        node.ID = node.ID; // NOPE
         return node;
     }
 

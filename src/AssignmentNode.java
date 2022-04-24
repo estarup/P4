@@ -1,8 +1,8 @@
 public class AssignmentNode extends StatementNode {
     String ID;
-    AST Value;
+    GraphNode Value;
 
-    void Assigning(String id, AST value){
+    void Assigning(String id, GraphNode value){
         ID = id;
         Value = value;
     }

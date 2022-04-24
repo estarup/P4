@@ -2,11 +2,7 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 public abstract class ASTVisitor<T> extends AbstractParseTreeVisitor
 {
-    public void visit(AST n){
-        System.out.println ("In  AST visit\t"+n);
 
-        n.accept(this);
-    }
     public abstract T visit(AddNode node);
     public abstract T visit(AssignmentNode node);
     public abstract T visit(BinaryOperatorNode node);

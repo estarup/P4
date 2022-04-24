@@ -1,8 +1,6 @@
+import org.antlr.runtime.tree.ParseTree;
+import org.antlr.runtime.tree.Tree;
 
+public class GraphNode {
 
-public class GraphNode extends AST  {
-    @Override
-    public void accept(ASTVisitor v) {
-        v.visit(this);
-    }
 }

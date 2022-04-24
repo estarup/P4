@@ -1,6 +1,6 @@
 import java.util.Hashtable;
 
-public abstract class AST {
+public abstract class ASTNode {
 
     public final static int
             FLTTYPE   = 0,
@@ -8,7 +8,7 @@ public abstract class AST {
 
     public static Hashtable<String,Integer> SymbolTable = new Hashtable<String,Integer>();
 
-    AST(){
+    ASTNode(){
         //for(int ch = 'a'; ch <= 'z'; ch++){AST.SymbolTable.put("" + ch,null);};
     }
 
