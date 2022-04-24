@@ -22,8 +22,6 @@ public class AntlrParser
             HelloParser parser = new HelloParser(commonTokenStream);
             ParseTree parseTree = parser.trafficProg();
             Trees.inspect(parseTree,parser);
-            //var test = parseTree.accept(new BuildASTVisitor());
-           // var test = parseTree.accept(new TypeCheckVisitor());
             ParseTreeVisitor visitor = new BuildASTVisitor();
             BlockNode astNode = (BlockNode) new BuildASTVisitor().visit(parseTree);
 

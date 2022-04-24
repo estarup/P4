@@ -1,7 +1,4 @@
-import java.util.Hashtable;
-
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
-
     @Override
     public GraphNode visit(AddNode node) {
         System.out.println("Hello");
@@ -9,7 +6,9 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(AssignmentNode node) { return null;}
+    public GraphNode visit(AssignmentNode node) {
+        System.out.println("Assign");
+        return node;}
 
     @Override
     public GraphNode visit(BinaryOperatorNode node) {
@@ -18,18 +17,48 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(BlockNode node) {
-        System.out.println("Block");
+        //BlockNode body = (BlockNode) visitChildren(node);
+
         for (GraphNode n: node.childrenList
              ) {
+            System.out.println("Count");
             if (n != null) {
-                System.out.println("Child in block");
-                if (n instanceof  AssignmentNode) {
-                    System.out.println("assignment");
-                    return n;
+                if (n instanceof AssignmentNode) {
+                    visit((AssignmentNode) n);
+                } else if (n instanceof BinaryOperatorNode) {
+                    System.out.println("binary");
+                    if (n instanceof AddNode) {
+                        System.out.println("add");
+                        visit((AddNode) n);
+                    } else if (n instanceof DivideNode) {
+                        visit((DivideNode) n);
+                    } else if (n instanceof SubtractNode) {
+                        visit((SubtractNode) n);
+                    } else if (n instanceof MultiplyNode) {
+                        visit((MultiplyNode) n);
+                    } else if (n instanceof EqualNode) {
+                        visit((EqualNode) n);
+                    } else if (n instanceof NotEqualNode) {
+                        visit((NotEqualNode) n);
+                    } else if (n instanceof LessOrEqualNode) {
+                        visit((LessOrEqualNode) n);
+                    } else if (n instanceof MoreOrEqualNode) {
+                        visit((MoreOrEqualNode) n);
+                    } else if (n instanceof LessThanNode) {
+                        visit((LessThanNode) n);
+                    } else if (n instanceof MoreThanNode) {
+                        visit((MoreThanNode) n);
+                    }
+                } else if (n instanceof CreateNode) {
+                    visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
-                    System.out.println("Declaration node returning");
-                    ((DeclarationNode) n).ID = "22";
-                    return n;
+                    visit((DeclarationNode) n);
+                } else if (n instanceof ExpressionNode) {
+                    visit((ExpressionNode) n);
+                } else if (n instanceof If_Then_ElseNode) {
+                    visit((If_Then_ElseNode) n);
+                } else if (n instanceof MethodNode) {
+                    visit((MethodNode) n);
                 }
             }
         }
@@ -43,7 +72,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(DeclarationNode node) {
-        node.ID = node.ID; // NOPE
+        // ID to symbol table
         return node;
     }
 
@@ -59,7 +88,6 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(ExpressionNode node) {
-        System.out.println("Exp");
         return node;
     }
 

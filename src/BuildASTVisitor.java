@@ -16,7 +16,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitMethod(HelloParser.MethodContext ctx) {
         MethodNode node = new MethodNode();
         if (ctx.children.get(0).getChildCount() > 0) {
-            node.declaration = (MethodDeclaration) visitMethod_declaration(ctx.method_declaration());
+            node.declaration = (MethodDeclarationNode) visitMethod_declaration(ctx.method_declaration());
         }
         if (ctx.children.get(1).getChildCount() > 0) {
             node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
@@ -29,7 +29,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 
     @Override
     public GraphNode visitMethod_declaration(HelloParser.Method_declarationContext ctx) {
-        MethodDeclaration node = new MethodDeclaration();
+        MethodDeclarationNode node = new MethodDeclarationNode();
         node.returnType = ctx.children.get(0).getText();
         node.name = ctx.children.get(1).getText();
         return node;

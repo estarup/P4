@@ -1,5 +1,5 @@
 public class MethodNode extends StatementNode {
-    MethodDeclaration declaration;
+    MethodDeclarationNode declaration;
     DeclarationNode parameter;
     BlockNode body;
 }
