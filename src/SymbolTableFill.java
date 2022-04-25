@@ -1,27 +1,42 @@
-public class SymbolTableFill extends ASTVisitor<GraphNode>{
+public class SymbolTableFill extends ASTVisitor{
     @Override
-    public GraphNode visit(AddNode node) {
+    public AddNode visit(AddNode node) {
         return node;
     }
 
 
     @Override
-    public GraphNode visit(AssignmentNode node)  {
+    public AssignmentNode visit(AssignmentNode node)  {
         if (GraphNode.SymbolTable.get(node.ID) == null) {
             System.out.println("Error: Variable not declared");
+        }
+        if (node.Value instanceof BinaryOperatorNode) {
+            visit((BinaryOperatorNode) node.Value);
         }
         return node;
     }
 
-
     @Override
-    public GraphNode visit(BinaryOperatorNode n) {
-
+    public BinaryOperatorNode visit(BinaryOperatorNode n) {
+        if (n.left instanceof SimpleExpressionNode) {
+            try {
+                int number = Integer.parseInt(((SimpleExpressionNode) n.left).value);
+                float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
+            } catch (Exception e) {
+                System.out.println("Error: Value is not a number");
+            }
+            if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left)) == null) {
+                System.out.println("Error: Left variable has not been declared");
+            }
+        }
+        if (n.left instanceof SimpleExpressionNode) {
+            System.out.println("simple 2");
+        }
         return n;
     }
 
     @Override
-    public GraphNode visit(BlockNode node) {
+    public BlockNode visit(BlockNode node) {
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {
@@ -32,12 +47,10 @@ public class SymbolTableFill extends ASTVisitor<GraphNode>{
                     visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
                     visit((DeclarationNode) n);
-                } else if (n instanceof ExpressionNode) {
-                    visit((ExpressionNode) n);
-                } else if (n instanceof If_Then_ElseNode) {
-                    visit((If_Then_ElseNode) n);
-                } else if (n instanceof MethodNode) {
+                }  else if (n instanceof MethodNode) {
                     visit((MethodNode) n);
+                } else if (n instanceof AddNode) {
+                    visit((AddNode) n);
                 }
             }
         }
@@ -45,7 +58,7 @@ public class SymbolTableFill extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(CreateNode node) {
+    public CreateNode visit(CreateNode node) {
         if (GraphNode.SymbolTable.get(node.ID) != null) {
             System.out.println("Error : Create ID already declared");
         }
@@ -65,7 +78,7 @@ public class SymbolTableFill extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(DeclarationNode node) {
+    public DeclarationNode visit(DeclarationNode node) {
         if (node.type == null) {
             return node;
         }
@@ -80,42 +93,42 @@ public class SymbolTableFill extends ASTVisitor<GraphNode>{
         } catch (NullPointerException e) {
             System.out.println("Error: Variable already declared " + e.getMessage());
         }
-
         return node;
     }
 
     @Override
-    public GraphNode visit(DivideNode node) {
+    public DivideNode visit(DivideNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(EqualNode node) {
+    public EqualNode visit(EqualNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(ExpressionNode node) {
+    public ExpressionNode visit(ExpressionNode node) {
+        System.out.println("EXpres");
         return node;
     }
 
     @Override
-    public GraphNode visit(If_Then_ElseNode node) {
+    public If_Then_ElseNode visit(If_Then_ElseNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(LessOrEqualNode node) {
+    public LessOrEqualNode visit(LessOrEqualNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(LessThanNode node) {
+    public LessThanNode visit(LessThanNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(MethodNode node) {
+    public MethodNode visit(MethodNode node) {
         visit(node.declaration);
         visit(node.parameter);
         visit(node.body);
@@ -123,7 +136,7 @@ public class SymbolTableFill extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(MethodDeclarationNode node) {
+    public MethodDeclarationNode visit(MethodDeclarationNode node) {
         if (GraphNode.SymbolTable.get(node.name) != null) {
             System.out.println("Error: Method  with name " + node.name + "already declared");
         }
@@ -131,52 +144,53 @@ public class SymbolTableFill extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(MoreOrEqualNode node) {
+    public MoreOrEqualNode visit(MoreOrEqualNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(MoreThanNode node) {
+    public MoreThanNode visit(MoreThanNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(MultiplyNode node) {
+    public MultiplyNode visit(MultiplyNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(NegateNode node) {
+    public NegateNode visit(NegateNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(NotEqualNode node) {
+    public NotEqualNode visit(NotEqualNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(ReturnNode node) {
+    public ReturnNode visit(ReturnNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(SimpleExpressionNode node) {
+    public SimpleExpressionNode visit(SimpleExpressionNode node) {
+        System.out.println("Simple");
         return node;
     }
 
     @Override
-    public GraphNode visit(StatementNode node) {
+    public StatementNode visit(StatementNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(SubtractNode node) {
+    public SubtractNode visit(SubtractNode node) {
         return node;
     }
 
     @Override
-    public GraphNode visit(WhileStmNode node) {
+    public WhileStmNode visit(WhileStmNode node) {
         return node;
     }
 }
