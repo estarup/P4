@@ -8,7 +8,8 @@ public class SymbolTableFill extends ASTVisitor{
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
         if (GraphNode.SymbolTable.get(node.ID) == null) {
-            System.out.println("Error: Variable not declared");
+            System.out.println("Error: Variable " + node.ID + " not declared");
+            return node;
         }
         if (node.Value instanceof BinaryOperatorNode) {
             visit((BinaryOperatorNode) node.Value);
@@ -19,18 +20,40 @@ public class SymbolTableFill extends ASTVisitor{
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
         if (n.left instanceof SimpleExpressionNode) {
+            // Return if int or float
             try {
                 int number = Integer.parseInt(((SimpleExpressionNode) n.left).value);
-                float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
+                return n;
             } catch (Exception e) {
-                System.out.println("Error: Value is not a number");
+                //System.out.println("Error: Value is not an integer");
             }
-            if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left)) == null) {
+            try {
+                float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
+                return n;
+            } catch (Exception e) {
+                //System.out.println("Error: Value is not a float");
+            }
+            if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left).value) == null)  {
                 System.out.println("Error: Left variable has not been declared");
             }
         }
-        if (n.left instanceof SimpleExpressionNode) {
-            System.out.println("simple 2");
+        if (n.right instanceof SimpleExpressionNode) {
+            // Return if int or float
+            try {
+                int number = Integer.parseInt(((SimpleExpressionNode) n.right).value);
+                return n;
+            } catch (Exception e) {
+                //System.out.println("Error: Value is not an integer");
+            }
+            try {
+                float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.right).value);
+                return n;
+            } catch (Exception e) {
+                //System.out.println("Error: Value is not a float");
+            }
+            if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.right).value) == null)  {
+                System.out.println("Error: Right variable has not been declared");
+            }
         }
         return n;
     }
@@ -49,8 +72,8 @@ public class SymbolTableFill extends ASTVisitor{
                     visit((DeclarationNode) n);
                 }  else if (n instanceof MethodNode) {
                     visit((MethodNode) n);
-                } else if (n instanceof AddNode) {
-                    visit((AddNode) n);
+                } else if (n instanceof BlockNode) {
+                    visit((BlockNode) n);
                 }
             }
         }
@@ -61,6 +84,7 @@ public class SymbolTableFill extends ASTVisitor{
     public CreateNode visit(CreateNode node) {
         if (GraphNode.SymbolTable.get(node.ID) != null) {
             System.out.println("Error : Create ID already declared");
+            return node;
         }
         if (GraphNode.SymbolTable.get(node.ID) == null) {
             if (node.type.equals("Car")) {
@@ -79,19 +103,20 @@ public class SymbolTableFill extends ASTVisitor{
 
     @Override
     public DeclarationNode visit(DeclarationNode node) {
-        if (node.type == null) {
+        try {
+            GraphNode.SymbolTable.get(node.ID);
+        } catch (NullPointerException e ) {
+            System.out.println("Error: Nullpointer declaration");
             return node;
         }
-        try {
-            if (GraphNode.SymbolTable.get(node.ID) == null) {
-                if (node.type.equals("int")) {
-                    GraphNode.SymbolTable.put(node.ID, node.INTTYPE);
-                } else if (node.type.equals("float")) {
-                    GraphNode.SymbolTable.put(node.ID, node.FLTTYPE);
-                }
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Error: Variable already declared " + e.getMessage());
+
+        if (node.type.equals("int")) {
+            GraphNode.SymbolTable.put(node.ID, node.INTTYPE);
+            return node;
+        }
+        if (node.type.equals("float")) {
+            GraphNode.SymbolTable.put(node.ID, node.FLTTYPE);
+            return node;
         }
         return node;
     }
