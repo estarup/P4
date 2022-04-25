@@ -1,55 +1,33 @@
-import org.antlr.v4.runtime.tree.RuleNode;
-
-import java.util.concurrent.ExecutionException;
-
-public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
+public class SymbolTableFill extends ASTVisitor<GraphNode>{
     @Override
     public GraphNode visit(AddNode node) {
-        System.out.println("Hello");
         return node;
     }
 
 
     @Override
     public GraphNode visit(AssignmentNode node)  {
+        if (GraphNode.SymbolTable.get(node.ID) == null) {
+            System.out.println("Error: Variable not declared");
+        }
         return node;
     }
 
+
     @Override
-    public GraphNode visit(BinaryOperatorNode node) {
-        return node;
+    public GraphNode visit(BinaryOperatorNode n) {
+
+        return n;
     }
 
     @Override
     public GraphNode visit(BlockNode node) {
-        //BlockNode body = (BlockNode) visitChildren(node);
-
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {
                     visit((AssignmentNode) n);
                 } else if (n instanceof BinaryOperatorNode) {
-                    if (n instanceof AddNode) {
-                        visit((AddNode) n);
-                    } else if (n instanceof DivideNode) {
-                        visit((DivideNode) n);
-                    } else if (n instanceof SubtractNode) {
-                        visit((SubtractNode) n);
-                    } else if (n instanceof MultiplyNode) {
-                        visit((MultiplyNode) n);
-                    } else if (n instanceof EqualNode) {
-                        visit((EqualNode) n);
-                    } else if (n instanceof NotEqualNode) {
-                        visit((NotEqualNode) n);
-                    } else if (n instanceof LessOrEqualNode) {
-                        visit((LessOrEqualNode) n);
-                    } else if (n instanceof MoreOrEqualNode) {
-                        visit((MoreOrEqualNode) n);
-                    } else if (n instanceof LessThanNode) {
-                        visit((LessThanNode) n);
-                    } else if (n instanceof MoreThanNode) {
-                        visit((MoreThanNode) n);
-                    }
+                    visit((BinaryOperatorNode) n);
                 } else if (n instanceof CreateNode) {
                     visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
@@ -68,11 +46,41 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(CreateNode node) {
+        if (GraphNode.SymbolTable.get(node.ID) != null) {
+            System.out.println("Error : Create ID already declared");
+        }
+        if (GraphNode.SymbolTable.get(node.ID) == null) {
+            if (node.type.equals("Car")) {
+                GraphNode.SymbolTable.put(node.ID, node.CARTYPE);
+            } else if (node.type.equals("CarSpawner")) {
+                GraphNode.SymbolTable.put(node.ID, node.CARSPAWNERTYPE);
+            } else if (node.type.equals("Grid")) {
+                GraphNode.SymbolTable.put(node.ID, node.GRIDTYPE);
+            } else if (node.type.equals("TrafficLight")) {
+                GraphNode.SymbolTable.put(node.ID, node.TRAFFICLIGHTTYPE);
+            }
+        }
+        visit(node.body);
         return node;
     }
 
     @Override
     public GraphNode visit(DeclarationNode node) {
+        if (node.type == null) {
+            return node;
+        }
+        try {
+            if (GraphNode.SymbolTable.get(node.ID) == null) {
+                if (node.type.equals("int")) {
+                    GraphNode.SymbolTable.put(node.ID, node.INTTYPE);
+                } else if (node.type.equals("float")) {
+                    GraphNode.SymbolTable.put(node.ID, node.FLTTYPE);
+                }
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Error: Variable already declared " + e.getMessage());
+        }
+
         return node;
     }
 
@@ -108,12 +116,18 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(MethodNode node) {
+        visit(node.declaration);
+        visit(node.parameter);
+        visit(node.body);
         return node;
     }
 
     @Override
     public GraphNode visit(MethodDeclarationNode node) {
-        return null;
+        if (GraphNode.SymbolTable.get(node.name) != null) {
+            System.out.println("Error: Method  with name " + node.name + "already declared");
+        }
+        return node;
     }
 
     @Override
@@ -148,11 +162,6 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(SimpleExpressionNode node) {
-        try {
-            int test = Integer.parseInt(node.value);
-        } catch (Exception e) {
-            System.out.println("Error: SimpleExpression is not an integer");
-        }
         return node;
     }
 

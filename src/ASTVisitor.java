@@ -16,6 +16,7 @@ public abstract class ASTVisitor<T> extends AbstractParseTreeVisitor
     public abstract T visit(LessOrEqualNode node);
     public abstract T visit(LessThanNode node);
     public abstract T visit(MethodNode node);
+    public abstract T visit(MethodDeclarationNode node);
     public abstract T visit(MoreOrEqualNode node);
     public abstract T visit(MoreThanNode node);
     public abstract T visit(MultiplyNode node);

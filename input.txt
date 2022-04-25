@@ -1,1 +1,1 @@
-int i;
+create Car car { i = 2; }
