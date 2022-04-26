@@ -66,14 +66,14 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
                 block.childrenList.add(visitChildren(ctx.curl_statement()));
                 node.if_body = block;
             } catch (NullPointerException n) {
-                System.out.println("Error: No if body ");
+                //System.out.println("Error: No if body ");
             }
             try {
                 BlockNode block = new BlockNode();
-                block.childrenList.add(visitChildren(ctx.curl_statement()));
+                block.childrenList.add(visitChildren(ctx.else_statement()));
                 node.else_body = block;
             } catch (NullPointerException n) {
-                System.out.println("Error: No else body");
+                //System.out.println("Error: No else body");
             }
          }
         return node;
@@ -85,6 +85,8 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         if (ctx.children.get(2).getChildCount() > 2) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
             try {
+                BlockNode block = new BlockNode();
+                block.childrenList.add(visitChildren(ctx.curl_statement()));
                 node.body = (BlockNode) visitChildren(ctx.curl_statement());
             } catch (NullPointerException n) {
                 System.out.println("Error: No while body ");
@@ -98,7 +100,13 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         CreateNode node = new CreateNode();
         node.type = ctx.children.get(1).getText();
         node.ID = ctx.children.get(2).getText();
-        node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
+        try {
+            BlockNode block = new BlockNode();
+            block.childrenList.add(visitChildren(ctx.curl_statement()));
+            node.body = block;
+        } catch (NullPointerException n) {
+            System.out.println("Error: No create body ");
+        }
         return  node;
     }
 

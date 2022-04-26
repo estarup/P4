@@ -1,2 +1,4 @@
 int i;
-void Behavior () {if (1 == 2) {int i;}}
+int j;
+
+create Car car { g = 5; c = 3; }

@@ -24,11 +24,10 @@ public class SymbolTableFill extends ASTVisitor{
                 int number = Integer.parseInt(((SimpleExpressionNode) n.left).value);
             } catch (Exception e) {
                 try {
-                    //System.out.println("Error: Right variable not an integer");
                     float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
                 } catch (Exception e2) {
                     if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left).value) == null)  {
-                        System.out.println("Error: Left variable has not been declared");
+                        System.out.println("Error: Variable " + ((SimpleExpressionNode) n.left).value + " has not been declared");
                     }
                 }
             }
@@ -45,7 +44,7 @@ public class SymbolTableFill extends ASTVisitor{
                     float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.right).value);
                 } catch (Exception e2) {
                     if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.right).value) == null)  {
-                        System.out.println("Error: Right variable has not been declared");
+                        System.out.println("Error: Variable " + ((SimpleExpressionNode) n.right).value + " has not been declared");
                     }
                 }
             }
@@ -104,7 +103,7 @@ public class SymbolTableFill extends ASTVisitor{
         try {
             GraphNode.SymbolTable.get(node.ID);
         } catch (NullPointerException e ) {
-            System.out.println("Error: Nullpointer declaration");
+            //System.out.println("Declaration: New declaration: " + e.getMessage());
             return node;
         }
         if (node.type.equals("int")) {
@@ -130,12 +129,14 @@ public class SymbolTableFill extends ASTVisitor{
 
     @Override
     public ExpressionNode visit(ExpressionNode node) {
-        System.out.println("EXpres");
         return node;
     }
 
     @Override
     public If_Then_ElseNode visit(If_Then_ElseNode node) {
+        visit(node.condition);
+        visit(node.if_body);
+        visit(node.else_body);
         return node;
     }
 
