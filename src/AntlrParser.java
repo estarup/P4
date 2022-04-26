@@ -23,11 +23,11 @@ public class AntlrParser
             ParseTree parseTree = parser.trafficProg();
             Trees.inspect(parseTree,parser);
             ParseTreeVisitor visitor = new BuildASTVisitor();
-            BlockNode astNode = (BlockNode) new BuildASTVisitor().visit(parseTree);
+            var astNode = new BuildASTVisitor().visit(parseTree);
             ASTVisitor symbolTableVisitor = new SymbolTableFill();
-            BlockNode symbolResult = (BlockNode) symbolTableVisitor.visit(astNode);
+          //  BlockNode symbolResult = (BlockNode) symbolTableVisitor.visit(astNode);
             ASTVisitor typeVisitor = new TypeCheckVisitor();
-            BlockNode result = (BlockNode) typeVisitor.visit(symbolResult);
+        //    BlockNode result = (BlockNode) typeVisitor.visit(symbolResult);
             int x = -7;
         }
         catch (IOException e) {

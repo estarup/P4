@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutionException;
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     @Override
     public GraphNode visit(AddNode node) {
-        System.out.println("Hello");
         return node;
     }
 
@@ -23,7 +22,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     @Override
     public GraphNode visit(BlockNode node) {
         //BlockNode body = (BlockNode) visitChildren(node);
-
+        if (node == null) { return null; }
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {

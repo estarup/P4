@@ -24,10 +24,13 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
         }
         if (ctx.children.get(2).getChildCount() > 2) {
-            node.body = (BlockNode) visitCurl_statement(ctx.curl_statement());
+            BlockNode block = new BlockNode();
+            block.childrenList.add(visitChildren(ctx.curl_statement()));
+            node.body = block;
         }
         return node;
     }
+
 
     @Override
     public GraphNode visitMethod_declaration(HelloParser.Method_declarationContext ctx) {
@@ -58,11 +61,19 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         If_Then_ElseNode node = new If_Then_ElseNode();
         if (ctx.children.get(2).getChildCount() > 2) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-            node.if_body = (BlockNode) visitChildren(ctx.curl_statement());
             try {
-                node.else_body = (BlockNode) visitChildren(ctx.else_statement());
+                BlockNode block = new BlockNode();
+                block.childrenList.add(visitChildren(ctx.curl_statement()));
+                node.if_body = block;
             } catch (NullPointerException n) {
-                System.out.println("Error: No else statement");
+                System.out.println("Error: No if body ");
+            }
+            try {
+                BlockNode block = new BlockNode();
+                block.childrenList.add(visitChildren(ctx.curl_statement()));
+                node.else_body = block;
+            } catch (NullPointerException n) {
+                System.out.println("Error: No else body");
             }
          }
         return node;
@@ -73,7 +84,11 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         WhileStmNode node = new WhileStmNode();
         if (ctx.children.get(2).getChildCount() > 2) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-            node.body = (BlockNode) visitChildren(ctx.curl_statement());
+            try {
+                node.body = (BlockNode) visitChildren(ctx.curl_statement());
+            } catch (NullPointerException n) {
+                System.out.println("Error: No while body ");
+            }
         }
         return node;
     }
@@ -202,9 +217,10 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         if (aggregate == null) {
             return nextResult;
         }
-
         if (nextResult == null) {
-            return aggregate;
+            if (aggregate != null) {
+                return aggregate;
+            }
         }
         if (aggregate != null && ! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();

@@ -1,6 +1,2 @@
-int j;
-int c;
-int t ;
-
-j = c + c + 5 + i;
-j = t +t  ;
+int i;
+void Behavior () {if (1 == 2) {int i;}}

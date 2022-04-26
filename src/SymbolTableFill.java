@@ -57,6 +57,7 @@ public class SymbolTableFill extends ASTVisitor{
 
     @Override
     public BlockNode visit(BlockNode node) {
+        if (node == null ){ return null; }
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {
