@@ -1,5 +1,4 @@
 import static java.lang.Integer.parseInt;
-
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
 
@@ -60,7 +59,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             try {
                 node.else_body = (BlockNode) visitChildren(ctx.else_statement());
             } catch (NullPointerException n) {
-                System.out.println("No else statement");
+                System.out.println("Error: No else statement");
             }
          }
         return node;
@@ -91,9 +90,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.ID = ctx.children.get(1).getText();
         return node;
     }
-
-
-
 
     @Override
     public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {

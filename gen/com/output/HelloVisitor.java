@@ -1,4 +1,4 @@
-// Generated from /Users/emil/IdeaProjects/P4/grammar/Hello.g4 by ANTLR 4.9.2
+// Generated from /Users/emil/IdeaProjects/P4/grammar/Hello.g4 by ANTLR 4.10.1
 package com.output;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -29,6 +29,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod(HelloParser.MethodContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#method_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_declaration(HelloParser.Method_declarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#if_statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -53,12 +59,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCreate_type(HelloParser.Create_typeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#create_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCreate_name(HelloParser.Create_nameContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HelloParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -76,12 +76,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMethod_parameter(HelloParser.Method_parameterContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#method_no_parameter}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMethod_no_parameter(HelloParser.Method_no_parameterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#curl_statement}.
 	 * @param ctx the parse tree
@@ -190,4 +184,10 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFactor(HelloParser.FactorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#negative_factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegative_factor(HelloParser.Negative_factorContext ctx);
 }
