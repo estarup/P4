@@ -1,7 +1,10 @@
+import org.antlr.v4.codegen.model.decl.Decl;
+
+import javax.sound.midi.SysexMessage;
+
 import static java.lang.Integer.parseInt;
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
-
     private GraphNode theTopNode = new BlockNode();
     @Override public GraphNode visitTrafficProg(HelloParser.TrafficProgContext ctx) {
         GraphNode result =  visitChildren(ctx);
@@ -191,6 +194,13 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 
     @Override
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
+        if (aggregate == null) {
+            return nextResult;
+        }
+
+        if (nextResult == null) {
+            return aggregate;
+        }
         if (aggregate != null && ! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();
             block.childrenList.add((GraphNode) aggregate);
@@ -198,7 +208,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         }
         if (aggregate instanceof BlockNode) {
             BlockNode block = (BlockNode) aggregate;
-            block.childrenList.add((GraphNode) nextResult);
+            block.childrenList.add(nextResult);
             return block;
         }
         return nextResult;
