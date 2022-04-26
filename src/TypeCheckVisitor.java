@@ -15,11 +15,46 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(BinaryOperatorNode node) {
-        if (node.left instanceof SimpleExpressionNode) {
-
+    public BinaryOperatorNode visit(BinaryOperatorNode n) {
+        int leftType = -1;
+        int rightType = -2;
+        if (n.left instanceof SimpleExpressionNode) {
+            // Return if int or float
+            try {
+                int number = Integer.parseInt(((SimpleExpressionNode) n.left).value);
+                leftType = GraphNode.INTTYPE;
+            } catch (Exception e) {
+                try {
+                    float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
+                    leftType = GraphNode.FLTTYPE;
+                } catch (Exception e2) {
+                    leftType = GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left).value);
+                    }
+                }
+            } else if (n.left instanceof BinaryOperatorNode) {
+                visit((BinaryOperatorNode) n.left);
+            }
+            if (n.right instanceof SimpleExpressionNode) {
+                // Return if int or float
+                try {
+                    int number = Integer.parseInt(((SimpleExpressionNode) n.right).value);
+                    rightType = GraphNode.INTTYPE;
+                } catch (Exception e) {
+                    try {
+                        //System.out.println("Error: Right variable not an integer");
+                        float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.right).value);
+                        rightType = GraphNode.FLTTYPE;
+                    } catch (Exception e2) {
+                        rightType = GraphNode.SymbolTable.get(((SimpleExpressionNode) n.right).value);
+                    }
+                }
+        } else if (n.right instanceof BinaryOperatorNode) {
+            visit((BinaryOperatorNode) n.right);
         }
-        return node;
+        if (leftType != rightType) {
+            System.out.println("Error: Type mismatch");
+        }
+        return n;
     }
 
     @Override
@@ -127,11 +162,6 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(SimpleExpressionNode node) {
-        try {
-            int test = Integer.parseInt(node.value);
-        } catch (Exception e) {
-            System.out.println("Error: SimpleExpression is not an integer");
-        }
         return node;
     }
 
