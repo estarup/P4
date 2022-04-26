@@ -16,49 +16,29 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(BinaryOperatorNode node) {
+        if (node.left instanceof SimpleExpressionNode) {
+
+        }
         return node;
     }
 
     @Override
-    public GraphNode visit(BlockNode node) {
-        //BlockNode body = (BlockNode) visitChildren(node);
-        if (node == null) { return null; }
+    public BlockNode visit(BlockNode node) {
+        if (node == null ){ return null; }
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {
                     visit((AssignmentNode) n);
                 } else if (n instanceof BinaryOperatorNode) {
-                    if (n instanceof AddNode) {
-                        visit((AddNode) n);
-                    } else if (n instanceof DivideNode) {
-                        visit((DivideNode) n);
-                    } else if (n instanceof SubtractNode) {
-                        visit((SubtractNode) n);
-                    } else if (n instanceof MultiplyNode) {
-                        visit((MultiplyNode) n);
-                    } else if (n instanceof EqualNode) {
-                        visit((EqualNode) n);
-                    } else if (n instanceof NotEqualNode) {
-                        visit((NotEqualNode) n);
-                    } else if (n instanceof LessOrEqualNode) {
-                        visit((LessOrEqualNode) n);
-                    } else if (n instanceof MoreOrEqualNode) {
-                        visit((MoreOrEqualNode) n);
-                    } else if (n instanceof LessThanNode) {
-                        visit((LessThanNode) n);
-                    } else if (n instanceof MoreThanNode) {
-                        visit((MoreThanNode) n);
-                    }
+                    visit((BinaryOperatorNode) n);
                 } else if (n instanceof CreateNode) {
                     visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
                     visit((DeclarationNode) n);
-                } else if (n instanceof ExpressionNode) {
-                    visit((ExpressionNode) n);
-                } else if (n instanceof If_Then_ElseNode) {
-                    visit((If_Then_ElseNode) n);
-                } else if (n instanceof MethodNode) {
+                }  else if (n instanceof MethodNode) {
                     visit((MethodNode) n);
+                } else if (n instanceof BlockNode) {
+                    visit((BlockNode) n);
                 }
             }
         }

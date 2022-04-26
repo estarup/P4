@@ -1,4 +1,2 @@
 int i;
-int j;
-
-create Car car { g = 5; c = 3; }
+i = 2;
