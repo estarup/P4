@@ -1,4 +1,6 @@
-
 int j;
-int i;
-int p;
+int c;
+int t ;
+
+j = c + c + 5 + i;
+j = t +t  ;

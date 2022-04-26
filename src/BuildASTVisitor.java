@@ -116,79 +116,84 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitEqual_condition(HelloParser.Equal_conditionContext ctx) {
         EqualNode node = new EqualNode();
-        node.left = (GraphNode) visitExpression(ctx.expression());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitExpression(ctx.expression());
+        node.right = visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitNot_equal_condition(HelloParser.Not_equal_conditionContext ctx) {
         NotEqualNode node = new NotEqualNode();
-        node.left = (GraphNode) visitExpression(ctx.expression());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitExpression(ctx.expression());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitLess_or_equal_condition(HelloParser.Less_or_equal_conditionContext ctx) {
         LessOrEqualNode node = new LessOrEqualNode();
-        node.left = (GraphNode) visitExpression(ctx.expression());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitExpression(ctx.expression());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitMore_or_equal_condition(HelloParser.More_or_equal_conditionContext ctx) {
         MoreOrEqualNode node = new MoreOrEqualNode();
-        node.left = (GraphNode) visitExpression(ctx.expression());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitExpression(ctx.expression());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitMore_than_condition(HelloParser.More_than_conditionContext ctx) {
         MoreThanNode node = new MoreThanNode();
-        node.left = (GraphNode) visitExpression(ctx.expression());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitExpression(ctx.expression());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitLess_than_condition(HelloParser.Less_than_conditionContext ctx) {
         LessThanNode node = new LessThanNode();
-        node.left = (GraphNode) visitExpression(ctx.expression());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitExpression(ctx.expression());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitAdd_expression(HelloParser.Add_expressionContext ctx) {
         AddNode node = new AddNode();
-        node.left = (GraphNode) visitTerm(ctx.term());
-        node.right = (GraphNode) visitExpression(ctx.expression());
+        node.left =  visitTerm(ctx.term());
+        node.right =  visitExpression(ctx.expression());
         return node;
+    }
+
+    @Override
+    public GraphNode visitTerm(HelloParser.TermContext ctx) {
+        return super.visitTerm(ctx);
     }
 
     @Override
     public GraphNode visitSubtract_expression(HelloParser.Subtract_expressionContext ctx) {
         SubtractNode node = new SubtractNode();
-        node.left = (GraphNode) visitTerm(ctx.term());
-        node.right = (GraphNode) visitExpression(ctx.expression());
+        node.left =  visitTerm(ctx.term());
+        node.right = visitExpression(ctx.expression());
         return node;
     }
     @Override
     public GraphNode visitMultiply_term(HelloParser.Multiply_termContext ctx) {
         MultiplyNode node = new MultiplyNode();
-        node.left = (GraphNode) visitFactor(ctx.factor());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitFactor(ctx.factor());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
     @Override
     public GraphNode visitDivide_term(HelloParser.Divide_termContext ctx) {
         DivideNode node = new DivideNode();
-        node.left = (GraphNode) visitFactor(ctx.factor());
-        node.right = (GraphNode) visitTerm(ctx.term());
+        node.left =  visitFactor(ctx.factor());
+        node.right =  visitTerm(ctx.term());
         return node;
     }
 
