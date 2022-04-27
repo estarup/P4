@@ -1,3 +1,5 @@
-int j;
 
-void Behvaior() { int j; }
+int j;
+double i;
+
+j = (2 + 2 )+ ( 1 * (2+ 1.2));

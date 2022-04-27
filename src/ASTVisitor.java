@@ -8,7 +8,7 @@ public abstract class ASTVisitor<T> extends AbstractParseTreeVisitor
     public abstract T visit(BinaryOperatorNode node);
     public abstract T visit(BlockNode node);
     public abstract T visit(CreateNode node);
-    public abstract T visit(DeclarationNode node);
+    public abstract T visit(DeclarationNode node) throws AlreadyDeclaredVariableException;
     public abstract T visit(DivideNode node);
     public abstract T visit(EqualNode node);
     public abstract T visit(ExpressionNode node);

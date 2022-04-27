@@ -20,11 +20,18 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         if(! (node.value instanceof SimpleExpressionNode)) {
             visit((BinaryOperatorNode) node.value);
         }
+        if (node.value instanceof SimpleExpressionNode){
+            if (assignType != ((SimpleExpressionNode) node.value).type) {
+                System.out.println("Error: Assign type error. Cannot assign " + node.ID + " to " + ((SimpleExpressionNode) node.value).value );
+            }
+        }
         return node;
     }
 
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
+
+
         if (n.left instanceof SimpleExpressionNode) {
             if (((SimpleExpressionNode) n.left).type != assignType) {
                 System.out.println("Error: " + ((SimpleExpressionNode) n.left).value + " is not of type " + assignType);
