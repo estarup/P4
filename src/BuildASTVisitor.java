@@ -24,7 +24,9 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
         }
         if (ctx.children.get(2).getChildCount() > 2) {
-            node.body = (BlockNode) visitChildren(ctx.curl_statement());
+            BlockNode block = new BlockNode();
+            block.childrenList.add(visitChildren(ctx.curl_statement()));
+            node.body = block;
         }
         return node;
     }
@@ -62,8 +64,12 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
         node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-        node.if_body = (BlockNode) visitChildren(ctx.curl_statement());
-        node.else_body = (BlockNode) visitChildren(ctx.else_statement());
+        BlockNode ifBlock = new BlockNode();
+        ifBlock.childrenList.add(visitCurl_statement(ctx.curl_statement()));
+        node.if_body = ifBlock;
+        BlockNode elseBlock = new BlockNode();
+        elseBlock.childrenList.add(visitChildren(ctx.else_statement()));
+        node.else_body = elseBlock;
         return node;
     }
 

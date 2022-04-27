@@ -80,11 +80,13 @@ public class SymbolTableFill extends ASTVisitor{
 
     @Override
     public DeclarationNode visit(DeclarationNode node) {
-        if (GraphNode.SymbolTable.get(node.ID) != null) {
-           System.out.println("Error: Variable name " + node.ID + " has already been declared");
-           //throw new AlreadyDeclaredVariableException();
-        } else {
-            GraphNode.SymbolTable.put(node.ID, node.type);
+        try {
+            if (GraphNode.SymbolTable.get(node.ID) == null) {
+                GraphNode.SymbolTable.put(node.ID, node.type);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Error: Variable name " + node.ID + " has already been declared");
+            //throw new AlreadyDeclaredVariableException();
         }
         return node;
     }
