@@ -1,5 +1,5 @@
 public class MethodNode extends StatementNode {
     MethodDeclarationNode declaration;
     DeclarationNode parameter;
-    BlockNode body;
+    BlockNode body = new BlockNode();
 }

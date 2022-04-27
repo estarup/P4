@@ -224,6 +224,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
         if (aggregate == null) {
             return nextResult;
+
         }
         if (nextResult == null) {
             if (aggregate != null) {
