@@ -84,13 +84,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         CreateNode node = new CreateNode();
         node.type = ctx.children.get(1).getText();
         node.ID = ctx.children.get(2).getText();
-        try {
-            BlockNode block = new BlockNode();
-            block.childrenList.add(visitChildren(ctx.curl_statement()));
-            node.body = block;
-        } catch (NullPointerException n) {
-            System.out.println("Error: No create body ");
-        }
+        node.body = (BlockNode) visitChildren(ctx.curl_statement());
         return  node;
     }
 
