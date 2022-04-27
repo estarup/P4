@@ -7,13 +7,9 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     public GraphNode visit(AddNode node) {
         return node;
     }
-    
+
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
-        if (GraphNode.SymbolTable.get(node.ID) == null) {
-            System.out.println("Error: Variable " + node.ID + " not declared");
-            return node;
-        }
         if (node.Value instanceof BinaryOperatorNode) {
             visit((BinaryOperatorNode) node.Value);
         } else if (node.Value instanceof SimpleExpressionNode){
@@ -66,7 +62,6 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public BlockNode visit(BlockNode node) {
-        if (node == null ){ return null; }
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {
