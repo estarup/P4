@@ -21,7 +21,7 @@ public class HelloParser extends Parser {
 		NOTEQUAL=8, LESSTHAN=9, MORETHAN=10, LESSOREQUAL=11, MOREOREQUAL=12, LCURL=13, 
 		RCURL=14, LPAREN=15, RPAREN=16, IF=17, ELSE=18, WHILE=19, CREATE=20, START=21, 
 		RETURN=22, CAR=23, CARSPAWNER=24, TRAFFICLIGHT=25, GRID=26, BOOL=27, METH_RETURN_TYPE=28, 
-		NUM_TYPE=29, INTEGER=30, FLOAT=31, METH_NAME=32, ID=33, STRING=34, WS=35;
+		NUM_TYPE=29, INTEGER=30, DOUBLE=31, METH_NAME=32, ID=33, STRING=34, WS=35;
 	public static final int
 		RULE_trafficProg = 0, RULE_statement = 1, RULE_method = 2, RULE_method_declaration = 3, 
 		RULE_if_statement = 4, RULE_while_loop = 5, RULE_create_statement = 6, 
@@ -61,7 +61,7 @@ public class HelloParser extends Parser {
 			"EQUAL", "NOTEQUAL", "LESSTHAN", "MORETHAN", "LESSOREQUAL", "MOREOREQUAL", 
 			"LCURL", "RCURL", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", "CREATE", 
 			"START", "RETURN", "CAR", "CARSPAWNER", "TRAFFICLIGHT", "GRID", "BOOL", 
-			"METH_RETURN_TYPE", "NUM_TYPE", "INTEGER", "FLOAT", "METH_NAME", "ID", 
+			"METH_RETURN_TYPE", "NUM_TYPE", "INTEGER", "DOUBLE", "METH_NAME", "ID", 
 			"STRING", "WS"
 		};
 	}
@@ -1574,7 +1574,7 @@ public class HelloParser extends Parser {
 		}
 		public TerminalNode RPAREN() { return getToken(HelloParser.RPAREN, 0); }
 		public TerminalNode INTEGER() { return getToken(HelloParser.INTEGER, 0); }
-		public TerminalNode FLOAT() { return getToken(HelloParser.FLOAT, 0); }
+		public TerminalNode DOUBLE() { return getToken(HelloParser.DOUBLE, 0); }
 		public TerminalNode ID() { return getToken(HelloParser.ID, 0); }
 		public Negative_factorContext negative_factor() {
 			return getRuleContext(Negative_factorContext.class,0);
@@ -1615,11 +1615,11 @@ public class HelloParser extends Parser {
 				match(INTEGER);
 				}
 				break;
-			case FLOAT:
+			case DOUBLE:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(210);
-				match(FLOAT);
+				match(DOUBLE);
 				}
 				break;
 			case ID:

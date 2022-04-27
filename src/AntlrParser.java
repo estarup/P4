@@ -26,10 +26,10 @@ public class AntlrParser
             BlockNode astNode = (BlockNode)  new BuildASTVisitor().visit(parseTree);
 
 
-          /*  ASTVisitor symbolTableVisitor = new SymbolTableFill();
+           ASTVisitor symbolTableVisitor = new SymbolTableFill();
             BlockNode symbolResult = (BlockNode) symbolTableVisitor.visit(astNode);
             ASTVisitor typeVisitor = new TypeCheckVisitor();
-            BlockNode result = (BlockNode) typeVisitor.visit(symbolResult);*/
+            BlockNode result = (BlockNode) typeVisitor.visit(symbolResult);
             int x = -7;
         }
         catch (IOException e) {

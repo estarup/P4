@@ -10,46 +10,24 @@ public class SymbolTableFill extends ASTVisitor{
             System.out.println("Error: Variable " + node.ID + " not declared");
             return node;
         }
-        if (node.Value instanceof BinaryOperatorNode) {
-            visit((BinaryOperatorNode) node.Value);
-        } else if (node.Value instanceof SimpleExpressionNode){
-            visit((SimpleExpressionNode)node.Value);
+        if (node.value instanceof BinaryOperatorNode) {
+            visit((BinaryOperatorNode) node.value);
+        } else if (node.value instanceof SimpleExpressionNode){
+            visit((SimpleExpressionNode)node.value);
         }
         return node;
     }
 
+
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
         if (n.left instanceof SimpleExpressionNode) {
-            // Return if int or float
-            try {
-                int number = Integer.parseInt(((SimpleExpressionNode) n.left).value);
-            } catch (Exception e) {
-                try {
-                    float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
-                } catch (Exception e2) {
-                    if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left).value) == null)  {
-                        System.out.println("Error: Variable " + ((SimpleExpressionNode) n.left).value + " has not been declared");
-                    }
-                }
-            }
+            visit((SimpleExpressionNode) n.left);
         } else if (n.left instanceof BinaryOperatorNode) {
             visit((BinaryOperatorNode) n.left);
         }
         if (n.right instanceof SimpleExpressionNode) {
-            // Return if int or float
-            try {
-                int number = Integer.parseInt(((SimpleExpressionNode) n.right).value);
-            } catch (Exception e) {
-                try {
-                    //System.out.println("Error: Right variable not an integer");
-                    float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.right).value);
-                } catch (Exception e2) {
-                    if (GraphNode.SymbolTable.get(((SimpleExpressionNode) n.right).value) == null)  {
-                        System.out.println("Error: Variable " + ((SimpleExpressionNode) n.right).value + " has not been declared");
-                    }
-                }
-            }
+            visit((SimpleExpressionNode) n.right);
         } else if (n.right instanceof BinaryOperatorNode) {
             visit((BinaryOperatorNode) n.right);
         }
@@ -110,8 +88,8 @@ public class SymbolTableFill extends ASTVisitor{
             GraphNode.SymbolTable.put(node.ID, node.INTTYPE);
             return node;
         }
-        if (node.type.equals("float")) {
-            GraphNode.SymbolTable.put(node.ID, node.FLTTYPE);
+        if (node.type.equals("double")) {
+            GraphNode.SymbolTable.put(node.ID, node.DBLTYPE);
             return node;
         }
         return node;
@@ -161,7 +139,7 @@ public class SymbolTableFill extends ASTVisitor{
     @Override
     public MethodDeclarationNode visit(MethodDeclarationNode node) {
         if (GraphNode.SymbolTable.get(node.name) != null) {
-            System.out.println("Error: Method  with name " + node.name + "already declared");
+            System.out.println("Error: Method  with name " + node.name + " already declared");
         }
         return node;
     }
@@ -196,24 +174,47 @@ public class SymbolTableFill extends ASTVisitor{
         return node;
     }
 
+    private boolean checkFloat(String s) {
+        try {
+            double doubleNumber = Double.parseDouble(s);
+            return true;
+        } catch (Exception e2) {
+            //System.out.println("Error: Could not parse variable " + s +"  to double");
+        }
+        return false;
+    }
+
+    private boolean checkInt(String s) {
+        try {
+            int intNumber = Integer.parseInt(s);
+            return true;
+        } catch (Exception e) {
+            //System.out.println("Error: Could not parse variable " + s +"  to int");
+        }
+        return false;
+    }
+
+    private boolean isADeclaredVariable(String s) {
+        try {
+            int x = GraphNode.SymbolTable.get(s);
+            return true;
+        } catch (NullPointerException e) {
+            System.out.println("Error: Variable " + s + " has not been declared");
+            return false;
+        }
+    }
+
+
     @Override
     public SimpleExpressionNode visit(SimpleExpressionNode node) {
-        try {
-            int intValue = Integer.parseInt(node.value);
-            return node;
-        } catch (Exception e) {
-            try {
-                float floatValue = Float.parseFloat(node.value);
-                return node;
-            } catch (Exception e2) {
-                //System.out.println("Variable " + node.value + " is not a float or an integer");
-            }
+        if (checkInt(node.value)) {
+            node.type = GraphNode.INTTYPE;
         }
-        try {
-            int x = GraphNode.SymbolTable.get(node.value);
-        } catch (NullPointerException e ) {
-            System.out.println("Error: Variable " + node.value +  " has not been declared: " +  e.getMessage());
-            return node;
+        else if (checkFloat(node.value)) {
+            node.type = GraphNode.DBLTYPE;
+        }
+        else if (isADeclaredVariable(node.value)) {
+            node.type = GraphNode.SymbolTable.get(node.value);
         }
         return node;
     }

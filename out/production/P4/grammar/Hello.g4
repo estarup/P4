@@ -59,7 +59,7 @@ multiply_term : factor MULTIPLY term;
 divide_term : factor DIVIDE term;
 factor : LPAREN expression RPAREN
 		|  INTEGER
-		|  FLOAT
+		|  DOUBLE
 	    |  ID
 	    | negative_factor
 	    ;
@@ -104,11 +104,11 @@ GRID : 'Grid' ;
 BOOL : 'true' | 'false' ;
 
 // Literals
-METH_RETURN_TYPE : 'void' | 'Int' | 'Float' ;
-NUM_TYPE : 'int' | 'float' ;
+METH_RETURN_TYPE : 'void' | 'Int' | 'Double' ;
+NUM_TYPE : 'int' | 'double' ;
 
 INTEGER : [0]| [1-9][0-9]* ;
-FLOAT : INTEGER '.'[0-9]* ;
+DOUBLE : INTEGER '.'[0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
 ID : [a-z]+ LETTER* DIGIT* ;
 STRING : '"' [a-zA-Z0-9]+  '"';

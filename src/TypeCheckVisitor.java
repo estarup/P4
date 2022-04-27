@@ -10,52 +10,27 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
-        if (node.Value instanceof BinaryOperatorNode) {
-            visit((BinaryOperatorNode) node.Value);
-        } else if (node.Value instanceof SimpleExpressionNode){
-            visit((SimpleExpressionNode)node.Value);
+        int type = GraphNode.SymbolTable.get(node.ID);
+
+
+
+        if (node.value instanceof SimpleExpressionNode){
+            System.out.println("yes");
+            if (type != ((SimpleExpressionNode) node.value).type) {
+                System.out.println("Error: Assign type error. Cannot assign " + node.ID + " to " + ((SimpleExpressionNode) node.value).value );
+            }
         }
+
         return node;
     }
+
+
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
-        int leftType = -1;
-        int rightType = -2;
         if (n.left instanceof SimpleExpressionNode) {
-            // Return if int or float
-            try {
-                int number = Integer.parseInt(((SimpleExpressionNode) n.left).value);
-                leftType = GraphNode.INTTYPE;
-            } catch (Exception e) {
-                try {
-                    float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.left).value);
-                    leftType = GraphNode.FLTTYPE;
-                } catch (Exception e2) {
-                    leftType = GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left).value);
-                }
-                }
-            } else if (n.left instanceof BinaryOperatorNode) {
-                visit((BinaryOperatorNode) n.left);
-            }
-            if (n.right instanceof SimpleExpressionNode) {
-                // Return if int or float
-                try {
-                    int number = Integer.parseInt(((SimpleExpressionNode) n.right).value);
-                    rightType = GraphNode.INTTYPE;
-                } catch (Exception e) {
-                    try {
-                        //System.out.println("Error: Right variable not an integer");
-                        float floatNumber = Float.parseFloat(((SimpleExpressionNode) n.right).value);
-                        rightType = GraphNode.FLTTYPE;
-                    } catch (Exception e2) {
-                        rightType = GraphNode.SymbolTable.get(((SimpleExpressionNode) n.right).value);
-                    }
-                }
-        } else if (n.right instanceof BinaryOperatorNode) {
-            visit((BinaryOperatorNode) n.right);
-        }
-        if (leftType != rightType) {
-            System.out.println("Error: Type mismatch");
+            System.out.println("Yea");
+        } else {
+            visit((BinaryOperatorNode) n.left);
         }
         return n;
     }

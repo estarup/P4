@@ -50,7 +50,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitAssignment(HelloParser.AssignmentContext ctx) {
         AssignmentNode node = new AssignmentNode();
         node.ID = ctx.children.get(0).getText();
-        node.Value =  visitExpression(ctx.expression());
+        node.value =  visitExpression(ctx.expression());
         return node;
     }
 
