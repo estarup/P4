@@ -1,2 +1,5 @@
 int i;
-i = 2;
+float j;
+float a;
+float k;
+a = k+ j ;

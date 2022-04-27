@@ -7,13 +7,20 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     public GraphNode visit(AddNode node) {
         return node;
     }
-
-
+    
     @Override
-    public GraphNode visit(AssignmentNode node)  {
+    public AssignmentNode visit(AssignmentNode node)  {
+        if (GraphNode.SymbolTable.get(node.ID) == null) {
+            System.out.println("Error: Variable " + node.ID + " not declared");
+            return node;
+        }
+        if (node.Value instanceof BinaryOperatorNode) {
+            visit((BinaryOperatorNode) node.Value);
+        } else if (node.Value instanceof SimpleExpressionNode){
+            visit((SimpleExpressionNode)node.Value);
+        }
         return node;
     }
-
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
         int leftType = -1;
@@ -29,7 +36,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
                     leftType = GraphNode.FLTTYPE;
                 } catch (Exception e2) {
                     leftType = GraphNode.SymbolTable.get(((SimpleExpressionNode) n.left).value);
-                    }
+                }
                 }
             } else if (n.left instanceof BinaryOperatorNode) {
                 visit((BinaryOperatorNode) n.left);
