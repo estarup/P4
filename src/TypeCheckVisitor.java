@@ -43,7 +43,10 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
             if (n != null) {
                 if (n instanceof AssignmentNode) {
                     visit((AssignmentNode) n);
-                } else if (n instanceof BinaryOperatorNode) {
+                } else if (n instanceof SimpleExpressionNode) {
+                    visit((SimpleExpressionNode) n);
+                }
+                else if (n instanceof BinaryOperatorNode) {
                     visit((BinaryOperatorNode) n);
                 } else if (n instanceof CreateNode) {
                     visit((CreateNode) n);

@@ -1,4 +1,2 @@
 int j;
 double p ;
-
-j = 3 + 55 + 0 ;

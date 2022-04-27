@@ -204,6 +204,14 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 
     @Override
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
+        if (aggregate == null) {
+            return nextResult;
+        }
+        if (nextResult == null) {
+            return aggregate;
+        }
+
+
         if (aggregate != null && ! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();
             block.childrenList.add((GraphNode) aggregate);
@@ -215,17 +223,10 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             return block;
         }
 
-        if (aggregate == null) {
-            // System.out.println("Next: " + nextResult);
-            return nextResult;
 
-        }
-        if (nextResult == null) {
-            System.out.println("Aggre: " + aggregate);
-            if (aggregate != null) {
-                return aggregate;
-            }
-        }
+
+
+
 
         return nextResult;
     }
