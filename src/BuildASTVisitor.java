@@ -24,9 +24,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
         }
         if (ctx.children.get(2).getChildCount() > 2) {
-            BlockNode block = new BlockNode();
-            block.childrenList.add(visitChildren(ctx.curl_statement()));
-            node.body = block;
+            node.body = (BlockNode) visitChildren(ctx.curl_statement());
         }
         return node;
     }
@@ -59,23 +57,9 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
-        if (ctx.children.get(2).getChildCount() > 2) {
-            node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-            try {
-                BlockNode block = new BlockNode();
-                block.childrenList.add(visitChildren(ctx.curl_statement()));
-                node.if_body = block;
-            } catch (NullPointerException n) {
-                //System.out.println("Error: No if body ");
-            }
-            try {
-                BlockNode block = new BlockNode();
-                block.childrenList.add(visitChildren(ctx.else_statement()));
-                node.else_body = block;
-            } catch (NullPointerException n) {
-                //System.out.println("Error: No else body");
-            }
-         }
+        node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
+        node.if_body = (BlockNode) visitChildren(ctx.curl_statement());
+        node.else_body = (BlockNode) visitChildren(ctx.else_statement());
         return node;
     }
 
@@ -222,15 +206,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 
     @Override
     protected GraphNode aggregateResult(GraphNode aggregate, GraphNode nextResult) {
-        if (aggregate == null) {
-            return nextResult;
-
-        }
-        if (nextResult == null) {
-            if (aggregate != null) {
-                return aggregate;
-            }
-        }
         if (aggregate != null && ! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();
             block.childrenList.add((GraphNode) aggregate);
@@ -241,6 +216,19 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             block.childrenList.add(nextResult);
             return block;
         }
+
+        if (aggregate == null) {
+            // System.out.println("Next: " + nextResult);
+            return nextResult;
+
+        }
+        if (nextResult == null) {
+            System.out.println("Aggre: " + aggregate);
+            if (aggregate != null) {
+                return aggregate;
+            }
+        }
+
         return nextResult;
     }
 }
