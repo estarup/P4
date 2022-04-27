@@ -3,6 +3,7 @@ import org.antlr.v4.runtime.tree.RuleNode;
 import java.util.concurrent.ExecutionException;
 
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
+    private int assignType = -1;
     @Override
     public GraphNode visit(AddNode node) {
         return node;
@@ -10,29 +11,34 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
-        int type = -1;
+        assignType = -1;
         try {
-            type = GraphNode.SymbolTable.get(node.ID);
+            assignType = GraphNode.SymbolTable.get(node.ID);
         } catch (NullPointerException e) {
-            System.out.println("Error: Variable " + node.ID + " has not been declared");
+            //System.out.println("Error: Variable " + node.ID + " has not been declared");
         }
-        if (node.value instanceof SimpleExpressionNode){
-            System.out.println("yes");
-            if (type != ((SimpleExpressionNode) node.value).type) {
-                System.out.println("Error: Assign type error. Cannot assign " + node.ID + " to " + ((SimpleExpressionNode) node.value).value );
-            }
+        if(! (node.value instanceof SimpleExpressionNode)) {
+            visit((BinaryOperatorNode) node.value);
         }
-
         return node;
     }
-
 
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
         if (n.left instanceof SimpleExpressionNode) {
-            System.out.println("Yea");
+            if (((SimpleExpressionNode) n.left).type != assignType) {
+                System.out.println("Error: " + ((SimpleExpressionNode) n.left).value + " is not of type " + assignType);
+            }
         } else {
             visit((BinaryOperatorNode) n.left);
+        }
+        if (n.right instanceof SimpleExpressionNode) {
+            if (((SimpleExpressionNode) n.right).type != assignType) {
+                System.out.println("Error: " + ((SimpleExpressionNode) n.right).value + " is not of type " + assignType);
+            }
+        }
+        else {
+            visit((BinaryOperatorNode) n.right);
         }
         return n;
     }
@@ -45,8 +51,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
                     visit((AssignmentNode) n);
                 } else if (n instanceof SimpleExpressionNode) {
                     visit((SimpleExpressionNode) n);
-                }
-                else if (n instanceof BinaryOperatorNode) {
+                } else if (n instanceof BinaryOperatorNode) {
                     visit((BinaryOperatorNode) n);
                 } else if (n instanceof CreateNode) {
                     visit((CreateNode) n);
