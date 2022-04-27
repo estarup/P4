@@ -9,6 +9,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         return node;
     }
 
+
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
         assignType = -1;
