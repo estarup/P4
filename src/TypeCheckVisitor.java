@@ -10,10 +10,12 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
-        int type = GraphNode.SymbolTable.get(node.ID);
-
-
-
+        int type = -1;
+        try {
+            type = GraphNode.SymbolTable.get(node.ID);
+        } catch (NullPointerException e) {
+            System.out.println("Error: Variable " + node.ID + " has not been declared");
+        }
         if (node.value instanceof SimpleExpressionNode){
             System.out.println("yes");
             if (type != ((SimpleExpressionNode) node.value).type) {

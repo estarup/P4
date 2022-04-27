@@ -41,7 +41,11 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
-        node.type = ctx.children.get(0).getText();
+        if (ctx.children.get(0).getText().equals("int")) {
+            node.type =  GraphNode.INTTYPE;
+        } else if (ctx.children.get(0).getText().equals("double")) {
+            node.type = GraphNode.DBLTYPE;
+        }
         node.ID = ctx.children.get(1).getText();
         return node;
     }

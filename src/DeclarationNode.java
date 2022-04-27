@@ -1,4 +1,4 @@
 public class DeclarationNode extends StatementNode {
-    String type;
+    int type;
     String ID;
 }

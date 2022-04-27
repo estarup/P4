@@ -83,14 +83,8 @@ public class SymbolTableFill extends ASTVisitor{
         if (GraphNode.SymbolTable.get(node.ID) != null) {
            System.out.println("Error: Variable name " + node.ID + " has already been declared");
            //throw new AlreadyDeclaredVariableException();
-        }
-        if (node.type.equals("int")) {
-            GraphNode.SymbolTable.put(node.ID, node.INTTYPE);
-            return node;
-        }
-        if (node.type.equals("double")) {
-            GraphNode.SymbolTable.put(node.ID, node.DBLTYPE);
-            return node;
+        } else {
+            GraphNode.SymbolTable.put(node.ID, node.type);
         }
         return node;
     }
