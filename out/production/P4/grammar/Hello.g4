@@ -108,7 +108,7 @@ METH_RETURN_TYPE : 'void' | 'Int' | 'Double' ;
 NUM_TYPE : 'int' | 'double' ;
 
 INTEGER : [0]| [1-9][0-9]* ;
-DOUBLE : INTEGER '.'[0-9]* ;
+DOUBLE : INTEGER ('.')? [0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
 ID : [a-z]+ LETTER* DIGIT* ;
 STRING : '"' [a-zA-Z0-9]+  '"';

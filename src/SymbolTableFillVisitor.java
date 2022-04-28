@@ -1,4 +1,4 @@
-public class SymbolTableFill extends ASTVisitor{
+public class SymbolTableFillVisitor extends ASTVisitor{
     @Override
     public AddNode visit(AddNode node) {
         return node;

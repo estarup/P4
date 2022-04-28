@@ -64,12 +64,21 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
         node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-        BlockNode ifBlock = new BlockNode();
-        ifBlock.childrenList.add(visitCurl_statement(ctx.curl_statement()));
-        node.if_body = ifBlock;
-        BlockNode elseBlock = new BlockNode();
-        elseBlock.childrenList.add(visitChildren(ctx.else_statement()));
-        node.else_body = elseBlock;
+        try {
+            BlockNode ifBlock = new BlockNode();
+            ifBlock.childrenList.add(visitCurl_statement(ctx.curl_statement()));
+            node.if_body = ifBlock;
+        } catch (NullPointerException n) {
+            //System.out.println("If block is empty");
+        }
+        try {
+            BlockNode elseBlock = new BlockNode();
+            elseBlock.childrenList.add(visitChildren(ctx.else_statement()));
+            node.else_body = elseBlock;
+        } catch (NullPointerException n) {
+            //System.out.println("Else block is empty");
+        }
+
         return node;
     }
 

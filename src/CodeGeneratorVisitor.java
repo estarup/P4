@@ -1,48 +1,50 @@
-import org.antlr.v4.runtime.tree.RuleNode;
+public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
-import java.util.concurrent.ExecutionException;
+    String code = "";
+    public void addCode(String c){
+        code = code + c;
+    }
 
-public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
-    private int assignType = -1;
     @Override
     public GraphNode visit(AddNode node) {
         return node;
     }
 
     @Override
-    public AssignmentNode visit(AssignmentNode node)  {
-        assignType = -1;
-        try {
-            assignType = GraphNode.SymbolTable.get(node.ID);
-        } catch (NullPointerException e) {
-            //System.out.println("Error: Variable " + node.ID + " has not been declared");
-        }
-        if(! (node.value instanceof SimpleExpressionNode)) {
+    public GraphNode visit(AssignmentNode node) {
+        addCode(node.ID);
+        addCode(" = ");
+        if (node.value instanceof BinaryOperatorNode) {
             visit((BinaryOperatorNode) node.value);
+        } else if (node.value instanceof SimpleExpressionNode){
+            visit((SimpleExpressionNode) node.value);
         }
-        if (node.value instanceof SimpleExpressionNode){
-            if (assignType != ((SimpleExpressionNode) node.value).type) {
-                System.out.println("Error: Assign type error. Cannot assign " + node.ID + " to " + ((SimpleExpressionNode) node.value).value );
-            }
-        }
+        addCode("; ");
+        System.out.println(code);
         return node;
     }
 
+
+
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
+         if (n instanceof MultiplyNode) {
+             visit((MultiplyNode) n);
+             return n;
+         } else if (n instanceof DivideNode) {
+             visit((DivideNode) n);
+             return n;
+         }
+
         if (n.left instanceof SimpleExpressionNode) {
-            if (((SimpleExpressionNode) n.left).type != assignType) {
-                System.out.println("Error: " + ((SimpleExpressionNode) n.left).value + " is not of type " + assignType);
-            }
+            visit((SimpleExpressionNode) n.left);
+            addCode(n.getOperatorCharacter());
         } else {
             visit((BinaryOperatorNode) n.left);
         }
         if (n.right instanceof SimpleExpressionNode) {
-            if (((SimpleExpressionNode) n.right).type != assignType) {
-                System.out.println("Error: " + ((SimpleExpressionNode) n.right).value + " is not of type " + assignType);
-            }
-        }
-        else {
+            visit((SimpleExpressionNode) n.right);
+        } else {
             visit((BinaryOperatorNode) n.right);
         }
         return n;
@@ -56,6 +58,10 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
                     visit((AssignmentNode) n);
                 } else if (n instanceof SimpleExpressionNode) {
                     visit((SimpleExpressionNode) n);
+                } else if (n instanceof MultiplyNode) {
+                    visit((MultiplyNode) n);
+                } else if (n instanceof DivideNode) {
+                    visit((DivideNode) n);
                 } else if (n instanceof BinaryOperatorNode) {
                     visit((BinaryOperatorNode) n);
                 } else if (n instanceof CreateNode) {
@@ -79,12 +85,31 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(DeclarationNode node) {
+        if (node.type == GraphNode.DBLTYPE) {
+            addCode("double ");
+        } else if (node.type == GraphNode.INTTYPE) {
+            addCode("int ");
+        }
+        addCode(node.ID);
+        addCode(";");
         return node;
     }
 
     @Override
-    public GraphNode visit(DivideNode node) {
-        return node;
+    public GraphNode visit(DivideNode n) {
+        if (n.left instanceof SimpleExpressionNode) {
+            visit((SimpleExpressionNode) n.left);
+            addCode(n.getOperatorCharacter());
+        } else {
+            evaluateExpression((BinaryOperatorNode) n.left);
+            addCode(n.getOperatorCharacter());
+        }
+        if (n.right instanceof SimpleExpressionNode) {
+            visit((SimpleExpressionNode) n.right);
+        } else  {
+            evaluateExpression((BinaryOperatorNode) n.right);
+        }
+        return n;
     }
 
     @Override
@@ -132,9 +157,31 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         return node;
     }
 
+    private void evaluateExpression(BinaryOperatorNode n) {
+        if (n instanceof AddNode || n instanceof SubtractNode) {
+            addCode("(");
+            visit((BinaryOperatorNode) n);
+            addCode(")");
+        }
+        else {
+            visit(n);
+        }
+    }
     @Override
-    public GraphNode visit(MultiplyNode node) {
-        return node;
+    public GraphNode visit(MultiplyNode n) {
+        if (n.left instanceof SimpleExpressionNode) {
+            visit((SimpleExpressionNode) n.left);
+            addCode(n.getOperatorCharacter());
+        } else {
+            evaluateExpression((BinaryOperatorNode) n.left);
+            addCode(n.getOperatorCharacter());
+        }
+        if (n.right instanceof SimpleExpressionNode) {
+            visit((SimpleExpressionNode) n.right);
+        } else  {
+            evaluateExpression((BinaryOperatorNode) n.right);
+        }
+        return n;
     }
 
     @Override
@@ -154,6 +201,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(SimpleExpressionNode node) {
+        addCode(node.value);
         return node;
     }
 
