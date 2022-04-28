@@ -43,6 +43,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             visit((BinaryOperatorNode) n.left);
         }
         if (n.right instanceof SimpleExpressionNode) {
+            addCode(n.getOperatorCharacter());
+
             visit((SimpleExpressionNode) n.right);
         } else {
             visit((BinaryOperatorNode) n.right);
