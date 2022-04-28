@@ -35,7 +35,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
              visit((DivideNode) n);
              return n;
          }
-
         if (n.left instanceof SimpleExpressionNode) {
             visit((SimpleExpressionNode) n.left);
             addCode(n.getOperatorCharacter());
