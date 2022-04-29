@@ -1,9 +1,15 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     String code = "";
+
     public void addCode(String c){
         code = code + c;
     }
+
+    //FileWriter writer = new FileWriter("YourFile.txt");
 
     @Override
     public GraphNode visit(AddNode node) {
@@ -66,8 +72,14 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
                     visit((DeclarationNode) n);
-                }  else if (n instanceof MethodNode) {
+                }  else if (n instanceof If_Then_ElseNode){
+                    visit((If_Then_ElseNode) n);
+                } else if (n instanceof WhileStmNode) {
+                    visit((WhileStmNode) n);
+                } else if (n instanceof MethodNode) {
                     visit((MethodNode) n);
+                } else if (n instanceof ReturnNode) {
+                    visit((ReturnNode) n);
                 } else if (n instanceof BlockNode) {
                     visit((BlockNode) n);
                 }
@@ -78,6 +90,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(CreateNode node) {
+
         return node;
     }
 
@@ -122,6 +135,25 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(If_Then_ElseNode node) {
+        addCode("if ");
+        addCode("(");
+        if (node.condition != null) {
+            visit(node.condition);
+        } else if (node.condition_bool != null) {
+            addCode(node.condition_bool);
+        }
+        addCode(")");
+
+        addCode("{");
+        if (node.if_body != null) {
+            visit(node.if_body);
+            if (node.else_body != null) {
+                visit(node.else_body);
+            }
+        }
+        addCode("}");
+
+        System.out.println(code);
         return node;
     }
 
@@ -137,11 +169,50 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(MethodNode node) {
+        visit(node.declaration);
+        addCode("(");
+        if (node.parameter.ID != null) {
+            addCode(convertIntType(node.parameter.type) + " ");
+            addCode(node.parameter.ID);
+        }
+        addCode(")");
+
+        addCode("{");
+        if (node.body != null) {
+            visit(node.body);
+        }
+        addCode("}");
+
+        System.out.println(code);
         return node;
+    }
+
+    private String convertIntType(int returnType) {
+
+        if (returnType == 0) {
+            return "double";
+        } else if (returnType == 1) {
+            return "int";
+        }
+        return null;
+    }
+
+    private String convertStringType(String returnType) {
+        if (returnType.equals("void")) {
+            return "void";
+        } else if (returnType.equals("Int")) {
+            return "int ";
+        } else if (returnType.equals("Double")) {
+            return "double ";
+        }
+        return null;
     }
 
     @Override
     public GraphNode visit(MethodDeclarationNode node) {
+        addCode(convertStringType(node.returnType));
+        addCode(" ");
+        addCode(node.name);
         return node;
     }
 
@@ -194,6 +265,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(ReturnNode node) {
+        addCode("return ");
+        addCode(node.ID + ";");
         return node;
     }
 
@@ -215,6 +288,22 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(WhileStmNode node) {
+        addCode("while ");
+        addCode("(");
+        if (node.condition != null) {
+            visit(node.condition);
+        } else if (node.condition_bool != null) {
+            addCode(node.condition_bool);
+        }
+        addCode(")");
+
+        addCode("{");
+        if (node.body != null) {
+            visit(node.body);
+        }
+        addCode("}");
+
+        System.out.println(code);
         return node;
     }
 }

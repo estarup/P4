@@ -1,1 +1,2 @@
-create Car car {int j; j = j + 1; }
+
+if (a > b) {int j; j = j +1 ; return j; }
