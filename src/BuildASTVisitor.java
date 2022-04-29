@@ -1,6 +1,9 @@
 import org.antlr.v4.codegen.model.decl.Decl;
 
 import javax.sound.midi.SysexMessage;
+import javax.swing.text.BadLocationException;
+
+import java.awt.event.WindowStateListener;
 
 import static java.lang.Integer.parseInt;
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
@@ -10,9 +13,14 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         GraphNode result =  visitChildren(ctx);
         if (result instanceof BlockNode) {
             theTopNode = result;
+        } else {
+            BlockNode block = new BlockNode();
+            block.childrenList.add(result);
+            return block;
         }
         return result;
     }
+
 
     @Override
     public GraphNode visitMethod(HelloParser.MethodContext ctx) {
@@ -64,33 +72,46 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
         node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-        try {
-            BlockNode ifBlock = new BlockNode();
+        BlockNode ifBlock = new BlockNode();
+       /* try {
             ifBlock.childrenList.add(visitCurl_statement(ctx.curl_statement()));
-            node.if_body = ifBlock;
         } catch (NullPointerException n) {
             //System.out.println("If block is empty");
+        }*/
+        node.if_body = (BlockNode) visitChildren(ctx.curl_statement());
+        node.else_body = (BlockNode) visit(ctx.else_statement());
+       /* if (visitCurl_statement(ctx.curl_statement()) == null) {
+            node.if_body = new BlockNode();
+        } else {
+            node.if_body = (BlockNode) visitCurl_statement(ctx.curl_statement());
         }
+        if (node.else_body == null) {
+            node.else_body = new BlockNode();
+        } else {
+
+        }
+        //node.else_body = (BlockNode) visitElse_statement(ctx.else_statement());
+        BlockNode elseBlock = new BlockNode();
+        node.else_body.childrenList.add(visitChildren(ctx.else_statement()));
         try {
-            BlockNode elseBlock = new BlockNode();
             elseBlock.childrenList.add(visitChildren(ctx.else_statement()));
-            node.else_body = elseBlock;
         } catch (NullPointerException n) {
             //System.out.println("Else block is empty");
         }
-
+        node.else_body = elseBlock;*/
         return node;
     }
 
     @Override
     public GraphNode visitWhile_loop(HelloParser.While_loopContext ctx) {
         WhileStmNode node = new WhileStmNode();
+
         if (ctx.children.get(2).getChildCount() > 2) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
             try {
                 BlockNode block = new BlockNode();
                 block.childrenList.add(visitChildren(ctx.curl_statement()));
-                node.body = (BlockNode) visitChildren(ctx.curl_statement());
+                node.body.childrenList.add(visitChildren(ctx.curl_statement()));
             } catch (NullPointerException n) {
                 System.out.println("Error: No while body ");
             }
@@ -225,9 +246,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         if (nextResult == null) {
             return aggregate;
         }
-
-
-        if (aggregate != null && ! (aggregate instanceof BlockNode)) {
+        if (! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();
             block.childrenList.add((GraphNode) aggregate);
             aggregate = block;
@@ -237,12 +256,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             block.childrenList.add(nextResult);
             return block;
         }
-
-
-
-
-
-
         return nextResult;
     }
 }
