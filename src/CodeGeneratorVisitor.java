@@ -20,7 +20,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             visit((SimpleExpressionNode) node.value);
         }
         addCode("; ");
-        System.out.println(code);
         return node;
     }
 

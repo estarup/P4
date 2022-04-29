@@ -98,15 +98,17 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitWhile_loop(HelloParser.While_loopContext ctx) {
         WhileStmNode node = new WhileStmNode();
 
-        if (ctx.children.get(2).getChildCount() > 2) {
+        if (visitCondition(ctx.logic_expression().condition()) != null) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-            try {
-                BlockNode block = new BlockNode();
-                block.childrenList.add(visitChildren(ctx.curl_statement()));
-                node.body.childrenList.add(visitChildren(ctx.curl_statement()));
-            } catch (NullPointerException n) {
-                System.out.println("Error: No while body ");
-            }
+        } else {
+            node.condition_bool = ctx.children.get(1).getChild(1).getText();
+        }
+        try {
+            BlockNode block = new BlockNode();
+            block.childrenList.add(visitChildren(ctx.curl_statement()));
+            node.body = block;
+        } catch (NullPointerException n) {
+            //System.out.println("Error: No while body ");
         }
         return node;
     }
