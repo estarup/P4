@@ -19,10 +19,10 @@ public class AntlrParser
             ParseTree parseTree = parser.trafficProg();
             Trees.inspect(parseTree,parser);
             ParseTreeVisitor visitor = new BuildASTVisitor();
-            var astNode =   new BuildASTVisitor().visit(parseTree);
-          //  BlockNode symbolResult = new SymbolTableFillVisitor().visit(astNode);
-            //BlockNode typeResult = new TypeCheckVisitor().visit(symbolResult);
-           // BlockNode codeResult = new CodeGeneratorVisitor().visit(typeResult);
+            BlockNode astNode =  (BlockNode) new BuildASTVisitor().visit(parseTree);
+            BlockNode symbolResult = new SymbolTableFillVisitor().visit(astNode);
+            BlockNode typeResult = new TypeCheckVisitor().visit(symbolResult);
+            BlockNode codeResult = new CodeGeneratorVisitor().visit(typeResult);
             double x = 1.0;
         }
         catch (IOException e) {

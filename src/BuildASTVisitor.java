@@ -71,34 +71,26 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
-        node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
-        BlockNode ifBlock = new BlockNode();
-       /* try {
+        if (visitCondition(ctx.logic_expression().condition()) != null) {
+            node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
+        } else {
+            node.condition_bool = ctx.children.get(1).getChild(1).getText();
+        }
+        try {
+            BlockNode ifBlock = new BlockNode();
             ifBlock.childrenList.add(visitCurl_statement(ctx.curl_statement()));
+            node.if_body = ifBlock;
         } catch (NullPointerException n) {
             //System.out.println("If block is empty");
-        }*/
-        node.if_body = (BlockNode) visitChildren(ctx.curl_statement());
-        node.else_body = (BlockNode) visit(ctx.else_statement());
-       /* if (visitCurl_statement(ctx.curl_statement()) == null) {
-            node.if_body = new BlockNode();
-        } else {
-            node.if_body = (BlockNode) visitCurl_statement(ctx.curl_statement());
         }
-        if (node.else_body == null) {
-            node.else_body = new BlockNode();
-        } else {
-
-        }
-        //node.else_body = (BlockNode) visitElse_statement(ctx.else_statement());
-        BlockNode elseBlock = new BlockNode();
-        node.else_body.childrenList.add(visitChildren(ctx.else_statement()));
         try {
+            BlockNode elseBlock = new BlockNode();
             elseBlock.childrenList.add(visitChildren(ctx.else_statement()));
+            node.else_body = elseBlock;
         } catch (NullPointerException n) {
             //System.out.println("Else block is empty");
         }
-        node.else_body = elseBlock;*/
+
         return node;
     }
 
