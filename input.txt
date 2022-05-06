@@ -1,2 +1,2 @@
-
-if (a > b) {int j; j = j +1 ; return j; }
+void Timing() {}
+Timing(30);

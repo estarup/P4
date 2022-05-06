@@ -11,7 +11,9 @@ public class GraphNode {
             CARTYPE = 2,
             CARSPAWNERTYPE = 3,
             GRIDTYPE = 4,
-            TRAFFICLIGHTTYPE = 5;
+            TRAFFICLIGHTTYPE = 5,
+
+            METHOD = 6;
     public static Hashtable<String,Integer> SymbolTable = new Hashtable<String,Integer>();
 
 }

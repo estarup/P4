@@ -13,20 +13,25 @@ statement :   method
   			| assignment
 			| declaration SEMICOLON
 			;
-method :      method_declaration method_parameter curl_statement
-			| METH_NAME method_parameter SEMICOLON
-			;
+method :     method_init
+            | method_call;
+method_init: method_declaration method_parameter_init curl_statement;
+method_call: METH_NAME method_parameter_call SEMICOLON;
 method_declaration: METH_RETURN_TYPE METH_NAME;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
-create_statement : CREATE create_type ID curl_statement;
+create_statement : CREATE create_type ID position curl_statement;
 create_type : CAR
             | CARSPAWNER
             | TRAFFICLIGHT
             | GRID ;
+position: LPAREN INTEGER ',' INTEGER RPAREN;
 assignment : ID ASSIGN expression SEMICOLON;
 declaration : NUM_TYPE ID ;
-method_parameter : LPAREN declaration? RPAREN ;
+method_parameter_init : LPAREN declaration? RPAREN;
+method_parameter_call : LPAREN RPAREN
+                      | LPAREN INTEGER RPAREN
+                      | LPAREN DOUBLE RPAREN;
 curl_statement : LCURL statement* return_statement? RCURL ;
 return_statement : RETURN ID SEMICOLON;
 logic_expression : LPAREN condition RPAREN; 

@@ -1,7 +1,3 @@
-import org.antlr.v4.runtime.tree.RuleNode;
-
-import java.util.concurrent.ExecutionException;
-
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     private int assignType = -1;
     @Override
@@ -62,9 +58,11 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
                     visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
                     visit((DeclarationNode) n);
-                }  else if (n instanceof MethodNode) {
-                    visit((MethodNode) n);
-                } else if (n instanceof BlockNode) {
+                }  else if (n instanceof MethodInitNode) {
+                    visit((MethodInitNode) n);
+                } else if (n instanceof MethodCallNode) {
+                    visit((MethodCallNode) n);
+                }  else if (n instanceof BlockNode) {
                     visit((BlockNode) n);
                 }
             }
@@ -112,13 +110,49 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         return node;
     }
 
+
+    private boolean checkInt(String s) {
+        try {
+            int intNumber = Integer.parseInt(s);
+            return true;
+        } catch (Exception e) {
+            //System.out.println("Error: Could not parse variable " + s +"  to int");
+        }
+        return false;
+    }
+
+    private boolean checkFloat(String s) {
+        try {
+            double doubleNumber = Double.parseDouble(s);
+            return true;
+        } catch (Exception e2) {
+            //System.out.println("Error: Could not parse variable " + s +"  to double");
+        }
+        return false;
+    }
     @Override
-    public GraphNode visit(MethodNode node) {
+    public GraphNode visit(MethodCallNode node) {
+        if (checkInt(node.parameter) || checkFloat(node.parameter)) {
+            return node;
+        }
+        if (GraphNode.SymbolTable.get(node.parameter) == null) {
+            System.out.println("Error: Variable " + node.parameter + "has not been declared ");
+        }
+        return node;
+    }
+
+    @Override
+    public GraphNode visit(MethodInitNode node) {
         return node;
     }
 
     @Override
     public GraphNode visit(MethodDeclarationNode node) {
+        if (GraphNode.SymbolTable.get(node.name) != null) {
+            System.out.println("Error: Method already declared");
+        } else {
+            GraphNode.SymbolTable.put(node.name, 6);
+        }
         return node;
     }
 

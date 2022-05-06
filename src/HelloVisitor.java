@@ -28,6 +28,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod(HelloParser.MethodContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#method_init}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_init(HelloParser.Method_initContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#method_call}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_call(HelloParser.Method_callContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#method_declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -58,6 +70,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCreate_type(HelloParser.Create_typeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#position}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPosition(HelloParser.PositionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -70,11 +88,17 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDeclaration(HelloParser.DeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#method_parameter}.
+	 * Visit a parse tree produced by {@link HelloParser#method_parameter_init}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMethod_parameter(HelloParser.Method_parameterContext ctx);
+	T visitMethod_parameter_init(HelloParser.Method_parameter_initContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#method_parameter_call}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod_parameter_call(HelloParser.Method_parameter_callContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#curl_statement}.
 	 * @param ctx the parse tree

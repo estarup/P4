@@ -47,8 +47,8 @@ public class SymbolTableFillVisitor extends ASTVisitor{
                     visit((CreateNode) n);
                 } else if (n instanceof DeclarationNode) {
                     visit((DeclarationNode) n);
-                }  else if (n instanceof MethodNode) {
-                    visit((MethodNode) n);
+                }  else if (n instanceof MethodInitNode) {
+                    visit((MethodInitNode) n);
                 } else if (n instanceof BlockNode) {
                     visit((BlockNode) n);
                 }
@@ -124,7 +124,20 @@ public class SymbolTableFillVisitor extends ASTVisitor{
     }
 
     @Override
-    public MethodNode visit(MethodNode node) {
+    public Object visit(MethodCallNode node) {
+
+        if (GraphNode.SymbolTable.get(node.ID) == null) {
+            System.out.println("Error: Call to not defined method: " + node.ID);
+            return node;
+        }
+        if (checkInt(node.parameter) || checkFloat(node.parameter)) {
+            return node;
+        }
+        return node;
+    }
+
+    @Override
+    public MethodInitNode visit(MethodInitNode node) {
         visit(node.declaration);
         visit(node.parameter);
         visit(node.body);
@@ -135,6 +148,8 @@ public class SymbolTableFillVisitor extends ASTVisitor{
     public MethodDeclarationNode visit(MethodDeclarationNode node) {
         if (GraphNode.SymbolTable.get(node.name) != null) {
             System.out.println("Error: Method  with name " + node.name + " already declared");
+        } else {
+            GraphNode.SymbolTable.put(node.name, 6);
         }
         return node;
     }

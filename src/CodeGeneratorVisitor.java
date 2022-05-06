@@ -1,6 +1,3 @@
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     String code = "";
@@ -76,8 +73,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     visit((If_Then_ElseNode) n);
                 } else if (n instanceof WhileStmNode) {
                     visit((WhileStmNode) n);
-                } else if (n instanceof MethodNode) {
-                    visit((MethodNode) n);
+                } else if (n instanceof MethodInitNode) {
+                    visit((MethodInitNode) n);
                 } else if (n instanceof ReturnNode) {
                     visit((ReturnNode) n);
                 } else if (n instanceof BlockNode) {
@@ -168,7 +165,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     }
 
     @Override
-    public GraphNode visit(MethodNode node) {
+    public GraphNode visit(MethodCallNode node) {
+        return node;
+    }
+
+    @Override
+    public GraphNode visit(MethodInitNode node) {
         visit(node.declaration);
         addCode("(");
         if (node.parameter.ID != null) {

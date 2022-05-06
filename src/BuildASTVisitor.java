@@ -1,10 +1,3 @@
-import org.antlr.v4.codegen.model.decl.Decl;
-
-import javax.sound.midi.SysexMessage;
-import javax.swing.text.BadLocationException;
-
-import java.awt.event.WindowStateListener;
-
 import static java.lang.Integer.parseInt;
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
@@ -22,14 +15,15 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
 
+
     @Override
-    public GraphNode visitMethod(HelloParser.MethodContext ctx) {
-        MethodNode node = new MethodNode();
+    public GraphNode visitMethod_init(HelloParser.Method_initContext ctx) {
+        MethodInitNode node = new MethodInitNode();
         if (ctx.children.get(0).getChildCount() > 0) {
             node.declaration = (MethodDeclarationNode) visitMethod_declaration(ctx.method_declaration());
         }
         if (ctx.children.get(1).getChildCount() > 0) {
-            node.parameter =  (DeclarationNode) visitMethod_parameter(ctx.method_parameter());
+            node.parameter =  (DeclarationNode) visitMethod_parameter_init(ctx.method_parameter_init());
         }
         if (ctx.children.get(2).getChildCount() > 2) {
             BlockNode block = new BlockNode();
@@ -39,6 +33,15 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return node;
     }
 
+    @Override
+    public GraphNode visitMethod_call(HelloParser.Method_callContext ctx) {
+        MethodCallNode node = new MethodCallNode();
+        node.ID = ctx.children.get(0).getText();
+        if (ctx.children.get(1).getChildCount() > 2 ) {
+            node.parameter = ctx.children.get(1).getChild(1).getText();
+        }
+        return node;
+    }
 
     @Override
     public GraphNode visitMethod_declaration(HelloParser.Method_declarationContext ctx) {
@@ -51,6 +54,11 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
+
+        if (ctx.children == null) {
+            System.out.println("null");
+            return node;
+        }
         if (ctx.children.get(0).getText().equals("int")) {
             node.type =  GraphNode.INTTYPE;
         } else if (ctx.children.get(0).getText().equals("double")) {
@@ -118,8 +126,17 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         CreateNode node = new CreateNode();
         node.type = ctx.children.get(1).getText();
         node.ID = ctx.children.get(2).getText();
+        node.position = (PositionNode) visitPosition(ctx.position());
         node.body = (BlockNode) visitChildren(ctx.curl_statement());
         return  node;
+    }
+
+    @Override
+    public GraphNode visitPosition(HelloParser.PositionContext ctx) {
+        PositionNode node = new PositionNode();
+        node.x = Integer.parseInt(ctx.children.get(1).getText());
+        node.y = Integer.parseInt(ctx.children.get(3).getText());
+        return node;
     }
 
     @Override
@@ -130,7 +147,15 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
-    public GraphNode visitMethod_parameter(HelloParser.Method_parameterContext ctx) {
+    public GraphNode visitMethod_parameter_call(HelloParser.Method_parameter_callContext ctx) {
+        if (ctx.getChildCount() > 2) {
+
+        }
+        return super.visitMethod_parameter_call(ctx);
+    }
+
+    @Override
+    public GraphNode visitMethod_parameter_init(HelloParser.Method_parameter_initContext ctx) {
         DeclarationNode node = new DeclarationNode();
         if (ctx.getChildCount() > 2) {
             node = visitDeclaration(ctx.declaration());
