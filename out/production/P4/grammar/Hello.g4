@@ -20,14 +20,14 @@ method_call: METH_NAME method_parameter_call SEMICOLON;
 method_declaration: METH_RETURN_TYPE METH_NAME;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
-create_statement : CREATE create_type ID position curl_statement;
+create_statement : CREATE create_type ID curl_statement;
 create_type : CAR
             | CARSPAWNER
             | TRAFFICLIGHT
             | GRID ;
-position: LPAREN INTEGER ',' INTEGER RPAREN;
-assignment : ID ASSIGN expression SEMICOLON;
-declaration : NUM_TYPE ID ;
+assignment : ID ASSIGN expression SEMICOLON
+           | ID ASSIGN STRING SEMICOLON;
+declaration : VAR_TYPE ID ;
 method_parameter_init : LPAREN declaration? RPAREN;
 method_parameter_call : LPAREN RPAREN
                       | LPAREN INTEGER RPAREN
@@ -100,7 +100,6 @@ IF : 'if' ;
 ELSE : 'else' ;
 WHILE : 'while' ;
 CREATE : 'create' ;
-START : 'Start' ;
 RETURN : 'return';
 CAR :  'Car';
 CARSPAWNER: 'CarSpawner' ;
@@ -110,7 +109,7 @@ BOOL : 'true' | 'false' ;
 
 // Literals
 METH_RETURN_TYPE : 'void' | 'Int' | 'Double' ;
-NUM_TYPE : 'int' | 'double' ;
+VAR_TYPE : 'int' | 'double' | 'string';
 
 INTEGER : [0]| [1-9][0-9]* ;
 DOUBLE : INTEGER ('.')? [0-9]* ;

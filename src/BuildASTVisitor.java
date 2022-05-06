@@ -71,7 +71,19 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitAssignment(HelloParser.AssignmentContext ctx) {
         AssignmentNode node = new AssignmentNode();
         node.ID = ctx.children.get(0).getText();
-        node.value =  visitExpression(ctx.expression());
+        boolean isExp = false;
+        try {
+            node.value = visitExpression(ctx.expression());
+            isExp = true;
+        } catch (NullPointerException n) {
+            isExp = false;
+            System.out.println("Error: Not an expression, must be a string");
+        }
+        if (!isExp) {
+            StringNode stringNode = new StringNode();
+            stringNode.string = ctx.children.get(2).getText();
+            node.value = stringNode;
+        }
         return node;
     }
 
@@ -140,7 +152,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             default: System.out.println("Error: No type matches " + node.ID);
         }
         node.ID = ctx.children.get(2).getText();
-        node.position = (PositionNode) visitPosition(ctx.position());
        // node.direction = ctx.children.get(3).getText();'
         try {
             BlockNode body = new BlockNode();
@@ -152,13 +163,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         return  node;
     }
 
-    @Override
-    public GraphNode visitPosition(HelloParser.PositionContext ctx) {
-        PositionNode node = new PositionNode();
-        node.x = Integer.parseInt(ctx.children.get(1).getText());
-        node.y = Integer.parseInt(ctx.children.get(3).getText());
-        return node;
-    }
+
 
     @Override
     public GraphNode visitReturn_statement(HelloParser.Return_statementContext ctx) {

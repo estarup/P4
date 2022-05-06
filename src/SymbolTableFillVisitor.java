@@ -225,6 +225,11 @@ public class SymbolTableFillVisitor extends ASTVisitor{
     }
 
     @Override
+    public Object visit(StringNode node) {
+        return node;
+    }
+
+    @Override
     public SubtractNode visit(SubtractNode node) {
         return node;
     }

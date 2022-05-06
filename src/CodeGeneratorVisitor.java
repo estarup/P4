@@ -396,10 +396,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
         switch (node.type) {
             case GraphNode.CARTYPE:
-                System.out.println("Error: User cannot create single car");
+                System.out.println("Error: Only CarSpawner can create single car");
                 break;
             case GraphNode.CARSPAWNERTYPE:
-                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.position.x + ", " + node.position.y + ",");
+                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.position.x + ", " +
+                        node.position.y + ",");
+
                 break;
             case GraphNode.GRIDTYPE:
                 break;
@@ -611,6 +613,11 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(StatementNode node) {
+        return node;
+    }
+
+    @Override
+    public GraphNode visit(StringNode node) {
         return node;
     }
 

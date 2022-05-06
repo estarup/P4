@@ -13,6 +13,10 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         } catch (NullPointerException e) {
             //System.out.println("Error: Variable " + node.ID + " has not been declared");
         }
+        if (node.value instanceof StringNode) {
+            visit((StringNode) node.value);
+            return node;
+        }
         if(! (node.value instanceof SimpleExpressionNode)) {
             visit((BinaryOperatorNode) node.value);
         }
@@ -193,6 +197,11 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(StatementNode node) {
+        return node;
+    }
+
+    @Override
+    public GraphNode visit(StringNode node) {
         return node;
     }
 

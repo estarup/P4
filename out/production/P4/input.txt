@@ -1,8 +1,5 @@
 
-
-
-create CarSpawner spawnerEast(2,2) {
-    int j;
-
+create Car car {
+ direction = "East"; 
 }
 
