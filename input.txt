@@ -1,2 +1,1 @@
-void Timing() {}
-Timing(30);
+create Car car(1,2){}
