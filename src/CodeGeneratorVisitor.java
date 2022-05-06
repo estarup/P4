@@ -394,12 +394,18 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         createCarSpawnerClass();
         createTrafficLightClass();
 
-        switch (Integer.parseInt(node.type)) {
+        switch (node.type) {
             case GraphNode.CARTYPE:
                 System.out.println("Error: User cannot create single car");
                 break;
             case GraphNode.CARSPAWNERTYPE:
-                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.position.x + ", " + node.position.y + "," + node.);
+                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.position.x + ", " + node.position.y + ",");
+                break;
+            case GraphNode.GRIDTYPE:
+                break;
+            default:
+                System.out.println("Error: Default cartype");
+                break;
         }
 
 

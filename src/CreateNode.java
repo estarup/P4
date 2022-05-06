@@ -1,6 +1,7 @@
 public class CreateNode extends StatementNode {
-    String type;
+    int type;
     String ID;
     PositionNode position;
+
     BlockNode body;
 }

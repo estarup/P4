@@ -63,17 +63,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
             System.out.println("Error : Create ID already declared");
             return node;
         }
-        if (GraphNode.SymbolTable.get(node.ID) == null) {
-            if (node.type.equals("Car")) {
-                GraphNode.SymbolTable.put(node.ID, node.CARTYPE);
-            } else if (node.type.equals("CarSpawner")) {
-                GraphNode.SymbolTable.put(node.ID, node.CARSPAWNERTYPE);
-            } else if (node.type.equals("Grid")) {
-                GraphNode.SymbolTable.put(node.ID, node.GRIDTYPE);
-            } else if (node.type.equals("TrafficLight")) {
-                GraphNode.SymbolTable.put(node.ID, node.TRAFFICLIGHTTYPE);
-            }
-        }
+        GraphNode.SymbolTable.put(node.ID, node.type);
         visit(node.body);
         return node;
     }
@@ -83,7 +73,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
         try {
             GraphNode.SymbolTable.get(node.ID);
         } catch (NullPointerException e) {
-            //System.out.println("Exception: Variable has not been declared");
+            System.out.println("Exception: Variable has not been declared");
             return node;
         }
         GraphNode.SymbolTable.put(node.ID, node.type);

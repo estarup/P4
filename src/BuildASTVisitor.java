@@ -54,7 +54,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
-
         if (ctx.children == null) {
             System.out.println("null");
             return node;
@@ -124,10 +123,32 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitCreate_statement(HelloParser.Create_statementContext ctx) {
         CreateNode node = new CreateNode();
-        node.type = ctx.children.get(1).getText();
+
+        switch (ctx.children.get(1).getText()) {
+            case "Car":
+                node.type = GraphNode.CARTYPE;
+                break;
+            case "CarSpawner":
+                node.type = GraphNode.CARSPAWNERTYPE;
+                break;
+            case "Grid":
+                node.type = GraphNode.GRIDTYPE;
+                break;
+            case "TrafficLight":
+                node.type = GraphNode.TRAFFICLIGHTTYPE;
+                break;
+            default: System.out.println("Error: No type matches " + node.ID);
+        }
         node.ID = ctx.children.get(2).getText();
         node.position = (PositionNode) visitPosition(ctx.position());
-        node.body = (BlockNode) visitChildren(ctx.curl_statement());
+       // node.direction = ctx.children.get(3).getText();'
+        try {
+            BlockNode body = new BlockNode();
+            body.childrenList.add(visitCurl_statement(ctx.curl_statement()));
+            node.body = body;
+        } catch (NullPointerException n) {
+            System.out.println("Body block is empty");
+        }
         return  node;
     }
 
@@ -148,10 +169,11 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 
     @Override
     public GraphNode visitMethod_parameter_call(HelloParser.Method_parameter_callContext ctx) {
+        MethodCallNode node = new MethodCallNode();
         if (ctx.getChildCount() > 2) {
-
+            node.parameter = ctx.getChild(1).getText();
         }
-        return super.visitMethod_parameter_call(ctx);
+        return node;
     }
 
     @Override
