@@ -399,9 +399,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 System.out.println("Error: Only CarSpawner can create single car");
                 break;
             case GraphNode.CARSPAWNERTYPE:
-                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.position.x + ", " +
-                        node.position.y + ",");
-
+                addCode("CarSpawner " + node.ID + "= new CarSpawner();");
                 break;
             case GraphNode.GRIDTYPE:
                 break;
