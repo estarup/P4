@@ -64,6 +64,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
             return node;
         }
         GraphNode.SymbolTable.put(node.ID, node.type);
+        GraphNode.SymbolTable.put("direction", 7);
         visit(node.body);
         return node;
     }

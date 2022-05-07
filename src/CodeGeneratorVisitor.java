@@ -135,6 +135,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         } catch (IOException e) {
             System.out.println("Error: Cannot create GridObjectclass");
             e.printStackTrace();
+        } finally {
         }
     }
 
@@ -258,15 +259,14 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     public void createCarSpawnerClass() {
         try {
-            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Car.java");
+            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/CarSpawner.java");
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
             } else {
                 System.out.println("File already exists.");
             }
             FileWriter writer = new FileWriter(file);
-            writer.write("import java.util.ArrayList;\n" +
-                    "package Simulation\n" +
+            writer.write("package Simulation;\n" +
                     "public class CarSpawner extends GridObject{\n" +
                     "\n" +
                     "    public CarSpawner(int x, int y, String direction, long frequency, String name) {\n" +
@@ -307,6 +307,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "        this.direction = direction;\n" +
                     "    }\n" +
                     "}\n");
+            writer.close();
         } catch (IOException e) {
             System.out.println("Error: Cannot create CarSpawner class.");
             e.printStackTrace();
@@ -315,7 +316,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     public void createTrafficLightClass() {
         try {
-            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Car.java");
+            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/TrafficLight.java");
             if (file.createNewFile()) {
                 System.out.println("File created: " + file.getName());
             } else {
@@ -377,6 +378,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "\n" +
                     "\n" +
                     "}\n");
+            writer.close();
         } catch (IOException e) {
             System.out.println("Error: Cannot create TrafficLight class.");
             e.printStackTrace();
@@ -399,7 +401,14 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 System.out.println("Error: Only CarSpawner can create single car");
                 break;
             case GraphNode.CARSPAWNERTYPE:
-                addCode("CarSpawner " + node.ID + "= new CarSpawner();");
+                addCode("CarSpawner " + node.ID + "= new CarSpawner(");
+                for (GraphNode n: node.body.childrenList) {
+                    if (n instanceof AssignmentNode) {
+                        if (((AssignmentNode) n).ID.equals("direction")) {
+                            addCode("");
+                        }
+                    }
+                }
                 break;
             case GraphNode.GRIDTYPE:
                 break;

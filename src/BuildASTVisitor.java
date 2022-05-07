@@ -77,7 +77,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             isExp = true;
         } catch (NullPointerException n) {
             isExp = false;
-            System.out.println("Error: Not an expression, must be a string");
+            //System.out.println("Error: Not an expression, must be a string");
         }
         if (!isExp) {
             StringNode stringNode = new StringNode();

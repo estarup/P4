@@ -13,7 +13,8 @@ public class GraphNode {
             GRIDTYPE = 4,
             TRAFFICLIGHTTYPE = 5,
 
-            METHOD = 6;
+            METHOD = 6,
+            STRING = 7;
     public static Hashtable<String,Integer> SymbolTable = new Hashtable<String,Integer>();
 
 }
