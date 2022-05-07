@@ -92,14 +92,19 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         ConstructorNode node = new ConstructorNode();
 
         if (ctx.getChildCount() == 11) {
-            System.out.println("I am a carspawner constructor");
             node.x = Integer.parseInt(ctx.children.get(1).getText());
             node.y = Integer.parseInt(ctx.children.get(3).getText());
             node.direction = ctx.children.get(5).getText();
             node.frequency = Integer.parseInt(ctx.children.get(7).getText());
             node.name = ctx.children.get(9).getText();
-        } else {
-
+        } else if (ctx.getChildCount() == 5) {
+            node.x = Integer.parseInt(ctx.children.get(1).getText());
+            node.y = Integer.parseInt(ctx.children.get(3).getText());
+        } else if (ctx.getChildCount() == 9) {
+            node.x = Integer.parseInt(ctx.children.get(1).getText());
+            node.y = Integer.parseInt(ctx.children.get(3).getText());
+            node.frequency = Integer.parseInt(ctx.children.get(5).getText());
+            node.name = ctx.children.get(7).getText();
         }
 
         return node;
@@ -172,7 +177,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         node.ID = ctx.children.get(2).getText();
        // node.direction = ctx.children.get(3).getText();'
 
-        node.constructer = (ConstructorNode) visitConstructor(ctx.constructor());
+        node.constructor = (ConstructorNode) visitConstructor(ctx.constructor());
 
         try {
             BlockNode body = new BlockNode();

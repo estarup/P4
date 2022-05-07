@@ -1,6 +1,6 @@
 public class CreateNode extends StatementNode {
     int type;
     String ID;
-    ConstructorNode constructer;
+    ConstructorNode constructor;
     BlockNode body;
 }

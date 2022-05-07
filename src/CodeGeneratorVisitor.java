@@ -91,11 +91,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     private void createGridObjectClass() {
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/GridObject.java");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation;\n" +
                     "\n" +
@@ -142,11 +137,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     private void createGridClass() {
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Grid.java");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation;\n" +
                     "\n" +
@@ -173,11 +163,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     public void createCarClass() {
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Car.java");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation; \n" +
                     "public class Car{\n" +
@@ -260,11 +245,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     public void createCarSpawnerClass() {
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/CarSpawner.java");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation;\n" +
                     "public class CarSpawner extends GridObject{\n" +
@@ -317,11 +297,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     public void createTrafficLightClass() {
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/TrafficLight.java");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation;\n" +
                     "public class TrafficLight extends GridObject{\n" +
@@ -401,18 +376,31 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 System.out.println("Error: Only CarSpawner can create single car");
                 break;
             case GraphNode.CARSPAWNERTYPE:
-                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.constructer.x + ", " + node.constructer.y
-                        + ", " + node.constructer.direction + ", " + node.constructer.frequency + ", " + node.constructer.name +
-                        ")");
+                addCode("CarSpawner " + node.ID + " = new CarSpawner(" + node.constructor.x
+                        + ", " + node.constructor.y
+                        + ", " + node.constructor.direction + ", "
+                        + node.constructor.frequency + ", " + node.constructor.name +
+                        ");");
                 visit(node.body);
+                addCode("grid.add(" + node.ID + ");");
                 break;
             case GraphNode.GRIDTYPE:
-                addCode("Grid " + node.ID + " = Grid(" );
+                addCode("Grid grid = Grid(" + node.constructor.x + ", " + node.constructor.y + ");");
+                visit(node.body);
+                break;
+            case GraphNode.TRAFFICLIGHTTYPE:
+                addCode("TrafficLight " + node.ID + " = TrafficLight("
+                        + node.constructor.x + ", "
+                        + node.constructor.y + ", " + node.constructor.frequency + ", "
+                        + node.constructor.name + ");");
+                visit(node.body);
+                addCode("grid.add(" + node.ID + ");");
                 break;
             default:
                 System.out.println("Error: Default cartype");
                 break;
         }
+        System.out.println(code);
 
 
         /*
