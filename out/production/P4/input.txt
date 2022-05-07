@@ -1,5 +1,6 @@
 
-create CarSpawner car {
- direction = "East";
+create CarSpawner car(1,2,"East",5,"eastSpawner") {
+
+
 }
 

@@ -401,16 +401,13 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 System.out.println("Error: Only CarSpawner can create single car");
                 break;
             case GraphNode.CARSPAWNERTYPE:
-                addCode("CarSpawner " + node.ID + "= new CarSpawner(");
-                for (GraphNode n: node.body.childrenList) {
-                    if (n instanceof AssignmentNode) {
-                        if (((AssignmentNode) n).ID.equals("direction")) {
-                            addCode("");
-                        }
-                    }
-                }
+                addCode("CarSpawner " + node.ID + "= new CarSpawner(" + node.constructer.x + ", " + node.constructer.y
+                        + ", " + node.constructer.direction + ", " + node.constructer.frequency + ", " + node.constructer.name +
+                        ")");
+                visit(node.body);
                 break;
             case GraphNode.GRIDTYPE:
+                addCode("Grid " + node.ID + " = Grid(" );
                 break;
             default:
                 System.out.println("Error: Default cartype");

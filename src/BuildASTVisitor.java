@@ -88,6 +88,24 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
+    public GraphNode visitConstructor(HelloParser.ConstructorContext ctx) {
+        ConstructorNode node = new ConstructorNode();
+
+        if (ctx.getChildCount() == 11) {
+            System.out.println("I am a carspawner constructor");
+            node.x = Integer.parseInt(ctx.children.get(1).getText());
+            node.y = Integer.parseInt(ctx.children.get(3).getText());
+            node.direction = ctx.children.get(5).getText();
+            node.frequency = Integer.parseInt(ctx.children.get(7).getText());
+            node.name = ctx.children.get(9).getText();
+        } else {
+
+        }
+
+        return node;
+    }
+
+    @Override
     public GraphNode visitIf_statement(HelloParser.If_statementContext ctx) {
         If_Then_ElseNode node = new If_Then_ElseNode();
         if (visitCondition(ctx.logic_expression().condition()) != null) {
@@ -153,6 +171,9 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         }
         node.ID = ctx.children.get(2).getText();
        // node.direction = ctx.children.get(3).getText();'
+
+        node.constructer = (ConstructorNode) visitConstructor(ctx.constructor());
+
         try {
             BlockNode body = new BlockNode();
             body.childrenList.add(visitCurl_statement(ctx.curl_statement()));

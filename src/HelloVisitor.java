@@ -64,6 +64,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCreate_statement(HelloParser.Create_statementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#constructor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructor(HelloParser.ConstructorContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#create_type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
