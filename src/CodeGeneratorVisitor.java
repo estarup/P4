@@ -85,6 +85,145 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 }
             }
         }
+        try {
+            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Main.java");
+            FileWriter writer = new FileWriter(file);
+            writer.write("import java.util.ArrayList;\n" +
+                    "package Simulation; \n" +
+                    "public class Main {\n" +
+                    "    public static void main(String[] args) {\n" +
+                    "        Grid grid = new Grid(10,10);\n" +
+                    "        ArrayList<Car> carList = new ArrayList<>();\n" +
+                    "        CarSpawner spawner = new CarSpawner(9,2, \"East\", 5, \"eastSpawner \");\n" +
+                    "        CarSpawner spawnerSouth = new CarSpawner(0,1, \"South\", 2, \"southSpawner\");\n" +
+                    "        TrafficLight tf = new TrafficLight(2,3, 10, \"firstLight\");\n" +
+                    "        grid.add(spawner);\n" +
+                    "        grid.add(spawnerSouth);\n" +
+                    "        grid.add(tf);\n" +
+                    "\n" +
+                    "        long startTime = System.currentTimeMillis();\n" +
+                    "        ArrayList<GridObject> list = new ArrayList<>();\n" +
+                    "\n" +
+                    "        for(GridObject[] gridObject: grid.arr) {\n" +
+                    "            for(GridObject gridObject2: gridObject){\n" +
+                    "                if(gridObject2 != null) {\n" +
+                    "                    list.add(gridObject2);\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        long interval = 1000;\n" +
+                    "        int carsPassed = 0;\n" +
+                    "        while(true) {\n" +
+                    "            for (GridObject obj: list) {\n" +
+                    "                if (obj instanceof CarSpawner) {\n" +
+                    "                    if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {\n" +
+                    "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
+                    "                        System.out.println(\"Spawn car: \" + ((CarSpawner) obj).getDirection()) ;\n" +
+                    "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
+                    "                    }\n" +
+                    "                }\n" +
+                    "                if (obj instanceof TrafficLight) {\n" +
+                    "                    if (System.currentTimeMillis() >= startTime + ((TrafficLight) obj).getInterval()) {\n" +
+                    "                        ((TrafficLight) obj).SwitchLights();\n" +
+                    "                        //System.out.println(\"TrafficLight switch: \" + ((TrafficLight) obj).getInterval() / 1000 + \"sec\");\n" +
+                    "                        ((TrafficLight) obj).setInterval((long) (((TrafficLight) obj).getInterval() + ((TrafficLight) obj).getFrequency()));\n" +
+                    "                    }\n" +
+                    "                    for (Car car: carList) {\n" +
+                    "                        switch (car.getDirection()) {\n" +
+                    "                            case \"East\":\n" +
+                    "                              /*  if (car.getX() >= obj.getX()) {\n" +
+                    "                                    carList.remove(car);\n" +
+                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
+                    "                                    break;\n" +
+                    "                                }*/\n" +
+                    "                                if (car.getX() >= obj.getX() - 0.05) {\n" +
+                    "                                    if (((TrafficLight) obj).isGreenNorth) {\n" +
+                    "                                        car.setSpeed(0);\n" +
+                    "                                    }\n" +
+                    "                                }\n" +
+                    "                                if (car.getX() <= obj.getX() + 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    carsPassed++;\n" +
+                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
+                    "                                }\n" +
+                    "                                break;\n" +
+                    "                            case \"West\":\n" +
+                    "                               /* if (car.getX() <= 0) {\n" +
+                    "                                    carList.remove(car);\n" +
+                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
+                    "                                    break;\n" +
+                    "                                }*/\n" +
+                    "                                if (car.getX() <= obj.getX() + 0.05) {\n" +
+                    "                                    if (((TrafficLight) obj).isGreenNorth) {\n" +
+                    "                                        car.setSpeed(0);\n" +
+                    "                                    }\n" +
+                    "                                }\n" +
+                    "                                if (car.getX() >= obj.getX() - 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    carsPassed++;\n" +
+                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
+                    "                                }\n" +
+                    "                                break;\n" +
+                    "                            case \"North\":\n" +
+                    "                              /*  if (car.getY() <= 0) {\n" +
+                    "                                    carList.remove(car);\n" +
+                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
+                    "                                    break;\n" +
+                    "                                }*/\n" +
+                    "                                if (car.getY() <= obj.getY() + 0.05) {\n" +
+                    "                                    if (!((TrafficLight) obj).isGreenNorth) {\n" +
+                    "                                        car.setSpeed(0);\n" +
+                    "                                    }\n" +
+                    "                                }\n" +
+                    "                                if (car.getY() >= obj.getY() - 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    carsPassed++;\n" +
+                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
+                    "                                }\n" +
+                    "                                break;\n" +
+                    "                            case \"South\":\n" +
+                    "                               /* if (car.getY() >= grid.getY() -1) {\n" +
+                    "                                    carList.remove(car);\n" +
+                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
+                    "                                    break;\n" +
+                    "                                }*/\n" +
+                    "                                if (car.getY() <= obj.getY() - 0.05) {\n" +
+                    "                                    if (!((TrafficLight) obj).isGreenNorth) {\n" +
+                    "                                        car.setSpeed(0);\n" +
+                    "                                    }\n" +
+                    "                                }\n" +
+                    "                                if (car.getY() <= obj.getY() + 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    carsPassed++;\n" +
+                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
+                    "                                }\n" +
+                    "                                break;\n" +
+                    "                            default: System.out.println(\"Error: Car direction mismatch\");\n" +
+                    "                        }\n" +
+                    "                    }\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "           /* if (System.currentTimeMillis() >= startTime + interval) {\n" +
+                    "                for (Car car: carList) {\n" +
+                    "                        car.Behavior();\n" +
+                    "                        car.setInterval(car.getInterval() + car.getFrequency());\n" +
+                    "                        if (car.getX() > grid.getX() -1 || car.getY() > grid.getY() -1 ) {\n" +
+                    "                            carList.remove(car);\n" +
+                    "                            System.out.println(\"Car removed \" + car.getDirection());\n" +
+                    "                            break;\n" +
+                    "                        }\n" +
+                    "                }\n" +
+                    "                interval += 1000;\n" +
+                    "            }*/\n" +
+                    "        }\n" +
+                    "\n" +
+                    "    }\n" +
+                    "}\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error: Cannot create GridObjectclass");
+            e.printStackTrace();
+        }
         return node;
     }
 
@@ -130,7 +269,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         } catch (IOException e) {
             System.out.println("Error: Cannot create GridObjectclass");
             e.printStackTrace();
-        } finally {
         }
     }
 
@@ -400,19 +538,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 System.out.println("Error: Default cartype");
                 break;
         }
-        System.out.println(code);
-
-
-        /*
-        1. Grid
-        2. This type
-
-        3. Main file
-
-
-
-        */
-
         return node;
     }
 
@@ -474,8 +599,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             }
         }
         addCode("}");
-
-        System.out.println(code);
         return node;
     }
 
@@ -634,8 +757,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             visit(node.body);
         }
         addCode("}");
-
-        System.out.println(code);
         return node;
     }
 }

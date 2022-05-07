@@ -74,7 +74,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
         try {
             GraphNode.SymbolTable.get(node.ID);
         } catch (NullPointerException e) {
-            System.out.println("Exception: Variable has not been declared");
+            //System.out.println("Exception: Variable has not been declared");
             return node;
         }
         GraphNode.SymbolTable.put(node.ID, node.type);
@@ -116,12 +116,8 @@ public class SymbolTableFillVisitor extends ASTVisitor{
 
     @Override
     public Object visit(MethodCallNode node) {
-
         if (GraphNode.SymbolTable.get(node.ID) == null) {
             System.out.println("Error: Call to not defined method: " + node.ID);
-            return node;
-        }
-        if (checkInt(node.parameter) || checkFloat(node.parameter)) {
             return node;
         }
         return node;

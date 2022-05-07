@@ -1,8 +1,5 @@
-
-int j;
-j = 1; 
-create Grid car(1,2) {
+create CarSpawner spawner(9,2, "East", 5, "eastSpawner") {
+    if (true) {
+        int j;
+    }
 }
-create CarSpawner spawner(1,2, "East", 5, "carspawner") {}
-
-create TrafficLight light(1, 2, 10, "tf") {}
