@@ -1,8 +1,7 @@
 package Simulation;
-
 public class Grid extends GridObject{
-    public Grid(int x, int y, String name) {
-        super(x,y, name);
+    public Grid(int x, int y) {
+        super(x,y);
         arr = new GridObject[this.getX()][this.getY()];
     }
 

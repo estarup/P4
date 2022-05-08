@@ -1,10 +1,9 @@
-package Simulation;
 
+package Simulation;
 public class GridObject {
-    public GridObject(int X, int Y, String Name) {
+    public GridObject(int X, int Y) {
         setX(X);
         setY(Y);
-        setName(Name);
     }
     private String name;
 

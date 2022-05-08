@@ -1,3 +1,4 @@
+import Simulation.Program;
 import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -23,6 +24,9 @@ public class AntlrParser
             BlockNode symbolResult = new SymbolTableFillVisitor().visit(astNode);
             BlockNode typeResult = new TypeCheckVisitor().visit(symbolResult);
             BlockNode codeResult = new CodeGeneratorVisitor().visit(typeResult);
+
+            Program program = new Program();
+            program.Run();
 
             double x = 1.0;
         }

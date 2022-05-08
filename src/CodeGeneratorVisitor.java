@@ -9,7 +9,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         code = code + c;
     }
 
-    //FileWriter writer = new FileWriter("YourFile.txt");
 
     @Override
     public GraphNode visit(AddNode node) {
@@ -86,23 +85,19 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             }
         }
         try {
-            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Main.java");
+            File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Program.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("import java.util.ArrayList;\n" +
-                    "package Simulation; \n" +
-                    "public class Main {\n" +
-                    "    public static void main(String[] args) {\n" +
-                    "        Grid grid = new Grid(10,10);\n" +
-                    "        ArrayList<Car> carList = new ArrayList<>();\n" +
-                    "        CarSpawner spawner = new CarSpawner(9,2, \"East\", 5, \"eastSpawner \");\n" +
-                    "        CarSpawner spawnerSouth = new CarSpawner(0,1, \"South\", 2, \"southSpawner\");\n" +
-                    "        TrafficLight tf = new TrafficLight(2,3, 10, \"firstLight\");\n" +
-                    "        grid.add(spawner);\n" +
-                    "        grid.add(spawnerSouth);\n" +
-                    "        grid.add(tf);\n" +
+            writer.write("package Simulation; \n" +
+                    "import java.util.ArrayList;\n" +
+                    "public class Program {\n" +
+                    "    Grid grid;\n" +
+                    "    ArrayList<Car> carList = new ArrayList<>();\n" +
+                    "    long startTime = System.currentTimeMillis();\n" +
+                    "    ArrayList<GridObject> list = new ArrayList<>();\n" +
+                    "    long interval = 1000;\n" +
+                    "    int carsPassed = 0;\n" +
+                    "    public void Run() {\n" + code +
                     "\n" +
-                    "        long startTime = System.currentTimeMillis();\n" +
-                    "        ArrayList<GridObject> list = new ArrayList<>();\n" +
                     "\n" +
                     "        for(GridObject[] gridObject: grid.arr) {\n" +
                     "            for(GridObject gridObject2: gridObject){\n" +
@@ -111,31 +106,23 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                }\n" +
                     "            }\n" +
                     "        }\n" +
-                    "        long interval = 1000;\n" +
-                    "        int carsPassed = 0;\n" +
+                    "\n" +
                     "        while(true) {\n" +
                     "            for (GridObject obj: list) {\n" +
                     "                if (obj instanceof CarSpawner) {\n" +
                     "                    if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {\n" +
                     "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
-                    "                        System.out.println(\"Spawn car: \" + ((CarSpawner) obj).getDirection()) ;\n" +
                     "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
                     "                    }\n" +
                     "                }\n" +
                     "                if (obj instanceof TrafficLight) {\n" +
                     "                    if (System.currentTimeMillis() >= startTime + ((TrafficLight) obj).getInterval()) {\n" +
                     "                        ((TrafficLight) obj).SwitchLights();\n" +
-                    "                        //System.out.println(\"TrafficLight switch: \" + ((TrafficLight) obj).getInterval() / 1000 + \"sec\");\n" +
                     "                        ((TrafficLight) obj).setInterval((long) (((TrafficLight) obj).getInterval() + ((TrafficLight) obj).getFrequency()));\n" +
                     "                    }\n" +
                     "                    for (Car car: carList) {\n" +
                     "                        switch (car.getDirection()) {\n" +
                     "                            case \"East\":\n" +
-                    "                              /*  if (car.getX() >= obj.getX()) {\n" +
-                    "                                    carList.remove(car);\n" +
-                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
-                    "                                    break;\n" +
-                    "                                }*/\n" +
                     "                                if (car.getX() >= obj.getX() - 0.05) {\n" +
                     "                                    if (((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
@@ -143,59 +130,40 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                }\n" +
                     "                                if (car.getX() <= obj.getX() + 0.05 && ! car.hasPassedLight) {\n" +
                     "                                    car.hasPassedLight = true;\n" +
-                    "                                    carsPassed++;\n" +
-                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
+                    "                                    ((TrafficLight) obj).carPassed();\n" +
                     "                                }\n" +
                     "                                break;\n" +
                     "                            case \"West\":\n" +
-                    "                               /* if (car.getX() <= 0) {\n" +
-                    "                                    carList.remove(car);\n" +
-                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
-                    "                                    break;\n" +
-                    "                                }*/\n" +
                     "                                if (car.getX() <= obj.getX() + 0.05) {\n" +
                     "                                    if (((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getX() >= obj.getX() - 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    ((TrafficLight) obj).carPassed();\n" +
                     "                                    car.hasPassedLight = true;\n" +
-                    "                                    carsPassed++;\n" +
-                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
                     "                                }\n" +
                     "                                break;\n" +
                     "                            case \"North\":\n" +
-                    "                              /*  if (car.getY() <= 0) {\n" +
-                    "                                    carList.remove(car);\n" +
-                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
-                    "                                    break;\n" +
-                    "                                }*/\n" +
                     "                                if (car.getY() <= obj.getY() + 0.05) {\n" +
                     "                                    if (!((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getY() >= obj.getY() - 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    ((TrafficLight) obj).carPassed();\n" +
                     "                                    car.hasPassedLight = true;\n" +
-                    "                                    carsPassed++;\n" +
-                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
                     "                                }\n" +
                     "                                break;\n" +
                     "                            case \"South\":\n" +
-                    "                               /* if (car.getY() >= grid.getY() -1) {\n" +
-                    "                                    carList.remove(car);\n" +
-                    "                                    System.out.println(\"Car removed \" + car.getDirection());\n" +
-                    "                                    break;\n" +
-                    "                                }*/\n" +
                     "                                if (car.getY() <= obj.getY() - 0.05) {\n" +
                     "                                    if (!((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getY() <= obj.getY() + 0.05 && ! car.hasPassedLight) {\n" +
+                    "                                    ((TrafficLight) obj).carPassed();\n" +
                     "                                    car.hasPassedLight = true;\n" +
-                    "                                    carsPassed++;\n" +
-                    "                                    System.out.println(\"Cars passed: \" + carsPassed + \" \" + ((TrafficLight) obj).getName());\n" +
                     "                                }\n" +
                     "                                break;\n" +
                     "                            default: System.out.println(\"Error: Car direction mismatch\");\n" +
@@ -203,27 +171,23 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                    }\n" +
                     "                }\n" +
                     "            }\n" +
-                    "           /* if (System.currentTimeMillis() >= startTime + interval) {\n" +
+                    "            if (System.currentTimeMillis() >= startTime + interval) {\n" +
                     "                for (Car car: carList) {\n" +
-                    "                        car.Behavior();\n" +
-                    "                        car.setInterval(car.getInterval() + car.getFrequency());\n" +
-                    "                        if (car.getX() > grid.getX() -1 || car.getY() > grid.getY() -1 ) {\n" +
-                    "                            carList.remove(car);\n" +
-                    "                            System.out.println(\"Car removed \" + car.getDirection());\n" +
-                    "                            break;\n" +
-                    "                        }\n" +
+                    "                    car.Behavior();\n" +
+                    "                    car.setInterval(car.getInterval() + car.getFrequency());\n" +
                     "                }\n" +
                     "                interval += 1000;\n" +
-                    "            }*/\n" +
+                    "            }\n" +
                     "        }\n" +
-                    "\n" +
                     "    }\n" +
-                    "}\n");
+                    "}\n" +
+                    "\n");
             writer.close();
         } catch (IOException e) {
-            System.out.println("Error: Cannot create GridObjectclass");
+            System.out.println("Error: Cannot create Program class");
             e.printStackTrace();
         }
+
         return node;
     }
 
@@ -231,13 +195,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/GridObject.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
-                    "\n" +
+            writer.write("\n" +
+                    "package Simulation;\n" +
                     "public class GridObject {\n" +
-                    "    public GridObject(int X, int Y, String Name) {\n" +
+                    "    public GridObject(int X, int Y) {\n" +
                     "        setX(X);\n" +
                     "        setY(Y);\n" +
-                    "        setName(Name);\n" +
                     "    }\n" +
                     "    private String name;\n" +
                     "\n" +
@@ -277,10 +240,9 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Grid.java");
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation;\n" +
-                    "\n" +
                     "public class Grid extends GridObject{\n" +
-                    "    public Grid(int x, int y, String name) {\n" +
-                    "        super(x,y, name);\n" +
+                    "    public Grid(int x, int y) {\n" +
+                    "        super(x,y);\n" +
                     "        arr = new GridObject[this.getX()][this.getY()];\n" +
                     "    }\n" +
                     "\n" +
@@ -310,7 +272,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "        setSpeed(speed);\n" +
                     "        setDirection(direction);\n" +
                     "    }\n" +
-                    "\n" +
                     "\n" +
                     "    public boolean hasPassedLight = false;\n" +
                     "\n" +
@@ -370,7 +331,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "            case \"North\" -> setY(getY() - ms);\n" +
                     "            case \"South\" -> setY(getY() + ms);\n" +
                     "        }\n" +
-                    "        System.out.println(\"Car pos: \" + this.getX() + \"x\" + this.getY());\n" +
+                    "        System.out.println(\"Car pos:\" + getX() + \"x\" + getY());\n" +
                     "    }\n" +
                     "}\n");
             writer.close();
@@ -388,7 +349,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "public class CarSpawner extends GridObject{\n" +
                     "\n" +
                     "    public CarSpawner(int x, int y, String direction, long frequency, String name) {\n" +
-                    "        super(x, y, name);\n" +
+                    "        super(x, y);\n" +
+                    "        setName(name);\n" +
                     "        setDirection(direction);\n" +
                     "        setFrequency(frequency * 1000);\n" +
                     "        setInterval(this.getFrequency());\n" +
@@ -410,7 +372,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    }\n" +
                     "\n" +
                     "    public Car SpawnCar(){\n" +
-                    "       return new Car(this.getX(), this.getY(), 50, this.getDirection()); // Spawn car with 50km/h\n" +
+                    "        //System.out.println(\"Spawn car: \" + getDirection() +\" \" +  getName()) ;\n" +
+                    "        return new Car(this.getX(), this.getY(), 50, this.getDirection()); // Spawn car with 50km/h\n" +
                     "    }\n" +
                     "\n" +
                     "    public void setFrequency(long frequency) {\n" +
@@ -440,7 +403,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "public class TrafficLight extends GridObject{\n" +
                     "\n" +
                     "    public TrafficLight(int X, int Y, long frequency, String Name) {\n" +
-                    "        super(X, Y, Name);\n" +
+                    "        super(X, Y);\n" +
+                    "        setName(Name);\n" +
                     "        setFrequency(frequency * 1000);\n" +
                     "        setInterval(this.interval += getFrequency());\n" +
                     "        isGreenNorth = true;\n" +
@@ -451,7 +415,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "\n" +
                     "    public void carPassed() {\n" +
                     "        carsPassed++;\n" +
-                    "        System.out.println(\"Cars passed: \" + carsPassed );\n" +
+                    "        System.out.println(getName() + \" has \" + carsPassed + \" cars passed\");\n" +
                     "    }\n" +
                     "    public long getCarsPassed() {\n" +
                     "        return this.carsPassed;\n" +
@@ -481,10 +445,10 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "\n" +
                     "    public void SwitchLights() {\n" +
                     "        if (isGreenNorth) {\n" +
-                    "            System.out.println(\"Green East/West\");\n" +
+                    "            System.out.println(getName() + \" is green East/West\");\n" +
                     "            isGreenNorth = false;\n" +
                     "        } else {\n" +
-                    "            System.out.println(\"Green North/South\");\n" +
+                    "            System.out.println(getName() + \" is green North/South\");\n" +
                     "            isGreenNorth = true;\n" +
                     "        }\n" +
                     "    }\n" +
@@ -523,11 +487,11 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 addCode("grid.add(" + node.ID + ");");
                 break;
             case GraphNode.GRIDTYPE:
-                addCode("Grid grid = Grid(" + node.constructor.x + ", " + node.constructor.y + ");");
+                addCode("grid = new Grid(" + node.constructor.x + ", " + node.constructor.y + ");");
                 visit(node.body);
                 break;
             case GraphNode.TRAFFICLIGHTTYPE:
-                addCode("TrafficLight " + node.ID + " = TrafficLight("
+                addCode("TrafficLight " + node.ID + " = new TrafficLight("
                         + node.constructor.x + ", "
                         + node.constructor.y + ", " + node.constructor.frequency + ", "
                         + node.constructor.name + ");");

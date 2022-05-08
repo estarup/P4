@@ -7,7 +7,6 @@ public class Car{
         setDirection(direction);
     }
 
-
     public boolean hasPassedLight = false;
 
     private double x;
@@ -66,6 +65,6 @@ public class Car{
             case "North" -> setY(getY() - ms);
             case "South" -> setY(getY() + ms);
         }
-        System.out.println("Car pos: " + this.getX() + "x" + this.getY());
+        System.out.println("Car pos:" + getX() + "x" + getY());
     }
 }
