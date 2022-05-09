@@ -1,11 +1,11 @@
-package Simulation; 
+package Simulation;
 public class Car{
     public Car(double x, double y, double speed, String direction) {
-        this.setX(x);
-        this.setY(y);
+        setX(x);
+        setY(y);
         setSpeed(speed);
         setDirection(direction);
-System.out.println("Car spawned");    }
+    }
 
     public boolean hasPassedLight = false;
 

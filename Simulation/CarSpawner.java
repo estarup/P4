@@ -1,4 +1,4 @@
-package Simulation;
+package Simulation; 
 public class CarSpawner extends GridObject{
 
     public CarSpawner(int x, int y, String direction, long frequency, String name) {
@@ -6,7 +6,7 @@ public class CarSpawner extends GridObject{
         setName(name);
         setDirection(direction);
         setFrequency(frequency * 1000);
-        setInterval(this.getFrequency());
+        setInterval(getFrequency());
     }
 
     private long interval;
@@ -25,8 +25,7 @@ public class CarSpawner extends GridObject{
     }
 
     public Car SpawnCar(){
-        //System.out.println("Spawn car: " + getDirection() +" " +  getName()) ;
-        return new Car(this.getX(), this.getY(), 50, this.getDirection()); // Spawn car with 50km/h
+        return new Car(getX(), getY(), 50, getDirection()); // Spawn car with 50km/h
     }
 
     public void setFrequency(long frequency) {

@@ -5,10 +5,9 @@ public class TrafficLight extends GridObject{
         super(X, Y);
         setName(Name);
         setFrequency(frequency * 1000);
-        setInterval(this.interval += getFrequency());
+        setInterval(interval += getFrequency());
         isGreenNorth = true;
     }
-
 
     private long carsPassed = 0;
 

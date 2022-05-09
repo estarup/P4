@@ -264,14 +264,13 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Car.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation; \n" +
+            writer.write("package Simulation;\n" +
                     "public class Car{\n" +
                     "    public Car(double x, double y, double speed, String direction) {\n" +
-                    "        this.setX(x);\n" +
-                    "        this.setY(y);\n" +
+                    "        setX(x);\n" +
+                    "        setY(y);\n" +
                     "        setSpeed(speed);\n" +
                     "        setDirection(direction);\n" +
-                    "System.out.println(\"Car spawned\");" +
                     "    }\n" +
                     "\n" +
                     "    public boolean hasPassedLight = false;\n" +
@@ -346,7 +345,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/CarSpawner.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
+            writer.write("package Simulation; \n" +
                     "public class CarSpawner extends GridObject{\n" +
                     "\n" +
                     "    public CarSpawner(int x, int y, String direction, long frequency, String name) {\n" +
@@ -354,7 +353,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "        setName(name);\n" +
                     "        setDirection(direction);\n" +
                     "        setFrequency(frequency * 1000);\n" +
-                    "        setInterval(this.getFrequency());\n" +
+                    "        setInterval(getFrequency());\n" +
                     "    }\n" +
                     "\n" +
                     "    private long interval;\n" +
@@ -373,8 +372,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    }\n" +
                     "\n" +
                     "    public Car SpawnCar(){\n" +
-                    "        //System.out.println(\"Spawn car: \" + getDirection() +\" \" +  getName()) ;\n" +
-                    "        return new Car(this.getX(), this.getY(), 50, this.getDirection()); // Spawn car with 50km/h\n" +
+                    "        return new Car(getX(), getY(), 50, getDirection()); // Spawn car with 50km/h\n" +
                     "    }\n" +
                     "\n" +
                     "    public void setFrequency(long frequency) {\n" +
@@ -407,10 +405,9 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "        super(X, Y);\n" +
                     "        setName(Name);\n" +
                     "        setFrequency(frequency * 1000);\n" +
-                    "        setInterval(this.interval += getFrequency());\n" +
+                    "        setInterval(interval += getFrequency());\n" +
                     "        isGreenNorth = true;\n" +
                     "    }\n" +
-                    "\n" +
                     "\n" +
                     "    private long carsPassed = 0;\n" +
                     "\n" +
