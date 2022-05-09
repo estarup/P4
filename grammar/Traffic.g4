@@ -1,4 +1,4 @@
-grammar Hello;
+grammar Traffic;
 
 options {
     language = Java;

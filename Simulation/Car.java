@@ -5,7 +5,7 @@ public class Car{
         this.setY(y);
         setSpeed(speed);
         setDirection(direction);
-    }
+System.out.println("Car spawned");    }
 
     public boolean hasPassedLight = false;
 

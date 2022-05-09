@@ -1,4 +1,4 @@
-// Generated from /Users/emil/IdeaProjects/P4/grammar/Hello.g4 by ANTLR 4.10.1
+// Generated from /Users/emil/IdeaProjects/P4/grammar/Traffic.g4 by ANTLR 4.10.1
 package com.output;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 

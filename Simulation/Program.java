@@ -1,4 +1,4 @@
-package Simulation; 
+package Simulation;
 import java.util.ArrayList;
 public class Program {
     Grid grid;
@@ -8,8 +8,8 @@ public class Program {
     long interval = 1000;
     int carsPassed = 0;
     public void Run() {
-grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 20, "southSpawner");grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10, "firstLight");grid.add(tf);
 
+grid = new Grid(10, 10);TrafficLight tf = new TrafficLight(2, 3, 10, "firstLight");grid.add(tf);CarSpawner spawnerSouth = new CarSpawner(2, 1, "South", 10, "southSpawner");grid.add(spawnerSouth);
         for(GridObject[] gridObject: grid.arr) {
             for(GridObject gridObject2: gridObject){
                 if(gridObject2 != null) {
@@ -34,47 +34,47 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                     for (Car car: carList) {
                         switch (car.getDirection()) {
                             case "East":
-                                if (car.getX() >= obj.getX() - 0.05) {
+                                if (car.getX() >= obj.getX() - 0.05 && car.getX() <= obj.getX()) {
                                     if (((TrafficLight) obj).isGreenNorth) {
                                         car.setSpeed(0);
                                     }
-                                }
-                                if (car.getX() <= obj.getX() + 0.05 && ! car.hasPassedLight) {
-                                    car.hasPassedLight = true;
-                                    ((TrafficLight) obj).carPassed();
+                                    if (! car.hasPassedLight) {
+                                        car.hasPassedLight = true;
+                                        ((TrafficLight) obj).carPassed();
+                                    }
                                 }
                                 break;
                             case "West":
-                                if (car.getX() <= obj.getX() + 0.05) {
+                                if (car.getX() <= obj.getX() + 0.05 && car.getX() >= obj.getX()) {
                                     if (((TrafficLight) obj).isGreenNorth) {
                                         car.setSpeed(0);
                                     }
-                                }
-                                if (car.getX() >= obj.getX() - 0.05 && ! car.hasPassedLight) {
-                                    ((TrafficLight) obj).carPassed();
-                                    car.hasPassedLight = true;
+                                    if (! car.hasPassedLight) {
+                                        ((TrafficLight) obj).carPassed();
+                                        car.hasPassedLight = true;
+                                    }
                                 }
                                 break;
                             case "North":
-                                if (car.getY() <= obj.getY() + 0.05) {
+                                if (car.getY() >= obj.getY() + 0.05 && car.getY() <= obj.getY()) {
                                     if (!((TrafficLight) obj).isGreenNorth) {
                                         car.setSpeed(0);
                                     }
-                                }
-                                if (car.getY() >= obj.getY() - 0.05 && ! car.hasPassedLight) {
-                                    ((TrafficLight) obj).carPassed();
-                                    car.hasPassedLight = true;
+                                    if (! car.hasPassedLight) {
+                                        ((TrafficLight) obj).carPassed();
+                                        car.hasPassedLight = true;
+                                    }
                                 }
                                 break;
                             case "South":
-                                if (car.getY() <= obj.getY() - 0.05) {
+                                if (car.getY() <= obj.getY() - 0.05 && car.getY() <= obj.getY()) {
                                     if (!((TrafficLight) obj).isGreenNorth) {
                                         car.setSpeed(0);
                                     }
-                                }
-                                if (car.getY() <= obj.getY() + 0.05 && ! car.hasPassedLight) {
-                                    ((TrafficLight) obj).carPassed();
-                                    car.hasPassedLight = true;
+                                    if (! car.hasPassedLight) {
+                                        ((TrafficLight) obj).carPassed();
+                                        car.hasPassedLight = true;
+                                    }
                                 }
                                 break;
                             default: System.out.println("Error: Car direction mismatch");

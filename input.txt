@@ -1,5 +1,5 @@
 
 create Grid grid(10,10) {}
-
-create CarSpawner spawnerSouth(2,2, "South", 20, "southSpawner") {}
 create TrafficLight tf(2,3, 10, "firstLight") {}
+
+create CarSpawner spawnerSouth(2,1, "South", 10, "southSpawner") {}
