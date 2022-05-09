@@ -139,7 +139,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitWhile_loop(HelloParser.While_loopContext ctx) {
         WhileStmNode node = new WhileStmNode();
-
         if (visitCondition(ctx.logic_expression().condition()) != null) {
             node.condition = (BinaryOperatorNode) visitCondition(ctx.logic_expression().condition());
         } else {
