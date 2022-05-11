@@ -1,4 +1,4 @@
-package Simulation;
+package Simulation; 
 public class Grid extends GridObject{
     public Grid(int x, int y) {
         super(x,y);
@@ -8,7 +8,7 @@ public class Grid extends GridObject{
     public GridObject[][] arr;
 
     public void add(GridObject gridObject) {
-        System.out.println(gridObject.getX() + "x" + gridObject.getY() + " " + gridObject.getName());
+        System.out.println(gridObject.getX() + "x" + gridObject.getY() + " " + gridObject);
         arr[gridObject.getX()][gridObject.getY()] = gridObject;
     }
 }

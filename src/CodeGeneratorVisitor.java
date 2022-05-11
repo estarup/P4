@@ -55,6 +55,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public BlockNode visit(BlockNode node) {
+        if (node == null) {return null;}
         for (GraphNode n: node.childrenList) {
             if (n != null) {
                 if (n instanceof AssignmentNode) {
@@ -98,7 +99,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    int carsPassed = 0;\n" +
                     "    public void Run() {\n" +
                     "\n" + code +
-                    "\n" +
+                    "\n"  +
                     "        for(GridObject[] gridObject: grid.arr) {\n" +
                     "            for(GridObject gridObject2: gridObject){\n" +
                     "                if(gridObject2 != null) {\n" +
@@ -239,7 +240,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Grid.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
+            writer.write("package Simulation; \n" +
                     "public class Grid extends GridObject{\n" +
                     "    public Grid(int x, int y) {\n" +
                     "        super(x,y);\n" +
@@ -249,7 +250,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    public GridObject[][] arr;\n" +
                     "\n" +
                     "    public void add(GridObject gridObject) {\n" +
-                    "        System.out.println(gridObject.getX() + \"x\" + gridObject.getY() + \" \" + gridObject.getName());\n" +
+                    "        System.out.println(gridObject.getX() + \"x\" + gridObject.getY() + \" \" + gridObject);\n" +
                     "        arr[gridObject.getX()][gridObject.getY()] = gridObject;\n" +
                     "    }\n" +
                     "}");
@@ -348,9 +349,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             writer.write("package Simulation; \n" +
                     "public class CarSpawner extends GridObject{\n" +
                     "\n" +
-                    "    public CarSpawner(int x, int y, String direction, long frequency, String name) {\n" +
+                    "    public CarSpawner(int x, int y, String direction, long frequency) {\n" +
                     "        super(x, y);\n" +
-                    "        setName(name);\n" +
                     "        setDirection(direction);\n" +
                     "        setFrequency(frequency * 1000);\n" +
                     "        setInterval(getFrequency());\n" +
@@ -401,9 +401,10 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             writer.write("package Simulation;\n" +
                     "public class TrafficLight extends GridObject{\n" +
                     "\n" +
-                    "    public TrafficLight(int X, int Y, long frequency, String Name) {\n" +
+                    "    public static int lightCount = 0;\n" +
+                    "    public TrafficLight(int X, int Y, long frequency) {\n" +
                     "        super(X, Y);\n" +
-                    "        setName(Name);\n" +
+                    "        lightCount += 1;\n" +
                     "        setFrequency(frequency * 1000);\n" +
                     "        setInterval(interval += getFrequency());\n" +
                     "        isGreenNorth = true;\n" +
@@ -413,7 +414,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "\n" +
                     "    public void carPassed() {\n" +
                     "        carsPassed++;\n" +
-                    "        System.out.println(getName() + \" has \" + carsPassed + \" cars passed\");\n" +
+                    "        System.out.println(\"Light \" + lightCount + \" has \" + carsPassed + \" cars passed\");\n" +
                     "    }\n" +
                     "    public long getCarsPassed() {\n" +
                     "        return this.carsPassed;\n" +
@@ -443,10 +444,10 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "\n" +
                     "    public void SwitchLights() {\n" +
                     "        if (isGreenNorth) {\n" +
-                    "            System.out.println(getName() + \" is green East/West\");\n" +
+                    "            System.out.println(lightCount + \" is green East/West\");\n" +
                     "            isGreenNorth = false;\n" +
                     "        } else {\n" +
-                    "            System.out.println(getName() + \" is green North/South\");\n" +
+                    "            System.out.println(lightCount + \" is green North/South\");\n" +
                     "            isGreenNorth = true;\n" +
                     "        }\n" +
                     "    }\n" +
@@ -479,21 +480,16 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                 addCode("CarSpawner " + node.ID + " = new CarSpawner(" + node.constructor.x
                         + ", " + node.constructor.y
                         + ", " + node.constructor.direction + ", "
-                        + node.constructor.frequency + ", " + node.constructor.name +
-                        ");");
-                visit(node.body);
+                        + node.constructor.frequency + ");");
                 addCode("grid.add(" + node.ID + ");");
                 break;
             case GraphNode.GRIDTYPE:
                 addCode("grid = new Grid(" + node.constructor.x + ", " + node.constructor.y + ");");
-                visit(node.body);
                 break;
             case GraphNode.TRAFFICLIGHTTYPE:
                 addCode("TrafficLight " + node.ID + " = new TrafficLight("
                         + node.constructor.x + ", "
-                        + node.constructor.y + ", " + node.constructor.frequency + ", "
-                        + node.constructor.name + ");");
-                visit(node.body);
+                        + node.constructor.y + ", " + node.constructor.frequency + ");");
                 addCode("grid.add(" + node.ID + ");");
                 break;
             default:

@@ -1,9 +1,10 @@
 package Simulation;
 public class TrafficLight extends GridObject{
 
-    public TrafficLight(int X, int Y, long frequency, String Name) {
+    public static int lightCount = 0;
+    public TrafficLight(int X, int Y, long frequency) {
         super(X, Y);
-        setName(Name);
+        lightCount += 1;
         setFrequency(frequency * 1000);
         setInterval(interval += getFrequency());
         isGreenNorth = true;
@@ -13,7 +14,7 @@ public class TrafficLight extends GridObject{
 
     public void carPassed() {
         carsPassed++;
-        System.out.println(getName() + " has " + carsPassed + " cars passed");
+        System.out.println("Light " + lightCount + " has " + carsPassed + " cars passed");
     }
     public long getCarsPassed() {
         return this.carsPassed;
@@ -43,10 +44,10 @@ public class TrafficLight extends GridObject{
 
     public void SwitchLights() {
         if (isGreenNorth) {
-            System.out.println(getName() + " is green East/West");
+            System.out.println(lightCount + " is green East/West");
             isGreenNorth = false;
         } else {
-            System.out.println(getName() + " is green North/South");
+            System.out.println(lightCount + " is green North/South");
             isGreenNorth = true;
         }
     }

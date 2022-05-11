@@ -9,7 +9,7 @@ public class Program {
     int carsPassed = 0;
     public void Run() {
 
-grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 1, "South", 20, "southSpawner");grid.add(spawnerSouth);CarSpawner spawnerEast = new CarSpawner(1, 3, "East", 25, "eastSpawn");grid.add(spawnerEast);TrafficLight tf = new TrafficLight(2, 3, 10, "firstLight");grid.add(tf);
+grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 20);grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10);grid.add(tf);
         for(GridObject[] gridObject: grid.arr) {
             for(GridObject gridObject2: gridObject){
                 if(gridObject2 != null) {

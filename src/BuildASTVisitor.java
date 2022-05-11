@@ -91,20 +91,18 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public GraphNode visitConstructor(HelloParser.ConstructorContext ctx) {
         ConstructorNode node = new ConstructorNode();
 
-        if (ctx.getChildCount() == 11) {
+        if (ctx.getChildCount() == 9) {
             node.x = Integer.parseInt(ctx.children.get(1).getText());
             node.y = Integer.parseInt(ctx.children.get(3).getText());
             node.direction = ctx.children.get(5).getText();
             node.frequency = Integer.parseInt(ctx.children.get(7).getText());
-            node.name = ctx.children.get(9).getText();
         } else if (ctx.getChildCount() == 5) {
             node.x = Integer.parseInt(ctx.children.get(1).getText());
             node.y = Integer.parseInt(ctx.children.get(3).getText());
-        } else if (ctx.getChildCount() == 9) {
+        } else if (ctx.getChildCount() == 7) {
             node.x = Integer.parseInt(ctx.children.get(1).getText());
             node.y = Integer.parseInt(ctx.children.get(3).getText());
             node.frequency = Integer.parseInt(ctx.children.get(5).getText());
-            node.name = ctx.children.get(7).getText();
         }
 
         return node;
@@ -174,17 +172,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             default: System.out.println("Error: No type matches " + node.ID);
         }
         node.ID = ctx.children.get(2).getText();
-       // node.direction = ctx.children.get(3).getText();'
-
         node.constructor = (ConstructorNode) visitConstructor(ctx.constructor());
-
-        try {
-            BlockNode body = new BlockNode();
-            body.childrenList.add(visitCurl_statement(ctx.curl_statement()));
-            node.body = body;
-        } catch (NullPointerException n) {
-            System.out.println("Body block is empty");
-        }
         return  node;
     }
 

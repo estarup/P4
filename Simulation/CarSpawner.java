@@ -1,9 +1,8 @@
 package Simulation; 
 public class CarSpawner extends GridObject{
 
-    public CarSpawner(int x, int y, String direction, long frequency, String name) {
+    public CarSpawner(int x, int y, String direction, long frequency) {
         super(x, y);
-        setName(name);
         setDirection(direction);
         setFrequency(frequency * 1000);
         setInterval(getFrequency());

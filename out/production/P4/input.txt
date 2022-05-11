@@ -1,6 +1,5 @@
 
-create Grid grid(10,10) {}
-create CarSpawner spawnerSouth(2,1, "South", 20, "southSpawner") {}
-create CarSpawner spawnerEast(1,3, "East", 25, "eastSpawn") {}
-create TrafficLight tf(2,3, 10, "firstLight") {}
+create Grid grid(10,10);
 
+create CarSpawner spawnerSouth(2,2, "South", 20);
+create TrafficLight tf(2,3, 10);

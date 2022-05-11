@@ -1,4 +1,4 @@
-grammar Traffic;
+grammar Hello;
 
 options {
     language = Java;
@@ -20,10 +20,10 @@ method_call: METH_NAME method_parameter_call SEMICOLON;
 method_declaration: METH_RETURN_TYPE METH_NAME;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
-create_statement : CREATE create_type ID constructor curl_statement;
-constructor: LPAREN INTEGER ',' INTEGER ',' STRING ',' INTEGER ',' STRING RPAREN // Carspawner
+create_statement : CREATE create_type ID constructor SEMICOLON;
+constructor: LPAREN INTEGER ',' INTEGER ',' STRING ',' INTEGER RPAREN // Carspawner
            | LPAREN INTEGER ',' INTEGER RPAREN // Grid
-           | LPAREN INTEGER ',' INTEGER ',' INTEGER ',' STRING RPAREN; // TrafficLight
+           | LPAREN INTEGER ',' INTEGER ',' INTEGER RPAREN; // TrafficLight
 create_type : CAR
             | CARSPAWNER
             | TRAFFICLIGHT
