@@ -43,11 +43,12 @@ public class TrafficLight extends GridObject{
 
 
     public void SwitchLights() {
+        setInterval((long) (getInterval() + getFrequency()));
         if (isGreenNorth) {
-            System.out.println(lightCount + " is green East/West");
+            System.out.println("TrafficLight " + lightCount + " is green East/West");
             isGreenNorth = false;
         } else {
-            System.out.println(lightCount + " is green North/South");
+            System.out.println("TrafficLight " + lightCount + " is green North/South");
             isGreenNorth = true;
         }
     }

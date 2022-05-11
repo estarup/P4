@@ -1,4 +1,4 @@
-package Simulation;
+package Simulation; 
 public class Car{
     public Car(double x, double y, double speed, String direction) {
         setX(x);
@@ -66,5 +66,6 @@ public class Car{
             case "South" -> setY(getY() + ms);
         }
         System.out.println("Car pos:" + getX() + "x" + getY());
+        setInterval(getInterval() + getFrequency());
     }
 }

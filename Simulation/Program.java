@@ -8,8 +8,7 @@ public class Program {
     long interval = 1000;
     int carsPassed = 0;
     public void Run() {
-
-grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 20);grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10);grid.add(tf);
+grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 120);grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10);grid.add(tf);
         for(GridObject[] gridObject: grid.arr) {
             for(GridObject gridObject2: gridObject){
                 if(gridObject2 != null) {
@@ -23,13 +22,11 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                 if (obj instanceof CarSpawner) {
                     if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {
                         carList.add(((CarSpawner) obj).SpawnCar());
-                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());
                     }
                 }
                 if (obj instanceof TrafficLight) {
                     if (System.currentTimeMillis() >= startTime + ((TrafficLight) obj).getInterval()) {
                         ((TrafficLight) obj).SwitchLights();
-                        ((TrafficLight) obj).setInterval((long) (((TrafficLight) obj).getInterval() + ((TrafficLight) obj).getFrequency()));
                     }
                     for (Car car: carList) {
                         switch (car.getDirection()) {
@@ -85,7 +82,6 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
             if (System.currentTimeMillis() >= startTime + interval) {
                 for (Car car: carList) {
                     car.Behavior();
-                    car.setInterval(car.getInterval() + car.getFrequency());
                 }
                 interval += 1000;
             }

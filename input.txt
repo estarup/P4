@@ -1,5 +1,5 @@
 
 create Grid grid(10,10);
 
-create CarSpawner spawnerSouth(2,2, "South", 20);
+create CarSpawner spawnerSouth(2,2, "South", 120);
 create TrafficLight tf(2,3, 10);
