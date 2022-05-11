@@ -17,11 +17,11 @@ public class HelloParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, ADD=2, SUBTRACT=3, MULTIPLY=4, DIVIDE=5, ASSIGN=6, SEMICOLON=7, 
-		PRINT=8, EQUAL=9, NOTEQUAL=10, LESSTHAN=11, MORETHAN=12, LESSOREQUAL=13, 
-		MOREOREQUAL=14, LCURL=15, RCURL=16, LPAREN=17, RPAREN=18, IF=19, ELSE=20, 
-		WHILE=21, CREATE=22, RETURN=23, CAR=24, CARSPAWNER=25, TRAFFICLIGHT=26, 
-		GRID=27, BOOL=28, METH_RETURN_TYPE=29, VAR_TYPE=30, INTEGER=31, DOUBLE=32, 
-		METH_NAME=33, ID=34, STRING=35, WS=36;
+		EQUAL=8, NOTEQUAL=9, LESSTHAN=10, MORETHAN=11, LESSOREQUAL=12, MOREOREQUAL=13, 
+		LCURL=14, RCURL=15, LPAREN=16, RPAREN=17, IF=18, ELSE=19, WHILE=20, CREATE=21, 
+		RETURN=22, CAR=23, CARSPAWNER=24, TRAFFICLIGHT=25, GRID=26, BOOL=27, PRINT=28, 
+		METH_RETURN_TYPE=29, VAR_TYPE=30, INTEGER=31, DOUBLE=32, METH_NAME=33, 
+		ID=34, STRING=35, WS=36;
 	public static final int
 		RULE_trafficProg = 0, RULE_statement = 1, RULE_method = 2, RULE_method_init = 3, 
 		RULE_method_call = 4, RULE_method_declaration = 5, RULE_if_statement = 6, 
@@ -50,19 +50,19 @@ public class HelloParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "','", "'+'", "'-'", "'*'", "'/'", "'='", "';'", "'Print'", "'=='", 
-			"'!='", "'<'", "'>'", "'<='", "'>='", "'{'", "'}'", "'('", "')'", "'if'", 
-			"'else'", "'while'", "'create'", "'return'", "'Car'", "'CarSpawner'", 
-			"'TrafficLight'", "'Grid'"
+			null, "','", "'+'", "'-'", "'*'", "'/'", "'='", "';'", "'=='", "'!='", 
+			"'<'", "'>'", "'<='", "'>='", "'{'", "'}'", "'('", "')'", "'if'", "'else'", 
+			"'while'", "'create'", "'return'", "'Car'", "'CarSpawner'", "'TrafficLight'", 
+			"'Grid'", null, "'Print'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "ASSIGN", "SEMICOLON", 
-			"PRINT", "EQUAL", "NOTEQUAL", "LESSTHAN", "MORETHAN", "LESSOREQUAL", 
-			"MOREOREQUAL", "LCURL", "RCURL", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", 
-			"CREATE", "RETURN", "CAR", "CARSPAWNER", "TRAFFICLIGHT", "GRID", "BOOL", 
+			"EQUAL", "NOTEQUAL", "LESSTHAN", "MORETHAN", "LESSOREQUAL", "MOREOREQUAL", 
+			"LCURL", "RCURL", "LPAREN", "RPAREN", "IF", "ELSE", "WHILE", "CREATE", 
+			"RETURN", "CAR", "CARSPAWNER", "TRAFFICLIGHT", "GRID", "BOOL", "PRINT", 
 			"METH_RETURN_TYPE", "VAR_TYPE", "INTEGER", "DOUBLE", "METH_NAME", "ID", 
 			"STRING", "WS"
 		};
@@ -147,7 +147,7 @@ public class HelloParser extends Parser {
 			setState(73);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PRINT) | (1L << IF) | (1L << WHILE) | (1L << CREATE) | (1L << METH_RETURN_TYPE) | (1L << VAR_TYPE) | (1L << METH_NAME) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << IF) | (1L << WHILE) | (1L << CREATE) | (1L << PRINT) | (1L << METH_RETURN_TYPE) | (1L << VAR_TYPE) | (1L << METH_NAME) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(70);
@@ -1055,7 +1055,7 @@ public class HelloParser extends Parser {
 			setState(185);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PRINT) | (1L << IF) | (1L << WHILE) | (1L << CREATE) | (1L << METH_RETURN_TYPE) | (1L << VAR_TYPE) | (1L << METH_NAME) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << IF) | (1L << WHILE) | (1L << CREATE) | (1L << PRINT) | (1L << METH_RETURN_TYPE) | (1L << VAR_TYPE) | (1L << METH_NAME) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(182);
@@ -2030,7 +2030,7 @@ public class HelloParser extends Parser {
 		"\3\33\3\33\3\34\3\34\3\34\3\34\3\35\3\35\3\35\3\35\3\36\3\36\3\36\3\36"+
 		"\3\37\3\37\3\37\3\37\3 \3 \3 \5 \u0101\n \3!\3!\3!\3!\3\"\3\"\3\"\3\""+
 		"\3#\3#\3#\3#\3#\3#\3#\3#\5#\u0113\n#\3$\3$\3$\3$\2\2%\2\4\6\b\n\f\16\20"+
-		"\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDF\2\3\3\2\32\35\2\u0114"+
+		"\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDF\2\3\3\2\31\34\2\u0114"+
 		"\2K\3\2\2\2\4Y\3\2\2\2\6]\3\2\2\2\b_\3\2\2\2\nc\3\2\2\2\fg\3\2\2\2\16"+
 		"j\3\2\2\2\20p\3\2\2\2\22t\3\2\2\2\24\u008f\3\2\2\2\26\u0091\3\2\2\2\30"+
 		"\u009c\3\2\2\2\32\u009e\3\2\2\2\34\u00a1\3\2\2\2\36\u00a7\3\2\2\2 \u00b5"+
@@ -2044,54 +2044,54 @@ public class HelloParser extends Parser {
 		"\2YP\3\2\2\2YQ\3\2\2\2YR\3\2\2\2YS\3\2\2\2YT\3\2\2\2YU\3\2\2\2YX\3\2\2"+
 		"\2Z\5\3\2\2\2[^\5\b\5\2\\^\5\n\6\2][\3\2\2\2]\\\3\2\2\2^\7\3\2\2\2_`\5"+
 		"\f\7\2`a\5\36\20\2ab\5\"\22\2b\t\3\2\2\2cd\7#\2\2de\5 \21\2ef\7\t\2\2"+
-		"f\13\3\2\2\2gh\7\37\2\2hi\7#\2\2i\r\3\2\2\2jk\7\25\2\2kl\5&\24\2ln\5\""+
-		"\22\2mo\5(\25\2nm\3\2\2\2no\3\2\2\2o\17\3\2\2\2pq\7\27\2\2qr\5&\24\2r"+
-		"s\5\"\22\2s\21\3\2\2\2tu\7\30\2\2uv\5\26\f\2vw\7$\2\2wx\5\24\13\2xy\7"+
-		"\t\2\2y\23\3\2\2\2z{\7\23\2\2{|\7!\2\2|}\7\3\2\2}~\7!\2\2~\177\7\3\2\2"+
+		"f\13\3\2\2\2gh\7\37\2\2hi\7#\2\2i\r\3\2\2\2jk\7\24\2\2kl\5&\24\2ln\5\""+
+		"\22\2mo\5(\25\2nm\3\2\2\2no\3\2\2\2o\17\3\2\2\2pq\7\26\2\2qr\5&\24\2r"+
+		"s\5\"\22\2s\21\3\2\2\2tu\7\27\2\2uv\5\26\f\2vw\7$\2\2wx\5\24\13\2xy\7"+
+		"\t\2\2y\23\3\2\2\2z{\7\22\2\2{|\7!\2\2|}\7\3\2\2}~\7!\2\2~\177\7\3\2\2"+
 		"\177\u0080\7%\2\2\u0080\u0081\7\3\2\2\u0081\u0082\7!\2\2\u0082\u0090\7"+
-		"\24\2\2\u0083\u0084\7\23\2\2\u0084\u0085\7!\2\2\u0085\u0086\7\3\2\2\u0086"+
-		"\u0087\7!\2\2\u0087\u0090\7\24\2\2\u0088\u0089\7\23\2\2\u0089\u008a\7"+
+		"\23\2\2\u0083\u0084\7\22\2\2\u0084\u0085\7!\2\2\u0085\u0086\7\3\2\2\u0086"+
+		"\u0087\7!\2\2\u0087\u0090\7\23\2\2\u0088\u0089\7\22\2\2\u0089\u008a\7"+
 		"!\2\2\u008a\u008b\7\3\2\2\u008b\u008c\7!\2\2\u008c\u008d\7\3\2\2\u008d"+
-		"\u008e\7!\2\2\u008e\u0090\7\24\2\2\u008fz\3\2\2\2\u008f\u0083\3\2\2\2"+
+		"\u008e\7!\2\2\u008e\u0090\7\23\2\2\u008fz\3\2\2\2\u008f\u0083\3\2\2\2"+
 		"\u008f\u0088\3\2\2\2\u0090\25\3\2\2\2\u0091\u0092\t\2\2\2\u0092\27\3\2"+
 		"\2\2\u0093\u0094\7$\2\2\u0094\u0095\7\b\2\2\u0095\u0096\5*\26\2\u0096"+
 		"\u0097\7\t\2\2\u0097\u009d\3\2\2\2\u0098\u0099\7$\2\2\u0099\u009a\7\b"+
 		"\2\2\u009a\u009b\7%\2\2\u009b\u009d\7\t\2\2\u009c\u0093\3\2\2\2\u009c"+
 		"\u0098\3\2\2\2\u009d\31\3\2\2\2\u009e\u009f\7 \2\2\u009f\u00a0\7$\2\2"+
-		"\u00a0\33\3\2\2\2\u00a1\u00a2\7\n\2\2\u00a2\u00a3\7\23\2\2\u00a3\u00a4"+
-		"\7%\2\2\u00a4\u00a5\7\24\2\2\u00a5\u00a6\7\t\2\2\u00a6\35\3\2\2\2\u00a7"+
-		"\u00a9\7\23\2\2\u00a8\u00aa\5\32\16\2\u00a9\u00a8\3\2\2\2\u00a9\u00aa"+
-		"\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac\7\24\2\2\u00ac\37\3\2\2\2\u00ad"+
-		"\u00ae\7\23\2\2\u00ae\u00b6\7\24\2\2\u00af\u00b0\7\23\2\2\u00b0\u00b1"+
-		"\7!\2\2\u00b1\u00b6\7\24\2\2\u00b2\u00b3\7\23\2\2\u00b3\u00b4\7\"\2\2"+
-		"\u00b4\u00b6\7\24\2\2\u00b5\u00ad\3\2\2\2\u00b5\u00af\3\2\2\2\u00b5\u00b2"+
-		"\3\2\2\2\u00b6!\3\2\2\2\u00b7\u00bb\7\21\2\2\u00b8\u00ba\5\4\3\2\u00b9"+
+		"\u00a0\33\3\2\2\2\u00a1\u00a2\7\36\2\2\u00a2\u00a3\7\22\2\2\u00a3\u00a4"+
+		"\7%\2\2\u00a4\u00a5\7\23\2\2\u00a5\u00a6\7\t\2\2\u00a6\35\3\2\2\2\u00a7"+
+		"\u00a9\7\22\2\2\u00a8\u00aa\5\32\16\2\u00a9\u00a8\3\2\2\2\u00a9\u00aa"+
+		"\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac\7\23\2\2\u00ac\37\3\2\2\2\u00ad"+
+		"\u00ae\7\22\2\2\u00ae\u00b6\7\23\2\2\u00af\u00b0\7\22\2\2\u00b0\u00b1"+
+		"\7!\2\2\u00b1\u00b6\7\23\2\2\u00b2\u00b3\7\22\2\2\u00b3\u00b4\7\"\2\2"+
+		"\u00b4\u00b6\7\23\2\2\u00b5\u00ad\3\2\2\2\u00b5\u00af\3\2\2\2\u00b5\u00b2"+
+		"\3\2\2\2\u00b6!\3\2\2\2\u00b7\u00bb\7\20\2\2\u00b8\u00ba\5\4\3\2\u00b9"+
 		"\u00b8\3\2\2\2\u00ba\u00bd\3\2\2\2\u00bb\u00b9\3\2\2\2\u00bb\u00bc\3\2"+
 		"\2\2\u00bc\u00bf\3\2\2\2\u00bd\u00bb\3\2\2\2\u00be\u00c0\5$\23\2\u00bf"+
-		"\u00be\3\2\2\2\u00bf\u00c0\3\2\2\2\u00c0\u00c1\3\2\2\2\u00c1\u00c2\7\22"+
-		"\2\2\u00c2#\3\2\2\2\u00c3\u00c4\7\31\2\2\u00c4\u00c5\7$\2\2\u00c5\u00c6"+
-		"\7\t\2\2\u00c6%\3\2\2\2\u00c7\u00c8\7\23\2\2\u00c8\u00c9\5\60\31\2\u00c9"+
-		"\u00ca\7\24\2\2\u00ca\'\3\2\2\2\u00cb\u00cc\7\26\2\2\u00cc\u00cd\5\"\22"+
+		"\u00be\3\2\2\2\u00bf\u00c0\3\2\2\2\u00c0\u00c1\3\2\2\2\u00c1\u00c2\7\21"+
+		"\2\2\u00c2#\3\2\2\2\u00c3\u00c4\7\30\2\2\u00c4\u00c5\7$\2\2\u00c5\u00c6"+
+		"\7\t\2\2\u00c6%\3\2\2\2\u00c7\u00c8\7\22\2\2\u00c8\u00c9\5\60\31\2\u00c9"+
+		"\u00ca\7\23\2\2\u00ca\'\3\2\2\2\u00cb\u00cc\7\25\2\2\u00cc\u00cd\5\"\22"+
 		"\2\u00cd)\3\2\2\2\u00ce\u00d2\5,\27\2\u00cf\u00d2\5.\30\2\u00d0\u00d2"+
 		"\5> \2\u00d1\u00ce\3\2\2\2\u00d1\u00cf\3\2\2\2\u00d1\u00d0\3\2\2\2\u00d2"+
 		"+\3\2\2\2\u00d3\u00d4\5> \2\u00d4\u00d5\7\4\2\2\u00d5\u00d6\5*\26\2\u00d6"+
 		"-\3\2\2\2\u00d7\u00d8\5> \2\u00d8\u00d9\7\5\2\2\u00d9\u00da\5*\26\2\u00da"+
 		"/\3\2\2\2\u00db\u00e4\5*\26\2\u00dc\u00e4\5\62\32\2\u00dd\u00e4\5\64\33"+
 		"\2\u00de\u00e4\5\66\34\2\u00df\u00e4\58\35\2\u00e0\u00e4\5:\36\2\u00e1"+
-		"\u00e4\5<\37\2\u00e2\u00e4\7\36\2\2\u00e3\u00db\3\2\2\2\u00e3\u00dc\3"+
+		"\u00e4\5<\37\2\u00e2\u00e4\7\35\2\2\u00e3\u00db\3\2\2\2\u00e3\u00dc\3"+
 		"\2\2\2\u00e3\u00dd\3\2\2\2\u00e3\u00de\3\2\2\2\u00e3\u00df\3\2\2\2\u00e3"+
 		"\u00e0\3\2\2\2\u00e3\u00e1\3\2\2\2\u00e3\u00e2\3\2\2\2\u00e4\61\3\2\2"+
-		"\2\u00e5\u00e6\5*\26\2\u00e6\u00e7\7\13\2\2\u00e7\u00e8\5> \2\u00e8\63"+
-		"\3\2\2\2\u00e9\u00ea\5*\26\2\u00ea\u00eb\7\f\2\2\u00eb\u00ec\5> \2\u00ec"+
-		"\65\3\2\2\2\u00ed\u00ee\5*\26\2\u00ee\u00ef\7\r\2\2\u00ef\u00f0\5> \2"+
-		"\u00f0\67\3\2\2\2\u00f1\u00f2\5*\26\2\u00f2\u00f3\7\16\2\2\u00f3\u00f4"+
-		"\5> \2\u00f49\3\2\2\2\u00f5\u00f6\5*\26\2\u00f6\u00f7\7\20\2\2\u00f7\u00f8"+
-		"\5> \2\u00f8;\3\2\2\2\u00f9\u00fa\5*\26\2\u00fa\u00fb\7\17\2\2\u00fb\u00fc"+
+		"\2\u00e5\u00e6\5*\26\2\u00e6\u00e7\7\n\2\2\u00e7\u00e8\5> \2\u00e8\63"+
+		"\3\2\2\2\u00e9\u00ea\5*\26\2\u00ea\u00eb\7\13\2\2\u00eb\u00ec\5> \2\u00ec"+
+		"\65\3\2\2\2\u00ed\u00ee\5*\26\2\u00ee\u00ef\7\f\2\2\u00ef\u00f0\5> \2"+
+		"\u00f0\67\3\2\2\2\u00f1\u00f2\5*\26\2\u00f2\u00f3\7\r\2\2\u00f3\u00f4"+
+		"\5> \2\u00f49\3\2\2\2\u00f5\u00f6\5*\26\2\u00f6\u00f7\7\17\2\2\u00f7\u00f8"+
+		"\5> \2\u00f8;\3\2\2\2\u00f9\u00fa\5*\26\2\u00fa\u00fb\7\16\2\2\u00fb\u00fc"+
 		"\5> \2\u00fc=\3\2\2\2\u00fd\u0101\5@!\2\u00fe\u0101\5B\"\2\u00ff\u0101"+
 		"\5D#\2\u0100\u00fd\3\2\2\2\u0100\u00fe\3\2\2\2\u0100\u00ff\3\2\2\2\u0101"+
 		"?\3\2\2\2\u0102\u0103\5D#\2\u0103\u0104\7\6\2\2\u0104\u0105\5> \2\u0105"+
 		"A\3\2\2\2\u0106\u0107\5D#\2\u0107\u0108\7\7\2\2\u0108\u0109\5> \2\u0109"+
-		"C\3\2\2\2\u010a\u010b\7\23\2\2\u010b\u010c\5*\26\2\u010c\u010d\7\24\2"+
+		"C\3\2\2\2\u010a\u010b\7\22\2\2\u010b\u010c\5*\26\2\u010c\u010d\7\23\2"+
 		"\2\u010d\u0113\3\2\2\2\u010e\u0113\7!\2\2\u010f\u0113\7\"\2\2\u0110\u0113"+
 		"\7$\2\2\u0111\u0113\5F$\2\u0112\u010a\3\2\2\2\u0112\u010e\3\2\2\2\u0112"+
 		"\u010f\3\2\2\2\u0112\u0110\3\2\2\2\u0112\u0111\3\2\2\2\u0113E\3\2\2\2"+

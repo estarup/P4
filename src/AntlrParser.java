@@ -28,8 +28,6 @@ public class AntlrParser
 
             Program program = new Program();
             program.Run();
-
-            double x = 1.0;
         }
         catch (IOException e) {
             System.out.println("IOException: " + e.getLocalizedMessage());

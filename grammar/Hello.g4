@@ -123,7 +123,7 @@ INTEGER : [0]| [1-9][0-9]* ;
 DOUBLE : INTEGER ('.')? [0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
 ID : [a-z]+ LETTER* DIGIT* ;
-STRING : '"' [a-zA-Z0-9 \t\r\n]+ '"';
+STRING : '"' [a-zA-Z0-9 \t\r]+ '"';
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT : [0-9];
 // Whitespace

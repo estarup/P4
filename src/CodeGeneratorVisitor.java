@@ -99,23 +99,25 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    ArrayList<Car> carList = new ArrayList<>();\n" +
                     "    long startTime = System.currentTimeMillis();\n" +
                     "    ArrayList<GridObject> list = new ArrayList<>();\n" +
-                    "    long interval = 1000;\n" +
-                    "    int totalPassedCars = 0;\n" +
-                    "    int totalSpawnedCars  = 0;\n" +
-                    "    public void Run() {\n"  +
-                    "    Grid grid;\n" + code +
+                    "    public void Run() {\n" +
+                    "        int totalSpawnedCars = 0;\n" +
+                    "        int totalPassedCars = 0;\n" +
+                    "        long interval = 1000;\n" +
+                    "        boolean isFirstCar = true;\n" +
+                    "        long startTime = System.currentTimeMillis();\n" +
+                    "        ArrayList<GridObject> list = new ArrayList<>();\n" +
+                    "        Grid grid;\n" + code +
                     "\n" +
-                    "        for(GridObject[] gridObject: grid.arr) {\n" +
-                    "            for(GridObject gridObject2: gridObject){\n" +
-                    "                if(gridObject2 != null) {\n" +
+                    "\n" +
+                    "        for (GridObject[] gridObject : grid.arr) {\n" +
+                    "            for (GridObject gridObject2 : gridObject) {\n" +
+                    "                if (gridObject2 != null) {\n" +
                     "                    list.add(gridObject2);\n" +
                     "                }\n" +
                     "            }\n" +
                     "        }\n" +
-                    "        int totalCarsSpawned = 0;\n" +
-                    "        int totalCarsPassed = 0;\n" +
-                    "        long interval = 1000;\n" +
-                    "        boolean isFirstCar = true;\n" +
+                    "\n" +
+                    "\n" +
                     "        while(true) {\n" +
                     "            for (GridObject obj: list) {\n" +
                     "                if (obj instanceof CarSpawner) {\n" +
@@ -123,11 +125,11 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
                     "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
                     "                        isFirstCar = false;\n" +
-                    "                        totalCarsSpawned = 1;\n" +
+                    "                        totalSpawnedCars = 1;\n" +
                     "                    } else if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {\n" +
                     "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
                     "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
-                    "                        totalCarsSpawned += 1;\n" +
+                    "                        totalSpawnedCars += 1;\n" +
                     "                    }\n" +
                     "                }\n" +
                     "                if (obj instanceof TrafficLight) {\n" +
@@ -147,7 +149,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        car.hasPassedLight = true;\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
-                    "                                        totalCarsPassed += 1;\n" +
+                    "                                        totalPassedCars += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getX() > obj.getX()) {\n" +
@@ -164,7 +166,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
-                    "                                        totalCarsPassed += 1;\n" +
+                    "                                        totalPassedCars += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getX() <= obj.getX()) {\n" +
@@ -182,7 +184,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
-                    "                                        totalCarsPassed += 1;\n" +
+                    "                                        totalPassedCars += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getY() < obj.getY() && car.hasPassedLight) {\n" +
@@ -199,7 +201,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
-                    "                                        totalCarsPassed += 1;\n" +
+                    "                                        totalPassedCars += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getY() > obj.getY() && car.hasPassedLight) {\n" +
@@ -212,6 +214,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                }\n" +
                     "            }\n" +
                     "            if (System.currentTimeMillis() >= startTime + interval) {\n" +
+                    "                System.out.print(\"Time: \" + interval / 1000 + \"sec | \");\n" +
                     "                for (Car car: carList) {\n" +
                     "                    car.Behavior();\n" +
                     "                    car.setInterval(car.getInterval() + car.getFrequency());\n" +
@@ -450,7 +453,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/TrafficLight.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
+            writer.write("package Simulation; \n" +
                     "public class TrafficLight extends GridObject{\n" +
                     "\n" +
                     "    public static int lightCount = 0;\n" +
@@ -495,7 +498,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "\n" +
                     "\n" +
                     "    public void SwitchLights() {\n" +
-                    "        setInterval((long) (getInterval() + getFrequency()));\n" +
                     "        if (isGreenNorth) {\n" +
                     "            System.out.println(\"TrafficLight \" + lightCount + \" is green East/West\");\n" +
                     "            isGreenNorth = false;\n" +

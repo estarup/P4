@@ -1,4 +1,4 @@
-package Simulation;
+package Simulation; 
 public class TrafficLight extends GridObject{
 
     public static int lightCount = 0;
@@ -43,7 +43,6 @@ public class TrafficLight extends GridObject{
 
 
     public void SwitchLights() {
-        setInterval((long) (getInterval() + getFrequency()));
         if (isGreenNorth) {
             System.out.println("TrafficLight " + lightCount + " is green East/West");
             isGreenNorth = false;
