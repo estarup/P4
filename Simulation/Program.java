@@ -1,18 +1,17 @@
-package Simulation;
+package Simulation; 
 import java.util.ArrayList;
 public class Program {
-    Grid grid;
-    ArrayList<Car> carList = new ArrayList<>();
+    int totalSpawnedCars = 0;
+    int totalPassedCars = 0;
+    long interval = 1000;
+    long minuteInterval = 60000;
+    boolean isFirstCar = true;
     long startTime = System.currentTimeMillis();
     ArrayList<GridObject> list = new ArrayList<>();
+    ArrayList<Car> carList = new ArrayList<>();
+    Grid grid;
+
     public void Run() {
-        int totalSpawnedCars = 0;
-        int totalPassedCars = 0;
-        long interval = 1000;
-        boolean isFirstCar = true;
-        long startTime = System.currentTimeMillis();
-        ArrayList<GridObject> list = new ArrayList<>();
-        Grid grid;
 grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 10);grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10);grid.add(tf);if (totalSpawnedCars>2){System.out.println("hello there");}if (totalPassedCars>1){System.out.println("2 cars passed");}
 
         for (GridObject[] gridObject : grid.arr) {
@@ -126,6 +125,12 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                     car.setInterval(car.getInterval() + car.getFrequency());
                 }
                 interval += 1000;
+            }
+
+            if (System.currentTimeMillis() >= startTime + minuteInterval) {
+                System.out.println("** Total cars passed: " + totalPassedCars + " **");
+                System.out.println("** Total spawned cars: " + totalSpawnedCars + " **");
+                minuteInterval += 60000;
             }
         }
     }

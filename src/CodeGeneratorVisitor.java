@@ -92,21 +92,20 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Program.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
+            writer.write("package Simulation; \n" +
                     "import java.util.ArrayList;\n" +
                     "public class Program {\n" +
-                    "    Grid grid;\n" +
-                    "    ArrayList<Car> carList = new ArrayList<>();\n" +
+                    "    int totalSpawnedCars = 0;\n" +
+                    "    int totalPassedCars = 0;\n" +
+                    "    long interval = 1000;\n" +
+                    "    long minuteInterval = 60000;\n" +
+                    "    boolean isFirstCar = true;\n" +
                     "    long startTime = System.currentTimeMillis();\n" +
                     "    ArrayList<GridObject> list = new ArrayList<>();\n" +
-                    "    public void Run() {\n" +
-                    "        int totalSpawnedCars = 0;\n" +
-                    "        int totalPassedCars = 0;\n" +
-                    "        long interval = 1000;\n" +
-                    "        boolean isFirstCar = true;\n" +
-                    "        long startTime = System.currentTimeMillis();\n" +
-                    "        ArrayList<GridObject> list = new ArrayList<>();\n" +
-                    "        Grid grid;\n" + code +
+                    "    ArrayList<Car> carList = new ArrayList<>();\n" +
+                    "    Grid grid;\n" +
+                    "\n" +
+                    "    public void Run() {\n" + code +
                     "\n" +
                     "\n" +
                     "        for (GridObject[] gridObject : grid.arr) {\n" +
@@ -220,6 +219,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                    car.setInterval(car.getInterval() + car.getFrequency());\n" +
                     "                }\n" +
                     "                interval += 1000;\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            if (System.currentTimeMillis() >= startTime + minuteInterval) {\n" +
+                    "                System.out.println(\"** Total cars passed: \" + totalPassedCars + \" **\");\n" +
+                    "                System.out.println(\"** Total spawned cars: \" + totalSpawnedCars + \" **\");\n" +
+                    "                minuteInterval += 60000;\n" +
                     "            }\n" +
                     "        }\n" +
                     "    }\n" +
