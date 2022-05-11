@@ -55,6 +55,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public BlockNode visit(BlockNode node) {
+
+
         if (node == null) {return null;}
         for (GraphNode n: node.childrenList) {
             if (n != null) {
@@ -80,6 +82,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     visit((MethodInitNode) n);
                 } else if (n instanceof ReturnNode) {
                     visit((ReturnNode) n);
+                } else if (n instanceof PrintNode) {
+                    visit((PrintNode) n);
                 } else if (n instanceof BlockNode) {
                     visit((BlockNode) n);
                 }
@@ -96,8 +100,9 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    long startTime = System.currentTimeMillis();\n" +
                     "    ArrayList<GridObject> list = new ArrayList<>();\n" +
                     "    long interval = 1000;\n" +
-                    "    int carsPassed = 0;\n" +
-                    "    public void Run() {\n" +
+                    "    int totalPassedCars = 0;\n" +
+                    "    int totalSpawnedCars  = 0;\n" +
+                    "    public void Run() {\n"  +
                     "    Grid grid;\n" + code +
                     "\n" +
                     "        for(GridObject[] gridObject: grid.arr) {\n" +
@@ -107,6 +112,9 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                }\n" +
                     "            }\n" +
                     "        }\n" +
+                    "        int totalCarsSpawned = 0;\n" +
+                    "        int totalCarsPassed = 0;\n" +
+                    "        long interval = 1000;\n" +
                     "        boolean isFirstCar = true;\n" +
                     "        while(true) {\n" +
                     "            for (GridObject obj: list) {\n" +
@@ -115,9 +123,11 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
                     "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
                     "                        isFirstCar = false;\n" +
+                    "                        totalCarsSpawned = 1;\n" +
                     "                    } else if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {\n" +
                     "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
                     "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
+                    "                        totalCarsSpawned += 1;\n" +
                     "                    }\n" +
                     "                }\n" +
                     "                if (obj instanceof TrafficLight) {\n" +
@@ -137,11 +147,10 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        car.hasPassedLight = true;\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
+                    "                                        totalCarsPassed += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getX() > obj.getX()) {\n" +
-                    "                                    System.out.println(\"GOO\");\n" +
-                    "\n" +
                     "                                    car.hasPassedLight = false;\n" +
                     "                                }\n" +
                     "                            }\n" +
@@ -155,6 +164,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
+                    "                                        totalCarsPassed += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getX() <= obj.getX()) {\n" +
@@ -172,6 +182,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
+                    "                                        totalCarsPassed += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getY() < obj.getY() && car.hasPassedLight) {\n" +
@@ -188,6 +199,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
+                    "                                        totalCarsPassed += 1;\n" +
                     "                                    }\n" +
                     "                                }\n" +
                     "                                if (car.getY() > obj.getY() && car.hasPassedLight) {\n" +
@@ -433,6 +445,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         }
     }
 
+
     public void createTrafficLightClass() {
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/TrafficLight.java");
@@ -636,7 +649,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     }
 
     private String convertIntType(int returnType) {
-
         if (returnType == 0) {
             return "double";
         } else if (returnType == 1) {
@@ -736,6 +748,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(SubtractNode node) {
+        return node;
+    }
+
+    @Override
+    public GraphNode visit(PrintNode node) {
+        addCode("System.out.println(" + node.string + ");");
         return node;
     }
 

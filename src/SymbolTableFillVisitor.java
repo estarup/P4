@@ -36,6 +36,8 @@ public class SymbolTableFillVisitor extends ASTVisitor{
 
     @Override
     public BlockNode visit(BlockNode node) {
+
+
         if (node == null ){ return null; }
         for (GraphNode n: node.childrenList) {
             if (n != null) {
@@ -226,6 +228,11 @@ public class SymbolTableFillVisitor extends ASTVisitor{
 
     @Override
     public SubtractNode visit(SubtractNode node) {
+        return node;
+    }
+
+    @Override
+    public Object visit(PrintNode node) {
         return node;
     }
 

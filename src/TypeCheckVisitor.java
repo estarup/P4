@@ -211,6 +211,11 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
 
     @Override
+    public GraphNode visit(PrintNode node) {
+        return node;
+    }
+
+    @Override
     public GraphNode visit(WhileStmNode node) {
         return node;
     }

@@ -68,6 +68,16 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     }
 
     @Override
+    public GraphNode visitPrint(HelloParser.PrintContext ctx) {
+        PrintNode node = new PrintNode();
+        if (ctx.getChildCount() > 5) {
+            System.out.println("Bigger " + ctx.getChildCount());
+        }
+        node.string = ctx.getChild(2).getText();
+        return node;
+    }
+
+    @Override
     public GraphNode visitAssignment(HelloParser.AssignmentContext ctx) {
         AssignmentNode node = new AssignmentNode();
         node.ID = ctx.children.get(0).getText();

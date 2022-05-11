@@ -28,5 +28,6 @@ public abstract class ASTVisitor<T> extends AbstractParseTreeVisitor
     public abstract T visit(StatementNode node);
     public abstract T visit(StringNode node);
     public abstract T visit(SubtractNode node);
+    public abstract T visit(PrintNode node);
     public abstract T visit(WhileStmNode node);
 }

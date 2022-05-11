@@ -6,10 +6,11 @@ public class Program {
     long startTime = System.currentTimeMillis();
     ArrayList<GridObject> list = new ArrayList<>();
     long interval = 1000;
-    int carsPassed = 0;
+    int totalPassedCars = 0;
+    int totalSpawnedCars  = 0;
     public void Run() {
     Grid grid;
-grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 120);grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10);grid.add(tf);
+grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 10);grid.add(spawnerSouth);TrafficLight tf = new TrafficLight(2, 3, 10);grid.add(tf);if (totalSpawnedCars>2){System.out.println("hello there");}
         for(GridObject[] gridObject: grid.arr) {
             for(GridObject gridObject2: gridObject){
                 if(gridObject2 != null) {
@@ -17,6 +18,9 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                 }
             }
         }
+        int totalCarsSpawned = 0;
+        int totalCarsPassed = 0;
+        long interval = 1000;
         boolean isFirstCar = true;
         while(true) {
             for (GridObject obj: list) {
@@ -25,9 +29,11 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                         carList.add(((CarSpawner) obj).SpawnCar());
                         ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());
                         isFirstCar = false;
+                        totalCarsSpawned = 1;
                     } else if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {
                         carList.add(((CarSpawner) obj).SpawnCar());
                         ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());
+                        totalCarsSpawned += 1;
                     }
                 }
                 if (obj instanceof TrafficLight) {
@@ -47,11 +53,10 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                                     if (!car.hasPassedLight) {
                                         car.hasPassedLight = true;
                                         ((TrafficLight) obj).carPassed();
+                                        totalCarsPassed += 1;
                                     }
                                 }
                                 if (car.getX() > obj.getX()) {
-                                    System.out.println("GOO");
-
                                     car.hasPassedLight = false;
                                 }
                             }
@@ -65,6 +70,7 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                                     if (!car.hasPassedLight) {
                                         ((TrafficLight) obj).carPassed();
                                         car.hasPassedLight = true;
+                                        totalCarsPassed += 1;
                                     }
                                 }
                                 if (car.getX() <= obj.getX()) {
@@ -82,6 +88,7 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                                     if (!car.hasPassedLight) {
                                         ((TrafficLight) obj).carPassed();
                                         car.hasPassedLight = true;
+                                        totalCarsPassed += 1;
                                     }
                                 }
                                 if (car.getY() < obj.getY() && car.hasPassedLight) {
@@ -98,6 +105,7 @@ grid = new Grid(10, 10);CarSpawner spawnerSouth = new CarSpawner(2, 2, "South", 
                                     if (!car.hasPassedLight) {
                                         ((TrafficLight) obj).carPassed();
                                         car.hasPassedLight = true;
+                                        totalCarsPassed += 1;
                                     }
                                 }
                                 if (car.getY() > obj.getY() && car.hasPassedLight) {

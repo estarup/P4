@@ -12,7 +12,9 @@ statement :   method
 	        | create_statement
   			| assignment
 			| declaration SEMICOLON
+			| print
 			;
+
 method :     method_init
             | method_call;
 method_init: method_declaration method_parameter_init curl_statement;
@@ -31,6 +33,8 @@ create_type : CAR
 assignment : ID ASSIGN expression SEMICOLON
            | ID ASSIGN STRING SEMICOLON;
 declaration : VAR_TYPE ID ;
+print: PRINT LPAREN STRING RPAREN SEMICOLON;
+
 method_parameter_init : LPAREN declaration? RPAREN;
 method_parameter_call : LPAREN RPAREN
                       | LPAREN INTEGER RPAREN
@@ -83,6 +87,7 @@ MULTIPLY : '*' ;
 DIVIDE : '/' ;
 ASSIGN : '=' ;
 SEMICOLON : ';' ;
+PRINT : 'Print';
 
 // Logic operators
 EQUAL : '==' ;
@@ -118,7 +123,7 @@ INTEGER : [0]| [1-9][0-9]* ;
 DOUBLE : INTEGER ('.')? [0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
 ID : [a-z]+ LETTER* DIGIT* ;
-STRING : '"' [a-zA-Z0-9]+  '"';
+STRING : '"' [a-zA-Z0-9 \t\r\n]+ '"';
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT : [0-9];
 // Whitespace

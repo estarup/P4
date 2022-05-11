@@ -158,6 +158,11 @@ class BuildASTVisitorTest extends ASTVisitor {
     }
 
     @Override
+    public Object visit(PrintNode node) {
+        return node;
+    }
+
+    @Override
     public Object visit(WhileStmNode node) {
         return null;
     }

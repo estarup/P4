@@ -1,5 +1,13 @@
 
 create Grid grid(10,10);
 
-create CarSpawner spawnerSouth(2,2, "South", 120);
+create CarSpawner spawnerSouth(2,2, "South", 10);
 create TrafficLight tf(2,3, 10);
+if (totalSpawnedCars > 2) {
+    Print("hello there");
+}
+if (totalPassedCars > 1) {
+    Print("2 cars passed");
+}
+
+
