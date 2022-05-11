@@ -101,6 +101,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(If_Then_ElseNode node) {
+
         return node;
     }
 
@@ -139,9 +140,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         if (checkInt(node.parameter) || checkFloat(node.parameter)) {
             return node;
         }
-        if (GraphNode.SymbolTable.get(node.parameter) == null) {
-            System.out.println("Error: Variable " + node.parameter + "has not been declared ");
-        }
+
         return node;
     }
 

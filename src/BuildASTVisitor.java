@@ -102,17 +102,17 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         ConstructorNode node = new ConstructorNode();
 
         if (ctx.getChildCount() == 9) {
-            node.x = Integer.parseInt(ctx.children.get(1).getText());
-            node.y = Integer.parseInt(ctx.children.get(3).getText());
+            node.x = Double.parseDouble(ctx.children.get(1).getText());
+            node.y = Double.parseDouble(ctx.children.get(3).getText());
             node.direction = ctx.children.get(5).getText();
-            node.frequency = Integer.parseInt(ctx.children.get(7).getText());
+            node.frequency = Long.parseLong(ctx.children.get(7).getText());
         } else if (ctx.getChildCount() == 5) {
-            node.x = Integer.parseInt(ctx.children.get(1).getText());
-            node.y = Integer.parseInt(ctx.children.get(3).getText());
+            node.x = Double.parseDouble(ctx.children.get(1).getText());
+            node.y = Double.parseDouble(ctx.children.get(3).getText());
         } else if (ctx.getChildCount() == 7) {
-            node.x = Integer.parseInt(ctx.children.get(1).getText());
-            node.y = Integer.parseInt(ctx.children.get(3).getText());
-            node.frequency = Integer.parseInt(ctx.children.get(5).getText());
+            node.x = Double.parseDouble(ctx.children.get(1).getText());
+            node.y = Double.parseDouble(ctx.children.get(3).getText());
+            node.frequency = Long.parseLong(ctx.children.get(5).getText());
         }
 
         return node;
@@ -172,9 +172,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
                 break;
             case "CarSpawner":
                 node.type = GraphNode.CARSPAWNERTYPE;
-                break;
-            case "Grid":
-                node.type = GraphNode.GRIDTYPE;
                 break;
             case "TrafficLight":
                 node.type = GraphNode.TRAFFICLIGHTTYPE;

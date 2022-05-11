@@ -1,7 +1,7 @@
 public class ConstructorNode extends GraphNode{
-    int x;
-    int y;
+    double x;
+    double y;
     String direction;
-    int frequency;
+    long frequency;
     String name;
 }

@@ -14,7 +14,6 @@ statement :   method
 			| declaration SEMICOLON
 			| print
 			;
-
 method :     method_init
             | method_call;
 method_init: method_declaration method_parameter_init curl_statement;
@@ -23,18 +22,15 @@ method_declaration: METH_RETURN_TYPE METH_NAME;
 if_statement : IF  logic_expression curl_statement else_statement? ;
 while_loop : WHILE logic_expression curl_statement ;
 create_statement : CREATE create_type ID constructor SEMICOLON;
-constructor: LPAREN INTEGER ',' INTEGER ',' STRING ',' INTEGER RPAREN // Carspawner
-           | LPAREN INTEGER ',' INTEGER RPAREN // Grid
-           | LPAREN INTEGER ',' INTEGER ',' INTEGER RPAREN; // TrafficLight
-create_type : CAR
-            | CARSPAWNER
+constructor: LPAREN DOUBLE ',' DOUBLE ',' STRING ',' INTEGER RPAREN // Carspawner
+           | LPAREN DOUBLE ',' DOUBLE ',' INTEGER RPAREN; // TrafficLight
+create_type : CARSPAWNER
             | TRAFFICLIGHT
-            | GRID ;
+            ;
 assignment : ID ASSIGN expression SEMICOLON
            | ID ASSIGN STRING SEMICOLON;
 declaration : VAR_TYPE ID ;
 print: PRINT LPAREN STRING RPAREN SEMICOLON;
-
 method_parameter_init : LPAREN declaration? RPAREN;
 method_parameter_call : LPAREN RPAREN
                       | LPAREN INTEGER RPAREN
@@ -73,6 +69,7 @@ factor : LPAREN expression RPAREN
 		|  INTEGER
 		|  DOUBLE
 	    |  ID
+	    | TOTALSPAWNEDCARS
 	    | negative_factor
 	    ;
 negative_factor : SUBTRACT factor;
@@ -111,9 +108,9 @@ RETURN : 'return';
 CAR :  'Car';
 CARSPAWNER: 'CarSpawner' ;
 TRAFFICLIGHT : 'TrafficLight'; 
-GRID : 'Grid' ;
 BOOL : 'true' | 'false' ;
 PRINT : 'Print';
+TOTALSPAWNEDCARS : 'totalSpawnedCars';
 
 // Literals
 METH_RETURN_TYPE : 'void' | 'Int' | 'Double' ;

@@ -1,8 +1,8 @@
-package Simulation; 
-public class CarSpawner extends GridObject{
+package Simulation;
+public class CarSpawner extends PositionedObject{
     public static int carNumber = 0;
 
-    public CarSpawner(int x, int y, String direction, long frequency) {
+    public CarSpawner(double x, double y, String direction, long frequency) {
         super(x, y);
         setDirection(direction);
         setFrequency(frequency * 1000);
@@ -25,7 +25,8 @@ public class CarSpawner extends GridObject{
     }
 
     public Car SpawnCar(){
-        return new Car(getX(), getY(), 50, getDirection(), carNumber); // Spawn car with 50km/h
+        carNumber++;
+        return new Car(getX(), getY(), 0, getDirection(), carNumber); // Spawn car with 50km/h
     }
 
     public void setFrequency(long frequency) {
