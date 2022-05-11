@@ -97,7 +97,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    ArrayList<GridObject> list = new ArrayList<>();\n" +
                     "    long interval = 1000;\n" +
                     "    int carsPassed = 0;\n" +
-                    "    public void Run() {\n" + code +
+                    "    public void Run() {\n" +
+                    "    Grid grid;\n" + code +
                     "\n" +
                     "        for(GridObject[] gridObject: grid.arr) {\n" +
                     "            for(GridObject gridObject2: gridObject){\n" +
@@ -106,65 +107,94 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                }\n" +
                     "            }\n" +
                     "        }\n" +
-                    "\n" +
+                    "        boolean isFirstCar = true;\n" +
                     "        while(true) {\n" +
                     "            for (GridObject obj: list) {\n" +
                     "                if (obj instanceof CarSpawner) {\n" +
-                    "                    if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {\n" +
+                    "                    if (isFirstCar) {\n" +
                     "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
+                    "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
+                    "                        isFirstCar = false;\n" +
+                    "                    } else if (System.currentTimeMillis() >= startTime + ((CarSpawner) obj).getInterval()) {\n" +
+                    "                        carList.add(((CarSpawner) obj).SpawnCar());\n" +
+                    "                        ((CarSpawner) obj).setInterval(((CarSpawner) obj).getInterval() + ((CarSpawner) obj).getFrequency());\n" +
                     "                    }\n" +
                     "                }\n" +
                     "                if (obj instanceof TrafficLight) {\n" +
                     "                    if (System.currentTimeMillis() >= startTime + ((TrafficLight) obj).getInterval()) {\n" +
                     "                        ((TrafficLight) obj).SwitchLights();\n" +
+                    "                        ((TrafficLight) obj).setInterval((long) (((TrafficLight) obj).getInterval() + ((TrafficLight) obj).getFrequency()));\n" +
                     "                    }\n" +
                     "                    for (Car car: carList) {\n" +
                     "                        switch (car.getDirection()) {\n" +
-                    "                            case \"East\":\n" +
-                    "                                if (car.getX() >= obj.getX() - 0.05 && car.getX() <= obj.getX()) {\n" +
+                    "                            case \"East\" -> {\n" +
+                    "                                if (car.getX() >= obj.getX() - 0.03 && car.getX() <= obj.getX()) {\n" +
                     "                                    if (((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
+                    "                                    } else {\n" +
+                    "                                        car.setSpeed(50);\n" +
                     "                                    }\n" +
-                    "                                    if (! car.hasPassedLight) {\n" +
+                    "                                    if (!car.hasPassedLight) {\n" +
                     "                                        car.hasPassedLight = true;\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                    }\n" +
                     "                                }\n" +
-                    "                                break;\n" +
-                    "                            case \"West\":\n" +
-                    "                                if (car.getX() <= obj.getX() + 0.05 && car.getX() >= obj.getX()) {\n" +
+                    "                                if (car.getX() > obj.getX()) {\n" +
+                    "                                    System.out.println(\"GOO\");\n" +
+                    "\n" +
+                    "                                    car.hasPassedLight = false;\n" +
+                    "                                }\n" +
+                    "                            }\n" +
+                    "                            case \"West\" -> {\n" +
+                    "                                if (car.getX() <= obj.getX() + 0.03 && car.getX() >= obj.getX()) {\n" +
                     "                                    if (((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
+                    "                                    } else {\n" +
+                    "                                        car.setSpeed(50);\n" +
                     "                                    }\n" +
-                    "                                    if (! car.hasPassedLight) {\n" +
+                    "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
                     "                                    }\n" +
                     "                                }\n" +
-                    "                                break;\n" +
-                    "                            case \"North\":\n" +
-                    "                                if (car.getY() >= obj.getY() + 0.05 && car.getY() <= obj.getY()) {\n" +
+                    "                                if (car.getX() <= obj.getX()) {\n" +
+                    "                                    car.hasPassedLight = false;\n" +
+                    "                                }\n" +
+                    "                            }\n" +
+                    "                            case \"North\" -> {\n" +
+                    "                                if (car.getY() >= obj.getY() + 0.03 && car.getY() <= obj.getY()) {\n" +
                     "                                    if (!((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
+                    "                                    } else {\n" +
+                    "                                        car.setSpeed(50);\n" +
                     "                                    }\n" +
-                    "                                    if (! car.hasPassedLight) {\n" +
+                    "\n" +
+                    "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
                     "                                    }\n" +
                     "                                }\n" +
-                    "                                break;\n" +
-                    "                            case \"South\":\n" +
-                    "                                if (car.getY() <= obj.getY() - 0.05 && car.getY() <= obj.getY()) {\n" +
+                    "                                if (car.getY() < obj.getY() && car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = false;\n" +
+                    "                                }\n" +
+                    "                            }\n" +
+                    "                            case \"South\" -> {\n" +
+                    "                                if (car.getY() >= obj.getY() - 0.03 && car.getY() <= obj.getY()) {\n" +
                     "                                    if (!((TrafficLight) obj).isGreenNorth) {\n" +
                     "                                        car.setSpeed(0);\n" +
+                    "                                    } else {\n" +
+                    "                                        car.setSpeed(50);\n" +
                     "                                    }\n" +
-                    "                                    if (! car.hasPassedLight) {\n" +
+                    "                                    if (!car.hasPassedLight) {\n" +
                     "                                        ((TrafficLight) obj).carPassed();\n" +
                     "                                        car.hasPassedLight = true;\n" +
                     "                                    }\n" +
                     "                                }\n" +
-                    "                                break;\n" +
-                    "                            default: System.out.println(\"Error: Car direction mismatch\");\n" +
+                    "                                if (car.getY() > obj.getY() && car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = false;\n" +
+                    "                                }\n" +
+                    "                            }\n" +
+                    "                            default -> System.out.println(\"Error: Car direction mismatch\");\n" +
                     "                        }\n" +
                     "                    }\n" +
                     "                }\n" +
@@ -172,6 +202,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "            if (System.currentTimeMillis() >= startTime + interval) {\n" +
                     "                for (Car car: carList) {\n" +
                     "                    car.Behavior();\n" +
+                    "                    car.setInterval(car.getInterval() + car.getFrequency());\n" +
                     "                }\n" +
                     "                interval += 1000;\n" +
                     "            }\n" +
@@ -261,14 +292,25 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Car.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation; \n" +
+            writer.write("package Simulation;\n" +
                     "public class Car{\n" +
-                    "    public Car(double x, double y, double speed, String direction) {\n" +
+                    "    public Car(double x, double y, double speed, String direction, int carNumber) {\n" +
                     "        setX(x);\n" +
                     "        setY(y);\n" +
                     "        setSpeed(speed);\n" +
                     "        setDirection(direction);\n" +
+                    "        setCarNumber(carNumber);\n" +
                     "    }\n" +
+                    "\n" +
+                    "    public int getCarNumber() {\n" +
+                    "        return carNumber;\n" +
+                    "    }\n" +
+                    "\n" +
+                    "    public void setCarNumber(int carNumber) {\n" +
+                    "        this.carNumber = carNumber;\n" +
+                    "    }\n" +
+                    "\n" +
+                    "    private int carNumber;\n" +
                     "\n" +
                     "    public boolean hasPassedLight = false;\n" +
                     "\n" +
@@ -323,13 +365,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    public void Behavior() { // run every second\n" +
                     "        double ms = getSpeed() / 3600 ; // 50km/h to m/s\n" +
                     "        switch (getDirection()) {\n" +
-                    "            case \"East\" -> setX(getX() + ms);\n" +
+                    "            case \"East\" -> setX(getX() + ms );\n" +
                     "            case \"West\" -> setX(getX() - ms);\n" +
                     "            case \"North\" -> setY(getY() - ms);\n" +
                     "            case \"South\" -> setY(getY() + ms);\n" +
                     "        }\n" +
-                    "        System.out.println(\"Car pos:\" + getX() + \"x\" + getY());\n" +
-                    "        setInterval(getInterval() + getFrequency());\n" +
+                    "        System.out.println(\"Car \" + carNumber + \" pos:\" + getX() + \"x\" + getY());\n" +
                     "    }\n" +
                     "}\n");
             writer.close();
@@ -345,6 +386,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation; \n" +
                     "public class CarSpawner extends GridObject{\n" +
+                    "    public static int carNumber = 0;\n" +
                     "\n" +
                     "    public CarSpawner(int x, int y, String direction, long frequency) {\n" +
                     "        super(x, y);\n" +
@@ -369,7 +411,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    }\n" +
                     "\n" +
                     "    public Car SpawnCar(){\n" +
-                    "        return new Car(getX(), getY(), 50, getDirection()); // Spawn car with 50km/h\n" +
+                    "        return new Car(getX(), getY(), 50, getDirection(), carNumber); // Spawn car with 50km/h\n" +
                     "    }\n" +
                     "\n" +
                     "    public void setFrequency(long frequency) {\n" +

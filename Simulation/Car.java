@@ -1,11 +1,22 @@
-package Simulation; 
+package Simulation;
 public class Car{
-    public Car(double x, double y, double speed, String direction) {
+    public Car(double x, double y, double speed, String direction, int carNumber) {
         setX(x);
         setY(y);
         setSpeed(speed);
         setDirection(direction);
+        setCarNumber(carNumber);
     }
+
+    public int getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(int carNumber) {
+        this.carNumber = carNumber;
+    }
+
+    private int carNumber;
 
     public boolean hasPassedLight = false;
 
@@ -60,12 +71,11 @@ public class Car{
     public void Behavior() { // run every second
         double ms = getSpeed() / 3600 ; // 50km/h to m/s
         switch (getDirection()) {
-            case "East" -> setX(getX() + ms);
+            case "East" -> setX(getX() + ms );
             case "West" -> setX(getX() - ms);
             case "North" -> setY(getY() - ms);
             case "South" -> setY(getY() + ms);
         }
-        System.out.println("Car pos:" + getX() + "x" + getY());
-        setInterval(getInterval() + getFrequency());
+        System.out.println("Car " + carNumber + " pos:" + getX() + "x" + getY());
     }
 }
