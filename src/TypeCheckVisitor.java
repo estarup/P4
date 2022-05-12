@@ -1,3 +1,5 @@
+import javax.swing.plaf.synth.SynthUI;
+
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     private int assignType = -1;
     @Override
@@ -137,10 +139,15 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
     @Override
     public GraphNode visit(MethodCallNode node) {
-        if (checkInt(node.parameter) || checkFloat(node.parameter)) {
+        if (node.parameter == null) {
             return node;
         }
-
+        if (checkInt(node.parameter) || checkFloat(node.parameter)) {
+            return node;
+        } else if (GraphNode.SymbolTable.get(node.parameter) == null) {
+            System.out.println("Error: ID " + node.parameter + " has not been declared");
+            return null;
+        }
         return node;
     }
 

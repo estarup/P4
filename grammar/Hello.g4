@@ -33,6 +33,7 @@ declaration : VAR_TYPE ID ;
 print: PRINT LPAREN STRING RPAREN SEMICOLON;
 method_parameter_init : LPAREN declaration? RPAREN;
 method_parameter_call : LPAREN RPAREN
+                      | LPAREN ID RPAREN
                       | LPAREN INTEGER RPAREN
                       | LPAREN DOUBLE RPAREN;
 curl_statement : LCURL statement* return_statement? RCURL ;

@@ -4,9 +4,10 @@ void Lights(){
     create TrafficLight tf2(2.0,4.0, 10);
 }
 
-void Carspawner () {
+void Carspawner (int j) {
     create CarSpawner spawnerSouth(2.0,2.0, "South", 10);
 }
-
+int o;
+o = 2;
 Lights();
-Carspawner();
+Carspawner(p);
