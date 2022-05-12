@@ -4,7 +4,6 @@ import org.antlr.runtime.tree.Tree;
 import java.util.Hashtable;
 
 public class GraphNode {
-
     public final static int
             DBLTYPE   = 0,
             INTTYPE   = 1,
@@ -16,5 +15,4 @@ public class GraphNode {
             METHOD = 6,
             STRING = 7;
     public static Hashtable<String,Integer> SymbolTable = new Hashtable<String,Integer>();
-
 }

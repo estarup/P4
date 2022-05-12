@@ -36,8 +36,6 @@ public class SymbolTableFillVisitor extends ASTVisitor{
 
     @Override
     public BlockNode visit(BlockNode node) {
-
-
         if (node == null ){ return null; }
         for (GraphNode n: node.childrenList) {
             if (n != null) {
@@ -51,6 +49,8 @@ public class SymbolTableFillVisitor extends ASTVisitor{
                     visit((DeclarationNode) n);
                 }  else if (n instanceof MethodInitNode) {
                     visit((MethodInitNode) n);
+                } else if (n instanceof MethodCallNode) {
+                    visit((MethodCallNode) n);
                 } else if (n instanceof BlockNode) {
                     visit((BlockNode) n);
                 }

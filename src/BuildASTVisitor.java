@@ -19,9 +19,8 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     @Override
     public GraphNode visitMethod_init(HelloParser.Method_initContext ctx) {
         MethodInitNode node = new MethodInitNode();
-        if (ctx.children.get(0).getChildCount() > 0) {
-            node.declaration = (MethodDeclarationNode) visitMethod_declaration(ctx.method_declaration());
-        }
+        node.declaration = (MethodDeclarationNode) visitMethod_declaration(ctx.method_declaration());
+
         if (ctx.children.get(1).getChildCount() > 0) {
             node.parameter =  (DeclarationNode) visitMethod_parameter_init(ctx.method_parameter_init());
         }

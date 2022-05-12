@@ -20,12 +20,13 @@ public class AntlrParser
             ParseTree parseTree = parser.trafficProg();
             Trees.inspect(parseTree,parser);
             ParseTreeVisitor visitor = new BuildASTVisitor();
+            visitor.visit(parseTree);
             BlockNode astNode =  (BlockNode) new BuildASTVisitor().visit(parseTree);
             BlockNode symbolResult = new SymbolTableFillVisitor().visit(astNode);
             BlockNode typeResult = new TypeCheckVisitor().visit(symbolResult);
             CodeGeneratorVisitor codeGeneratorVisitor = new CodeGeneratorVisitor();
             codeGeneratorVisitor.visit(symbolResult);
-
+            double i = 21;
             Program program = new Program();
             program.Run();
         }
