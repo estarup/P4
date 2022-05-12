@@ -1,8 +1,4 @@
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Type;
-import java.util.Hashtable;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class TypeCheckVisitorTest {
@@ -15,7 +11,4 @@ class TypeCheckVisitorTest {
         assertTrue(visitor.checkInt(integer));
         assertFalse(visitor.checkInt(db));
     }
-
-    
-
 }
