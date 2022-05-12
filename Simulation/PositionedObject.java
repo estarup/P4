@@ -1,5 +1,5 @@
 package Simulation; 
-public class PositionedObject {
+public abstract class PositionedObject {
     public PositionedObject (double x, double y) {
         setX(x);
         setY(y);

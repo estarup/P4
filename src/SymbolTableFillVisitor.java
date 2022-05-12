@@ -120,6 +120,13 @@ public class SymbolTableFillVisitor extends ASTVisitor{
             System.out.println("Error: Call to not defined method: " + node.ID);
             return node;
         }
+        if (node.parameter == null) {
+            return node;
+        } else if (GraphNode.SymbolTable.get(node.parameter) == null) {
+            System.out.println("Error: ID " + node.parameter + " has not been declared");
+            return null;
+        }
+
         return node;
     }
 
@@ -136,7 +143,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
         if (GraphNode.SymbolTable.get(node.name) != null) {
             System.out.println("Error: Method  with name " + node.name + " already declared");
         } else {
-            GraphNode.SymbolTable.put(node.name, 6);
+            GraphNode.SymbolTable.put(node.name, GraphNode.METHOD);
         }
         return node;
     }

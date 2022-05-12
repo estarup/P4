@@ -87,7 +87,7 @@ public class Car extends PositionedObject{
         return this.direction;
     }
 
-    public void Behavior() { // run every second
+    public void Info() { // run every second
         System.out.println("Car " + carNumber + " | Position: " + getX() + "x" + getY() + " | Speed: " + getSpeed() + " | " + " Direction : " + getDirection() + " | " + " IsDriving: " + isDriving);
     }
 }

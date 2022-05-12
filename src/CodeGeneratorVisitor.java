@@ -199,7 +199,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                    } else {\n" +
                     "                        car.Stop();\n" +
                     "                    }\n" +
-                    "                    car.Behavior();\n" +
+                    "                    car.Info();\n" +
                     "                }\n" +
                     "                for (TrafficLight light: trafficLights) {\n" +
                     "                    if (System.currentTimeMillis() >= startTime + light.getInterval()){\n" +
@@ -225,7 +225,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             System.out.println("Error: Cannot create Program class");
             e.printStackTrace();
         }
-
         return node;
     }
 
@@ -322,7 +321,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "        return this.direction;\n" +
                     "    }\n" +
                     "\n" +
-                    "    public void Behavior() { // run every second\n" +
+                    "    public void Info() { // run every second\n" +
                     "        System.out.println(\"Car \" + carNumber + \" | Position: \" + getX() + \"x\" + getY() + \" | Speed: \" + getSpeed() + \" | \" + \" Direction : \" + getDirection() + \" | \" + \" IsDriving: \" + isDriving);\n" +
                     "    }\n" +
                     "}\n");
@@ -338,7 +337,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/PositionedObject.java");
             FileWriter writer = new FileWriter(file);
             writer.write("package Simulation; \n" +
-                    "public class PositionedObject {\n" +
+                    "public abstract class PositionedObject {\n" +
                     "    public PositionedObject (double x, double y) {\n" +
                     "        setX(x);\n" +
                     "        setY(y);\n" +

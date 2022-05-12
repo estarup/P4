@@ -1,5 +1,3 @@
-import javax.swing.plaf.synth.SynthUI;
-
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     private int assignType = -1;
     @Override
@@ -32,16 +30,16 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
-        if (n.left instanceof SimpleExpressionNode) {
-            if (((SimpleExpressionNode) n.left).type != assignType) {
-                System.out.println("Error: " + ((SimpleExpressionNode) n.left).value + " is not of type " + assignType);
+        if (n.left instanceof SimpleExpressionNode expr) {
+            if (expr.type != assignType) {
+                System.out.println("Error: " + expr.value + " is not of type " + assignType);
             }
         } else {
             visit((BinaryOperatorNode) n.left);
         }
-        if (n.right instanceof SimpleExpressionNode) {
-            if (((SimpleExpressionNode) n.right).type != assignType) {
-                System.out.println("Error: " + ((SimpleExpressionNode) n.right).value + " is not of type " + assignType);
+        if (n.right instanceof SimpleExpressionNode expr) {
+            if (expr.type != assignType) {
+                System.out.println("Error: " + expr.value + " is not of type " + assignType);
             }
         }
         else {
@@ -118,7 +116,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
     }
 
 
-    private boolean checkInt(String s) {
+    public boolean checkInt(String s) {
         try {
             int intNumber = Integer.parseInt(s);
             return true;
@@ -128,7 +126,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         return false;
     }
 
-    private boolean checkFloat(String s) {
+    public boolean checkDouble(String s) {
         try {
             double doubleNumber = Double.parseDouble(s);
             return true;
@@ -142,13 +140,14 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
         if (node.parameter == null) {
             return node;
         }
-        if (checkInt(node.parameter) || checkFloat(node.parameter)) {
+        if (checkInt(node.parameter) || checkDouble(node.parameter)) {
             return node;
-        } else if (GraphNode.SymbolTable.get(node.parameter) == null) {
+        }
+        if (GraphNode.SymbolTable.get(node.parameter) == null) {
             System.out.println("Error: ID " + node.parameter + " has not been declared");
             return null;
         }
-        return node;
+        return null;
     }
 
     @Override
