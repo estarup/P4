@@ -1,8 +1,7 @@
-import static java.lang.Integer.parseInt;
 public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
 {
-    private GraphNode theTopNode = new BlockNode();
     @Override public GraphNode visitTrafficProg(HelloParser.TrafficProgContext ctx) {
+        GraphNode theTopNode = new BlockNode();
         GraphNode result =  visitChildren(ctx);
         if (result instanceof BlockNode) {
             theTopNode = result;
@@ -13,8 +12,6 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         }
         return result;
     }
-
-
 
     @Override
     public GraphNode visitMethod_init(HelloParser.Method_initContext ctx) {
@@ -54,13 +51,14 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
     public DeclarationNode visitDeclaration(HelloParser.DeclarationContext ctx) {
         DeclarationNode node = new DeclarationNode();
         if (ctx.children == null) {
-            System.out.println("null");
             return node;
         }
         if (ctx.children.get(0).getText().equals("int")) {
             node.type =  GraphNode.INTTYPE;
         } else if (ctx.children.get(0).getText().equals("double")) {
             node.type = GraphNode.DBLTYPE;
+        } else if (ctx.children.get(0).getText().equals("string")) {
+            node.type = GraphNode.STRING;
         }
         node.ID = ctx.children.get(1).getText();
         return node;
@@ -92,6 +90,7 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
             StringNode stringNode = new StringNode();
             stringNode.string = ctx.children.get(2).getText();
             node.value = stringNode;
+            node.type = GraphNode.STRING;
         }
         return node;
     }
@@ -313,14 +312,11 @@ public class BuildASTVisitor extends HelloBaseVisitor<GraphNode>
         }
         if (! (aggregate instanceof BlockNode)) {
             BlockNode block = new BlockNode();
-            block.childrenList.add((GraphNode) aggregate);
+            block.childrenList.add(aggregate);
             aggregate = block;
         }
-        if (aggregate instanceof BlockNode) {
-            BlockNode block = (BlockNode) aggregate;
-            block.childrenList.add(nextResult);
-            return block;
-        }
-        return nextResult;
+        BlockNode block = (BlockNode) aggregate;
+        block.childrenList.add(nextResult);
+        return block;
     }
 }

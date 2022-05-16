@@ -1,5 +1,5 @@
 public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
-    private int assignType = -1;
+    private int varType = -2;
     @Override
     public GraphNode visit(AddNode node) {
         return node;
@@ -7,43 +7,40 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public AssignmentNode visit(AssignmentNode node)  {
-        assignType = -1;
         try {
-            assignType = GraphNode.SymbolTable.get(node.ID);
+            node.type = GraphNode.SymbolTable.get(node.ID);
         } catch (NullPointerException e) {
             //System.out.println("Error: Variable " + node.ID + " has not been declared");
         }
         if (node.value instanceof StringNode) {
-            visit((StringNode) node.value);
-            return node;
-        }
-        if(! (node.value instanceof SimpleExpressionNode)) {
+            varType = GraphNode.STRING;
+        } else if(! (node.value instanceof SimpleExpressionNode s)) {
             visit((BinaryOperatorNode) node.value);
+        } else {
+            varType = s.type;
         }
-        if (node.value instanceof SimpleExpressionNode){
-            if (assignType != ((SimpleExpressionNode) node.value).type) {
-                System.out.println("Error: Assign type error. Cannot assign " + node.ID + " to " + ((SimpleExpressionNode) node.value).value );
-            }
+
+        if (node.type != varType) {
+            System.out.println("Error: Assignment not of same type as variables: " + node.type + " and " + varType);
         }
         return node;
     }
 
     @Override
     public BinaryOperatorNode visit(BinaryOperatorNode n) {
-        if (n.left instanceof SimpleExpressionNode expr) {
-            if (expr.type != assignType) {
-                System.out.println("Error: " + expr.value + " is not of type " + assignType);
-            }
-        } else {
+        if (!(n.left instanceof SimpleExpressionNode)) {
             visit((BinaryOperatorNode) n.left);
         }
-        if (n.right instanceof SimpleExpressionNode expr) {
-            if (expr.type != assignType) {
-                System.out.println("Error: " + expr.value + " is not of type " + assignType);
-            }
-        }
-        else {
+        if (!(n.right instanceof SimpleExpressionNode)) {
             visit((BinaryOperatorNode) n.right);
+        }
+        if (n.left instanceof SimpleExpressionNode s && n.right instanceof SimpleExpressionNode s2) {
+            if (s.type != s2.type) {
+                System.out.println("Error: Binary operator is not of same type:" + s.value + " and " + s2.value);
+                return null;
+            } else {
+                varType = s.type;
+            }
         }
         return n;
     }
@@ -207,6 +204,7 @@ public class TypeCheckVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(StringNode node) {
+        varType = GraphNode.STRING;
         return node;
     }
 

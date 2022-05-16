@@ -25,10 +25,12 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
     public GraphNode visit(AssignmentNode node) {
         addCode(node.ID);
         addCode(" = ");
-        if (node.value instanceof BinaryOperatorNode) {
-            visit((BinaryOperatorNode) node.value);
-        } else if (node.value instanceof SimpleExpressionNode){
-            visit((SimpleExpressionNode) node.value);
+        if (node.value instanceof BinaryOperatorNode b) {
+            visit(b);
+        } else if (node.value instanceof SimpleExpressionNode s){
+            visit(s);
+        } else if (node.value instanceof StringNode s) {
+            visit(s);
         }
         addCode("; ");
         return node;
@@ -533,6 +535,8 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
             addCode("double ");
         } else if (node.type == GraphNode.INTTYPE) {
             addCode("int ");
+        } else if (node.type == GraphNode.STRING) {
+            addCode("String ");
         }
         addCode(node.ID);
         addCode(";");
@@ -723,6 +727,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
 
     @Override
     public GraphNode visit(StringNode node) {
+        addCode(node.string);
         return node;
     }
 

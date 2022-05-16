@@ -10,6 +10,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
             System.out.println("Error: Variable " + node.ID + " not declared");
             return node;
         }
+        node.type = GraphNode.SymbolTable.get(node.ID);
         if (node.value instanceof BinaryOperatorNode) {
             visit((BinaryOperatorNode) node.value);
         } else if (node.value instanceof SimpleExpressionNode){
@@ -229,7 +230,7 @@ public class SymbolTableFillVisitor extends ASTVisitor{
     }
 
     @Override
-    public Object visit(StringNode node) {
+    public StringNode visit(StringNode node) {
         return node;
     }
 
