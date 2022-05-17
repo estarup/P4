@@ -1,3 +1,14 @@
-int j;
-string p;
-p = "hello";
+
+void Lights(){
+    create TrafficLight tf2(2.0,3.7, 10);
+    create TrafficLight tf3(2.0,3.8, 10);
+}
+
+void Carspawner () {
+    create CarSpawner spawnerSouth(2.0,3.5, "South", 120);
+}
+Lights();
+Carspawner();
+
+
+

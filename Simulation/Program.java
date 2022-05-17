@@ -11,9 +11,9 @@ public class Program {
     ArrayList<Car> carList = new ArrayList<>();
     ArrayList<TrafficLight> trafficLights = new ArrayList<>();
     ArrayList<CarSpawner> carSpawners = new ArrayList<>();
-
+void Lights(){TrafficLight tf2 = new TrafficLight(2.0, 3.7, 10);trafficLights.add(tf2);TrafficLight tf3 = new TrafficLight(2.0, 3.8, 10);trafficLights.add(tf3);}void Carspawner(){CarSpawner spawnerSouth = new CarSpawner(2.0, 3.5, "South", 120);carSpawners.add(spawnerSouth);}
     public void Run() {
-int j;String p;p = "hello"; 
+Lights();Carspawner();
         while(true) {
             for (CarSpawner spawner: carSpawners) {
                 if (isFirstCar) {
