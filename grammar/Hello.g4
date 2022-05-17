@@ -11,7 +11,7 @@ statement :   method
 	        | while_loop
 	        | create_statement
   			| assignment
-			| declaration SEMICOLON
+			| declaration
 			| print
 			;
 method :     method_init
@@ -29,7 +29,7 @@ create_type : CARSPAWNER
             ;
 assignment : ID ASSIGN expression SEMICOLON
            | ID ASSIGN STRING SEMICOLON;
-declaration : VAR_TYPE ID ;
+declaration : VAR_TYPE ID SEMICOLON;
 print: PRINT LPAREN STRING RPAREN SEMICOLON;
 method_parameter_init : LPAREN declaration? RPAREN;
 method_parameter_call : LPAREN RPAREN
