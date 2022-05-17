@@ -1,4 +1,4 @@
-package Simulation;
+package Simulation; 
 import java.util.ArrayList;
 
 public class Program {
@@ -11,7 +11,7 @@ public class Program {
     ArrayList<Car> carList = new ArrayList<>();
     ArrayList<TrafficLight> trafficLights = new ArrayList<>();
     ArrayList<CarSpawner> carSpawners = new ArrayList<>();
-void Lights(){TrafficLight tf2 = new TrafficLight(2.0, 3.7, 10);trafficLights.add(tf2);TrafficLight tf3 = new TrafficLight(2.0, 3.8, 10);trafficLights.add(tf3);}void Carspawner(){CarSpawner spawnerSouth = new CarSpawner(2.0, 3.5, "South", 120);carSpawners.add(spawnerSouth);}
+void Lights(){TrafficLight tf2 = new TrafficLight(2.0, 3.7, 10);trafficLights.add(tf2);TrafficLight tf3 = new TrafficLight(2.0, 3.8, 10);trafficLights.add(tf3);TrafficLight tf4 = new TrafficLight(2.0, 3.9, 10);trafficLights.add(tf4);}void Carspawner(){CarSpawner spawnerSouth = new CarSpawner(2.0, 3.5, "South", 120);carSpawners.add(spawnerSouth);}
     public void Run() {
 Lights();Carspawner();
         while(true) {
@@ -31,62 +31,74 @@ Lights();Carspawner();
                     switch (car.getDirection()) {
                         case "East" -> {
                             if (car.getX() >= light.getX() - 0.05 && car.getX() <= light.getX() && car.getY() == light.getY()) {
+                                if (!car.hasPassedLight) {
+                                    car.hasPassedLight = true;
+                                    light.carPassed();
+                                    totalPassedCars += 1;
+                                }
                                 if (!light.isGreenEast) {
                                     car.isDriving = false;
                                 } else {
                                     car.isDriving = true;
                                 }
                             }
-                            if (car.getX() > light.getY() && !car.hasPassedLight) {
-                                light.carPassed();
-                                car.hasPassedLight = true;
+                            if (car.getX() > light.getY() && car.hasPassedLight) {
+                                car.hasPassedLight = false;
                                 car.isDriving = true;
-                                totalPassedCars += 1;
                             }
                         }
                         case "West" -> {
                             if (car.getX() <= light.getX() + 0.05 && car.getX() >= light.getX() && car.getY() == light.getY()) {
+                                if (!car.hasPassedLight) {
+                                    car.hasPassedLight = true;
+                                    light.carPassed();
+                                    totalPassedCars += 1;
+                                }
                                 if (!light.isGreenEast) {
                                     car.isDriving = false;
                                 } else {
                                     car.isDriving = true;
                                 }
                             }
-                            if (car.getX() < light.getY() && !car.hasPassedLight) {
-                                light.carPassed();
-                                car.hasPassedLight = true;
+                            if (car.getX() < light.getY() && car.hasPassedLight) {
+                                car.hasPassedLight = false;
                                 car.isDriving = true;
-                                totalPassedCars += 1;
                             }
                         }
                         case "North" -> {
                             if (car.getY() <= light.getY() + 0.05 && car.getY() >= light.getY() && car.getX() == light.getX()) {
+                                if (!car.hasPassedLight) {
+                                    car.hasPassedLight = true;
+                                    light.carPassed();
+                                    totalPassedCars += 1;
+                                }
                                 if (!light.isGreenNorth) {
                                     car.isDriving = false;
                                 } else {
                                     car.isDriving = true;
                                 }
                             }
-                            if (car.getY() < light.getY() && !car.hasPassedLight) {
-                                light.carPassed();
-                                car.hasPassedLight = true;
+                            if (car.getY() < light.getY() && car.hasPassedLight) {
+                                car.hasPassedLight = false;
                                 car.isDriving = true;
-                                totalPassedCars += 1;
                             }
                         }
                         case "South" -> {
                             if (car.getY() >= light.getY() - 0.05 && car.getY() <= light.getY() && car.getX() == light.getX()) {
+                                if (!car.hasPassedLight) {
+                                    car.hasPassedLight = true;
+                                    light.carPassed();
+                                    totalPassedCars += 1;
+                                }
                                 if (!light.isGreenNorth) {
                                     car.isDriving = false;
                                 } else {
                                     car.isDriving = true;
                                 }
                             }
-                            if (car.getY() > light.getY() && !car.hasPassedLight) {
-                                light.carPassed();
+                            if (car.getY() > light.getY() && car.hasPassedLight) {
+                                car.hasPassedLight = false;
                                 car.isDriving = true;
-                                car.hasPassedLight = true;
-                                totalPassedCars += 1;
                             }
                         }
                         default -> System.out.println("Error: Car direction mismatch");

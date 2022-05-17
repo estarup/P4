@@ -100,7 +100,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/Program.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
+            writer.write("package Simulation; \n" +
                     "import java.util.ArrayList;\n" +
                     "\n" +
                     "public class Program {\n" +
@@ -131,62 +131,74 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "                    switch (car.getDirection()) {\n" +
                     "                        case \"East\" -> {\n" +
                     "                            if (car.getX() >= light.getX() - 0.05 && car.getX() <= light.getX() && car.getY() == light.getY()) {\n" +
+                    "                                if (!car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    light.carPassed();\n" +
+                    "                                    totalPassedCars += 1;\n" +
+                    "                                }\n" +
                     "                                if (!light.isGreenEast) {\n" +
                     "                                    car.isDriving = false;\n" +
                     "                                } else {\n" +
                     "                                    car.isDriving = true;\n" +
                     "                                }\n" +
                     "                            }\n" +
-                    "                            if (car.getX() > light.getY() && !car.hasPassedLight) {\n" +
-                    "                                light.carPassed();\n" +
-                    "                                car.hasPassedLight = true;\n" +
+                    "                            if (car.getX() > light.getY() && car.hasPassedLight) {\n" +
+                    "                                car.hasPassedLight = false;\n" +
                     "                                car.isDriving = true;\n" +
-                    "                                totalPassedCars += 1;\n" +
                     "                            }\n" +
                     "                        }\n" +
                     "                        case \"West\" -> {\n" +
                     "                            if (car.getX() <= light.getX() + 0.05 && car.getX() >= light.getX() && car.getY() == light.getY()) {\n" +
+                    "                                if (!car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    light.carPassed();\n" +
+                    "                                    totalPassedCars += 1;\n" +
+                    "                                }\n" +
                     "                                if (!light.isGreenEast) {\n" +
                     "                                    car.isDriving = false;\n" +
                     "                                } else {\n" +
                     "                                    car.isDriving = true;\n" +
                     "                                }\n" +
                     "                            }\n" +
-                    "                            if (car.getX() < light.getY() && !car.hasPassedLight) {\n" +
-                    "                                light.carPassed();\n" +
-                    "                                car.hasPassedLight = true;\n" +
+                    "                            if (car.getX() < light.getY() && car.hasPassedLight) {\n" +
+                    "                                car.hasPassedLight = false;\n" +
                     "                                car.isDriving = true;\n" +
-                    "                                totalPassedCars += 1;\n" +
                     "                            }\n" +
                     "                        }\n" +
                     "                        case \"North\" -> {\n" +
                     "                            if (car.getY() <= light.getY() + 0.05 && car.getY() >= light.getY() && car.getX() == light.getX()) {\n" +
+                    "                                if (!car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    light.carPassed();\n" +
+                    "                                    totalPassedCars += 1;\n" +
+                    "                                }\n" +
                     "                                if (!light.isGreenNorth) {\n" +
                     "                                    car.isDriving = false;\n" +
                     "                                } else {\n" +
                     "                                    car.isDriving = true;\n" +
                     "                                }\n" +
                     "                            }\n" +
-                    "                            if (car.getY() < light.getY() && !car.hasPassedLight) {\n" +
-                    "                                light.carPassed();\n" +
-                    "                                car.hasPassedLight = true;\n" +
+                    "                            if (car.getY() < light.getY() && car.hasPassedLight) {\n" +
+                    "                                car.hasPassedLight = false;\n" +
                     "                                car.isDriving = true;\n" +
-                    "                                totalPassedCars += 1;\n" +
                     "                            }\n" +
                     "                        }\n" +
                     "                        case \"South\" -> {\n" +
                     "                            if (car.getY() >= light.getY() - 0.05 && car.getY() <= light.getY() && car.getX() == light.getX()) {\n" +
+                    "                                if (!car.hasPassedLight) {\n" +
+                    "                                    car.hasPassedLight = true;\n" +
+                    "                                    light.carPassed();\n" +
+                    "                                    totalPassedCars += 1;\n" +
+                    "                                }\n" +
                     "                                if (!light.isGreenNorth) {\n" +
                     "                                    car.isDriving = false;\n" +
                     "                                } else {\n" +
                     "                                    car.isDriving = true;\n" +
                     "                                }\n" +
                     "                            }\n" +
-                    "                            if (car.getY() > light.getY() && !car.hasPassedLight) {\n" +
-                    "                                light.carPassed();\n" +
+                    "                            if (car.getY() > light.getY() && car.hasPassedLight) {\n" +
+                    "                                car.hasPassedLight = false;\n" +
                     "                                car.isDriving = true;\n" +
-                    "                                car.hasPassedLight = true;\n" +
-                    "                                totalPassedCars += 1;\n" +
                     "                            }\n" +
                     "                        }\n" +
                     "                        default -> System.out.println(\"Error: Car direction mismatch\");\n" +
