@@ -35,8 +35,7 @@ method_parameter_init : LPAREN declaration? RPAREN;
 method_parameter_call : LPAREN RPAREN
                       | LPAREN ID RPAREN
                       | LPAREN INTEGER RPAREN
-                      | LPAREN DOUBLE RPAREN
-                      | LPAREN STRING RPAREN;
+                      | LPAREN DOUBLE RPAREN;
 curl_statement : LCURL statement* return_statement? RCURL ;
 return_statement : RETURN ID SEMICOLON;
 logic_expression : LPAREN condition RPAREN; 
@@ -111,12 +110,10 @@ CARSPAWNER: 'CarSpawner' ;
 TRAFFICLIGHT : 'TrafficLight'; 
 BOOL : 'true' | 'false' ;
 PRINT : 'Print';
-TOTALSPAWNEDCARS : 'totalSpawnedCars';
 
 // Literals
 METH_RETURN_TYPE : 'void' | 'Int' | 'Double' ;
 VAR_TYPE : 'int' | 'double' | 'string';
-
 INTEGER : [0]| [1-9][0-9]* ;
 DOUBLE : INTEGER ('.')? [0-9]* ;
 METH_NAME : [A-Z][a-zA-Z]* ;
@@ -125,4 +122,4 @@ STRING : '"' [a-zA-Z0-9 \t\r]+ '"';
 fragment LETTER : [a-zA-Z] ;
 fragment DIGIT : [0-9];
 // Whitespace
-WS : [ \t\r\n]+ -> skip ;
+WS : [ \t\r\n]+  -> skip ;

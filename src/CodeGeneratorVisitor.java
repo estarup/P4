@@ -442,7 +442,7 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
         try {
             File file = new File("/Users/emil/IdeaProjects/P4/Simulation/TrafficLight.java");
             FileWriter writer = new FileWriter(file);
-            writer.write("package Simulation;\n" +
+            writer.write("package Simulation; \n" +
                     "public class TrafficLight extends PositionedObject{\n" +
                     "\n" +
                     "    public static int lightCount = 0;\n" +
@@ -485,9 +485,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "    public long getFrequency() {\n" +
                     "        return this.frequency;\n" +
                     "    }\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
                     "    public void SwitchLights() {\n" +
                     "        if (isGreenNorth) {\n" +
                     "            System.out.println(\" ** TrafficLight \" + lightNumber + \" is green East/West | \");\n" +
@@ -497,8 +494,6 @@ public class CodeGeneratorVisitor extends ASTVisitor<GraphNode>{
                     "            isGreenNorth = true;\n" +
                     "        }\n" +
                     "    }\n" +
-                    "\n" +
-                    "\n" +
                     "}\n");
             writer.close();
         } catch (IOException e) {

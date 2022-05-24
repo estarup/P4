@@ -1,4 +1,4 @@
-package Simulation;
+package Simulation; 
 public class TrafficLight extends PositionedObject{
 
     public static int lightCount = 0;
@@ -41,9 +41,6 @@ public class TrafficLight extends PositionedObject{
     public long getFrequency() {
         return this.frequency;
     }
-
-
-
     public void SwitchLights() {
         if (isGreenNorth) {
             System.out.println(" ** TrafficLight " + lightNumber + " is green East/West | ");
@@ -53,6 +50,4 @@ public class TrafficLight extends PositionedObject{
             isGreenNorth = true;
         }
     }
-
-
 }
