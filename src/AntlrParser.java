@@ -23,9 +23,9 @@ public class AntlrParser
             visitor.visit(parseTree);
             BlockNode astNode =  (BlockNode) new BuildASTVisitor().visit(parseTree);
             BlockNode symbolResult = new SymbolTableFillVisitor().visit(astNode);
-            BlockNode typeResult = new TypeCheckVisitor().visit(astNode);
+            BlockNode typeResult = new TypeCheckVisitor().visit(symbolResult);
             CodeGeneratorVisitor codeGeneratorVisitor = new CodeGeneratorVisitor();
-            codeGeneratorVisitor.visit(astNode);
+            codeGeneratorVisitor.visit(typeResult);
             Program program = new Program();
             program.Run();
         }

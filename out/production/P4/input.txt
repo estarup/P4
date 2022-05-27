@@ -1,4 +1,8 @@
 
+int j;
+j = 2 * 2;
+
+
 void Lights(){
     create TrafficLight tf2(2.0,3.7, 20);
     create TrafficLight tf3(2.0,3.8, 30);

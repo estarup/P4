@@ -13,7 +13,7 @@ public class Program {
     ArrayList<CarSpawner> carSpawners = new ArrayList<>();
 void Lights(){TrafficLight tf2 = new TrafficLight(2.0, 3.7, 20);trafficLights.add(tf2);TrafficLight tf3 = new TrafficLight(2.0, 3.8, 30);trafficLights.add(tf3);TrafficLight tf4 = new TrafficLight(2.0, 3.9, 20);trafficLights.add(tf4);}void Carspawner(){CarSpawner spawnerSouth = new CarSpawner(2.0, 3.5, "South", 120);carSpawners.add(spawnerSouth);}
     public void Run() {
-Lights();Carspawner();
+int j;j = 2*2; Lights();Carspawner();
         while(true) {
             for (CarSpawner spawner: carSpawners) {
                 if (isFirstCar) {
